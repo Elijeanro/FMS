@@ -1,17 +1,11 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from django.contrib.auth.models import User
 
 class Marque(models.Model):
     nom_marque = models.CharField(max_length=40)
     def __str__(self):
         return str(self.nom_marque)
-    
-class Conducteur(models.Model):
-    nom_cond = models.CharField(max_length=25)
-    prenom_cond = models.CharField(max_length=50)
-    contact_cond = PhoneNumberField(region='TG')
-    def __str__(self):
-        return f"{self.nom_cond} {self.prenom_cond}"
     
 class Modele(models.Model):
     nom_modele = models.CharField(max_length=20)
@@ -24,16 +18,22 @@ class Grade(models.Model):
     libelle_grade = models.CharField(max_length=10)
     def __str__(self):
         return str(self.libelle_grade)
+
+class Personne(models.Model):
+    nom = models.CharField(max_length=25)
+    prenom = models.CharField(max_length=50)
+    contact = PhoneNumberField(region='TG')
+    email = models.EmailField(max_length=255)
+    def __str__(self):
+        return f"{self.nom} {self.prenom}"
     
 class Utilisateur(models.Model):
-    nom_user = models.CharField(max_length=25)
-    prenom_user = models.CharField(max_length=50)
-    contact_user = PhoneNumberField(region='TG')
-    email_user = models.EmailField()
-    motDePasse = models.CharField(max_length=12)
+    personne = models.OneToOneField('Personne', on_delete=models.CASCADE, primary_key=True,default=0)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)
     grade_user = models.ForeignKey('Grade', on_delete=models.CASCADE)
+    motDePasse = models.CharField(max_length=12)
     def __str__(self):
-        return f"{self.nom_user} {self.prenom_user}"
+        return f"{self.personne.nom} {self.personne.prenom}"
     
 class TypeEngin(models.Model):
     designation = models.CharField(max_length=10)
@@ -60,34 +60,36 @@ class Engin(models.Model):
         return str(self.immatriculation)
   
 class RavitaillementCarburant(models.Model):
-    date_ravitaillement = models.DateField()
-    quantite = models.FloatField()
+    date_rav = models.DateField()
+    quantite_rav = models.FloatField(default=0)
+    cout_rav = models.FloatField()
     engin_rav = models.ForeignKey('Engin',on_delete=models.CASCADE)
     def __str__(self):
         return f"Ravitaillement en carburant du {self.date_ravitaillement}"
 
 class VidangeEngin(models.Model):
-    date_vidange = models.DateField()
+    date_vid = models.DateField()
     engin_vid = models.ForeignKey('Engin',on_delete=models.CASCADE)
     def __str__(self):
         return f"Vidange du {self.date_vidange}"
 
 class TypeMaintenance(models.Model):
-    libelle_maintenance = models.CharField(max_length=30)
+    libelle_maint = models.CharField(max_length=30)
     def __str__(self):
         return str(self.libelle_maintenance)
     
 class MaintenanceEngin(models.Model):
-    date_maintenance = models.DateField()
-    type_maintenance = models.ForeignKey('TypeMaintenance',on_delete=models.CASCADE)
-    motif_maintenance = models.CharField(max_length=120)
-    engin_maintenance = models.ForeignKey('Engin',on_delete=models.CASCADE)
+    date_maint = models.DateField()
+    type_maint = models.ForeignKey('TypeMaintenance',on_delete=models.CASCADE)
+    motif_maint = models.CharField(max_length=120)
+    engin_maint = models.ForeignKey('Engin',on_delete=models.CASCADE)
+    cout_maint = models.FloatField(default=0)
     def __str__(self):
-        return f"Maintenance du {self.date_maintenance}"
+        return f"Maintenance du {self.date_maint}"
     
 class Attribution(models.Model):
     date_attribution = models.DateField()
-    conducteur = models.ForeignKey('Conducteur',on_delete=models.CASCADE)
+    conducteur = models.ForeignKey('Personne',on_delete=models.CASCADE)
     engin = models.ForeignKey('Engin', on_delete=models.CASCADE)
     def __str__(self):
         return f"Attribution du {self.date_attribution}"

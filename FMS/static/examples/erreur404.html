@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    {% load static %}
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>FMS - 404</title>
+
+    <!-- Custom fonts for this template-->
+    <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <!-- Nucleo Icons -->
+  <link href="{% static 'assets/css/nucleo-icons.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <link href="{% static 'assets/css/font-awesome.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link href="{% static 'assets/css/argon-design-system.css' %}" rel="stylesheet" />
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'public:login' %}">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-school"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3"><sup>FMS</sup></div>
+            </a>
+
+            
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">FMS</span>
+                                <img class="img-profile rounded-circle"
+                                    src="img/undraw_profile.svg">
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- 404 Error Text -->
+                    <div class="text-center">
+                        <i class="fas fa-sad-tear">FMS Erreur</i>
+                        <div class="error mx-auto" data-text="404">404</div>
+                        <p class="lead text-gray-800 mb-5">{{message}}</p>
+                        <p class="text-gray-500 mb-0">Veuillez corriger l'erreur avant de continuer</p>
+                        <a href="javascript:history.go(-1);">&larr; Retour</a>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <footer class="footer">
+        <div class="container">
+          <div class="row row-grid align-items-center mb-5">
+            
+            
+          </div>
+          <hr>
+          <div class="row align-items-center justify-content-md-between">
+            <div class="col-md-6">
+              <div class="copyright">
+                &copy; 2023 <a href="" target="_blank">JRo</a>.
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </footer>
+      <!--   Core JS Files   -->
+      <script src="../assets/js/core/jquery.min.js" type="text/javascript"></script>
+      <script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
+      <script src="../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+      <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+      <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+      <script src="../assets/js/plugins/bootstrap-switch.js"></script>
+      <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+      <script src="../assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+      <script src="../assets/js/plugins/moment.min.js"></script>
+      <script src="../assets/js/plugins/datetimepicker.js" type="text/javascript"></script>
+      <script src="../assets/js/plugins/bootstrap-datepicker.min.js"></script>
+      <!-- Control Center for Argon UI Kit: parallax effects, scripts for the example pages etc -->
+      <!--  Google Maps Plugin    -->
+      <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+      <script src="../assets/js/argon-design-system.min.js?v=1.2.2" type="text/javascript"></script>
+      <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+      <script>
+        window.TrackJS &&
+          TrackJS.install({
+            token: "ee6fab19c5a04ac1a32a645abde4613a",
+            application: "argon-design-system-pro"
+          });
+      </script>
+    </body>
+    
+    </html>
