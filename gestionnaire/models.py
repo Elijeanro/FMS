@@ -1,6 +1,5 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-from django.contrib.auth.models import User
 
 class Marque(models.Model):
     nom_marque = models.CharField(max_length=40)
@@ -15,7 +14,7 @@ class Modele(models.Model):
         return f"{self.marque.nom_marque} / {self.nom_modele}"
 
 class Grade(models.Model):
-    libelle_grade = models.CharField(max_length=10)
+    libelle_grade = models.CharField(max_length=50)
     def __str__(self):
         return str(self.libelle_grade)
 
@@ -23,17 +22,9 @@ class Personne(models.Model):
     nom = models.CharField(max_length=25)
     prenom = models.CharField(max_length=50)
     contact = PhoneNumberField(region='TG')
-    email = models.EmailField(max_length=255)
+    grade = models.ForeignKey('Grade', on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.nom} {self.prenom}"
-    
-class Utilisateur(models.Model):
-    personne = models.OneToOneField('Personne', on_delete=models.CASCADE, primary_key=True,default=0)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)
-    grade_user = models.ForeignKey('Grade', on_delete=models.CASCADE)
-    motDePasse = models.CharField(max_length=12)
-    def __str__(self):
-        return f"{self.personne.nom} {self.personne.prenom}"
     
 class TypeEngin(models.Model):
     designation = models.CharField(max_length=10)
@@ -76,12 +67,12 @@ class VidangeEngin(models.Model):
 class TypeMaintenance(models.Model):
     libelle_maint = models.CharField(max_length=30)
     def __str__(self):
-        return str(self.libelle_maintenance)
+        return str(self.libelle_maint)
     
 class MaintenanceEngin(models.Model):
     date_maint = models.DateField()
     type_maint = models.ForeignKey('TypeMaintenance',on_delete=models.CASCADE)
-    motif_maint = models.CharField(max_length=120)
+    motif_maint = models.CharField(max_length=120, null=True)
     engin_maint = models.ForeignKey('Engin',on_delete=models.CASCADE)
     cout_maint = models.FloatField(default=0)
     def __str__(self):

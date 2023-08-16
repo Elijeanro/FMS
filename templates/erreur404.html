@@ -15,10 +15,8 @@
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <!-- Nucleo Icons -->
   <link href="{% static 'assets/css/nucleo-icons.css' %}" rel="stylesheet" />
-  <!-- <link href="../assets/css/nucleo-svg.css" rel="stylesheet" /> -->
   <!-- Font Awesome Icons -->
   <link href="{% static 'assets/css/font-awesome.css' %}" rel="stylesheet" />
-  <!-- <link href="../assets/css/nucleo-svg.css" rel="stylesheet" /> -->
   <!-- CSS Files -->
   <link href="{% static 'assets/css/argon-design-system.css' %}" rel="stylesheet" />
 </head>
@@ -74,10 +72,11 @@
           <div class="col px-0">
             <div class="row align-items-center justify-content-center">
               <div class="col-lg-6 text-center">
+                <img src="{% static 'images/Logo_EV_final.png' %}" style="width: 35%;">
                 <h1 class="text-white display-1">Erreur 404</h1>
                 <h2 class="display-4 font-weight-normal text-white">{{message}}!</h2>
                 <div class="btn-wrapper mt-4">
-                  <a href="{% url 'public:login' %}" class="btn btn-warning btn-icon mt-3 mb-sm-0">
+                  <a href="{% url 'administratif:login' %}" class="btn btn-warning btn-icon mt-3 mb-sm-0">
                     <span class="btn-inner--icon"><i class="ni ni-button-back"></i></span>
                     <span class="btn-inner--text">Retour</span>
                   </a>
