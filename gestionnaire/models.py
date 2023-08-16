@@ -26,6 +26,13 @@ class Personne(models.Model):
     def __str__(self):
         return f"{self.nom} {self.prenom}"
     
+class Fournisseur(models.Model):
+    nom_fournisseur = models.CharField(max_length=50)
+    adresse = models.CharField(max_length=100)
+    description_fournisseur = models.CharField(max_length=255)
+    def __str__(self):
+        return str(self.nom_fournisseur)
+    
 class TypeEngin(models.Model):
     designation = models.CharField(max_length=10)
     description = models.CharField(max_length=50)
@@ -47,6 +54,7 @@ class Engin(models.Model):
     modele_engin = models.ForeignKey('Modele',on_delete=models.CASCADE)
     type_engin = models.ForeignKey('TypeEngin',on_delete=models.CASCADE)
     info_engin = models.ForeignKey('InfoEngin', on_delete=models.CASCADE)
+    fournisseur_engin = models.ForeignKey('Fournisseur', on_delete=models.CASCADE, null=True)
     def __str__(self):
         return str(self.immatriculation)
   
@@ -55,6 +63,7 @@ class RavitaillementCarburant(models.Model):
     quantite_rav = models.FloatField(default=0)
     cout_rav = models.FloatField()
     engin_rav = models.ForeignKey('Engin',on_delete=models.CASCADE)
+    fournisseur_carburant = models.ForeignKey('Fournisseur', on_delete=models.CASCADE, null=True)
     def __str__(self):
         return f"Ravitaillement en carburant du {self.date_ravitaillement}"
 
@@ -75,6 +84,7 @@ class MaintenanceEngin(models.Model):
     motif_maint = models.CharField(max_length=120, null=True)
     engin_maint = models.ForeignKey('Engin',on_delete=models.CASCADE)
     cout_maint = models.FloatField(default=0)
+    fournisseur_maint = models.ForeignKey('Fournisseur', on_delete=models.CASCADE, null=True)
     def __str__(self):
         return f"Maintenance du {self.date_maint}"
     
