@@ -33,6 +33,9 @@ class Fournisseur(models.Model):
     def __str__(self):
         return str(self.nom_fournisseur)
     
+class EtatEngin(models.Model):
+    libelle_etat = models.CharField(max_length=120)
+    
 class TypeEngin(models.Model):
     designation = models.CharField(max_length=10)
     description = models.CharField(max_length=50)
@@ -54,6 +57,7 @@ class Engin(models.Model):
     modele_engin = models.ForeignKey('Modele',on_delete=models.CASCADE)
     type_engin = models.ForeignKey('TypeEngin',on_delete=models.CASCADE)
     info_engin = models.ForeignKey('InfoEngin', on_delete=models.CASCADE)
+    etat_engin = models.ForeignKey('EtatEngin', on_delete=models.CASCADE, null=True)
     fournisseur_engin = models.ForeignKey('Fournisseur', on_delete=models.CASCADE, null=True)
     def __str__(self):
         return str(self.immatriculation)
