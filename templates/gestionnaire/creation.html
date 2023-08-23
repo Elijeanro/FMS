@@ -1,0 +1,36 @@
+{% extends 'bases/base1.html' %}
+
+{% load static %}
+
+{% block title %}
+  Enrégistrer une personne
+{% endblock title %}
+  
+
+{% block contenu %}
+<form role="form" method="post">
+  {% csrf_token %}
+  <div class="form-group">
+    <div class="input-group input-group-alternative mb-3">
+      <!-- <div class="input-group-prepend">
+        <span class="input-group-text"><i class="ni ni-per-3"></i></span>
+      </div> -->
+      {{form.as_p}}
+      <!-- <input class="form-control" id="firstname" name="firstname" placeholder="Saisissez votre prénom ici" type="text"> -->
+    </div>
+  </div>
+  
+  <div class="row my-4">
+    <div class="col-12">
+      <div class="custom-control custom-control-alternative custom-checkbox">
+        <input class="custom-control-input" id="customCheckRegister" type="checkbox">
+        <label class="custom-control-label" for="customCheckRegister"><span>I agree with the <a href="#">Privacy Policy</a></span></label>
+      </div>
+    </div>
+  </div>
+  <div class="text-center">
+    <button type="button" class="btn btn-primary mt-4">Create account</button>
+  </div>
+</form>
+{% endblock contenu %}
+  

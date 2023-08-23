@@ -1,5 +1,6 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from django.utils import timezone
 
 class Marque(models.Model):
     nom_marque = models.CharField(max_length=40)
@@ -35,6 +36,8 @@ class Fournisseur(models.Model):
     
 class EtatEngin(models.Model):
     libelle_etat = models.CharField(max_length=120)
+    def __str__(self):
+        return str(self.libelle_etat)
     
 class TypeEngin(models.Model):
     designation = models.CharField(max_length=10)
@@ -49,7 +52,7 @@ class InfoEngin(models.Model):
     vidange = models.FloatField()
     revision = models.DurationField()
     def __str__(self):
-        return str(self.info)
+        return f"Consommation : {self.consommation} L/100Km  | Vidange tous les {self.vidange} Km | Révision tous les {self.revision} jours"
     
 class Engin(models.Model):
     immatriculation = models.CharField(max_length=13)
@@ -59,20 +62,23 @@ class Engin(models.Model):
     info_engin = models.ForeignKey('InfoEngin', on_delete=models.CASCADE)
     etat_engin = models.ForeignKey('EtatEngin', on_delete=models.CASCADE, null=True)
     fournisseur_engin = models.ForeignKey('Fournisseur', on_delete=models.CASCADE, null=True)
+    est_obsolete = models.BooleanField(default=False)
+    date_creation = models.DateField(default=timezone.now)
     def __str__(self):
         return str(self.immatriculation)
   
 class RavitaillementCarburant(models.Model):
-    date_rav = models.DateField()
+    date_rav = models.DateField(auto_now_add=True)
     quantite_rav = models.FloatField(default=0)
     cout_rav = models.FloatField()
     engin_rav = models.ForeignKey('Engin',on_delete=models.CASCADE)
     fournisseur_carburant = models.ForeignKey('Fournisseur', on_delete=models.CASCADE, null=True)
+    plein = models.BooleanField(default=False)
     def __str__(self):
-        return f"Ravitaillement en carburant du {self.date_ravitaillement}"
+        return f"Ravitaillement en carburant du {self.date_rav}"
 
 class VidangeEngin(models.Model):
-    date_vid = models.DateField()
+    date_vid = models.DateField(auto_now_add=True)
     engin_vid = models.ForeignKey('Engin',on_delete=models.CASCADE)
     def __str__(self):
         return f"Vidange du {self.date_vidange}"
@@ -83,7 +89,7 @@ class TypeMaintenance(models.Model):
         return str(self.libelle_maint)
     
 class MaintenanceEngin(models.Model):
-    date_maint = models.DateField()
+    date_maint = models.DateField(auto_now_add=True)
     type_maint = models.ForeignKey('TypeMaintenance',on_delete=models.CASCADE)
     motif_maint = models.CharField(max_length=120, null=True)
     engin_maint = models.ForeignKey('Engin',on_delete=models.CASCADE)
@@ -93,14 +99,14 @@ class MaintenanceEngin(models.Model):
         return f"Maintenance du {self.date_maint}"
     
 class Attribution(models.Model):
-    date_attribution = models.DateField()
+    date_attribution = models.DateField(auto_now_add=True)
     conducteur = models.ForeignKey('Personne',on_delete=models.CASCADE)
     engin = models.ForeignKey('Engin', on_delete=models.CASCADE)
     def __str__(self):
         return f"Attribution du {self.date_attribution}"
 
 class ReleveDistance(models.Model):
-    date_releve = models.DateField()
+    date_releve = models.DateField(auto_now_add=True)
     nbKmDebut = models.FloatField()
     nbKmFin = models.FloatField()
     engin_releve = models.ForeignKey('Engin', on_delete=models.CASCADE)
