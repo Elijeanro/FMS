@@ -1,0 +1,583 @@
+{% extends 'bases/base1.html' %}
+
+{% load static %}
+
+{% block title %}
+Details {{sujet}}
+{% endblock title %}
+
+{% block contenu %}
+<div class="wrapper">
+
+    {% if sujet == 'attribution' %}
+    <!--  -->
+    <div class="bg-image">
+        <div class="container">
+            <div class="card card-profile shadow mt-3">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="mt-5">
+                            <div class="mt-5 py-5 border-top ">
+                                <h3>Détail {{sujet | upper}} : </h3>
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <tr>
+                                            <th style="color: black;">Nom : </th>
+                                            <td> {{objet.conducteur.nom}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Prénom : </th>
+                                            <td> {{objet.conducteur.prenom}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Engin attribué : </th>
+                                            <td> {{objet.engin.immatriculation}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Date d'attribution : </th>
+                                            <td> {{objet.date_attribution}} </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--  -->
+    {% elif sujet == 'engin' %}
+    <!--  -->
+    <div class="bg-image">
+        <div class="container">
+            <div class="card card-profile shadow mt-3">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="mt-5">
+                            <div class="mt-5 py-5 border-top ">
+                                <h3>Détail {{sujet | upper}} : </h3>
+                                <table class="table table-bordered" width="100%" cellspacing="0">
+                                    <tr>
+                                        <th style="color: black;">Immatriculattion : </th>
+                                        <td> {{objet.immatriculation}} </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="color: black;">Couleur : </th>
+                                        <td> {{objet.couleur}} </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="color: black;">Informations techniques : </th>
+                                        <td> {{objet.info_engin.info}} </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="color: black;">Modèle : </th>
+                                        <td> {{objet.modele_engin.nom_modele}} </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="color: black;">Type : </th>
+                                        <td> {{objet.type_engin.designation}} </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="color: black;">Fournisseur : </th>
+                                        <td> {{objet.fournisseur_engin.nom_fournisseur}} </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="color: black;">Etat : </th>
+                                        <td> {{objet.etat_engin.libelle_etat}} </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="color: black;">Obsolète? : </th>
+                                        <td> {{objet.est_obsolete}} </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="color: black;">Date de création : </th>
+                                        <td> {{objet.date_creation}} </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--  -->
+    {% elif sujet == 'etat_engin' %}
+
+    <div class="bg-image">
+        <div class="container">
+            <div class="card card-profile shadow mt-3">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="mt-5">
+                            <div class="mt-5 py-5 border-top ">
+                                <h3>Détail {{sujet | upper}} : </h3>
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <tr>
+                                            <th style="color: black;">Libellé de l'état : </th>
+                                            <td> {{objet.libelle_etat}} </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+    {% elif sujet == 'fournisseur' %}
+
+    <div class="bg-image">
+        <div class="container">
+            <div class="card card-profile shadow mt-3">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="mt-5">
+                            <div class="mt-5 py-5 border-top ">
+                                <h3>Détail {{sujet | upper}} : </h3>
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <tr>
+                                            <th style="color: black;">Nom du fournisseur : </th>
+                                            <td> {{objet.nom_fournisseur}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Adresse : </th>
+                                            <td> {{objet.adresse}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Description du fournisseur : </th>
+                                            <td> {{objet.description_fournisseur}} </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+    {% elif sujet == 'info_engin' %}
+    <div class="bg-image">
+        <div class="container">
+            <div class="card card-profile shadow mt-3">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="mt-5">
+                            <div class="mt-5 py-5 border-top ">
+                                <h3>Détail {{sujet | upper}} : </h3>
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <tr>
+                                            <th style="color: black;">Info : </th>
+                                            <td> {{objet.info}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Consommation : </th>
+                                            <td> {{objet.consommation}} L/100Km</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Vidange : </th>
+                                            <td>Chaque {{objet.vidange}} Km </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Révision : </th>
+                                            <td>Tous les {{objet.revision}} jours </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+    {% elif sujet == 'maintenance_engin' %}
+    <div class="bg-image">
+        <div class="container">
+            <div class="card card-profile shadow mt-3">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="mt-5">
+                            <div class="mt-5 py-5 border-top ">
+                                <h3>Détail {{sujet | upper}} : </h3>
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <tr>
+                                            <th style="color: black;">Motif : </th>
+                                            <td> {{objet.motif_maint}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Engin : </th>
+                                            <td> {{objet.engin_maint.immatriculation}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Type de maintenance : </th>
+                                            <td> {{objet.type_maint.libelle_maint}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Coût de la maintenance : </th>
+                                            <td> {{objet.cout_maint}} F CFA</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Fournisseur de la maintenance : </th>
+                                            <td> {{objet.fournisseur_maint.nom_fournisseur}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Date de la maintenance : </th>
+                                            <td> {{objet.date_maint}} </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+    {% elif sujet == 'ravitaillement_carburant' %}
+    <div class="bg-image">
+        <div class="container">
+            <div class="card card-profile shadow mt-3">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="mt-5">
+                            <div class="mt-5 py-5 border-top ">
+                                <h3>Détail {{sujet | upper}} : </h3>
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <tr>
+                                            <th style="color: black;">Coût de ravitaillement : </th>
+                                            <td> {{objet.cout_rav}} F CFA</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Quantité équivalente : </th>
+                                            <td> {{objet.quantite_rav}} Litres</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;"> Plein ? : </th>
+                                            <td> {{objet.plein}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Engin ravitaillé : </th>
+                                            <td> {{objet.engin_rav.immatriculation}} Litres</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;"> Fournisseur de carburant : </th>
+                                            <td> {{objet.forurnisseur_carburant.nom_fournisseur}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Date de ravitaillement : </th>
+                                            <td> {{objet.date_rav}} </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+    {% elif sujet == 'releve_distance' %}
+    <div class="bg-image">
+        <div class="container">
+            <div class="card card-profile shadow mt-3">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="mt-5">
+                            <div class="mt-5 py-5 border-top ">
+                                <h3>Détail {{sujet | upper}} : </h3>
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <tr>
+                                            <th style="color: black;">Date : </th>
+                                            <td> {{objet.date_releve}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Engin : </th>
+                                            <td> {{objet.engin_releve.immatriculation}} </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th style="color: black;">Kilometrage de début : </th>
+                                            <td> {{objet.nbKmDebut}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Kilometrage de fin : </th>
+                                            <td> {{objet.nbKmFin}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Distance parcourue : </th>
+                                            <td> {{objet.distance}} Km</td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+    {% elif sujet == 'type_engin' %}
+    <div class="bg-image">
+        <div class="container">
+            <div class="card card-profile shadow mt-3">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="mt-5">
+                            <div class="mt-5 py-5 border-top ">
+                                <h3>Détail {{sujet | upper}} : </h3>
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <tr>
+                                            <th style="color: black;">Désignation : </th>
+                                            <td> {{objet.designation}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Description : </th>
+                                            <td> {{objet.description}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Nombre de roues : </th>
+                                            <td> {{objet.nombre_roue}} roues</td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+    {% elif sujet == 'type_maintenance' %}
+    <div class="bg-image">
+        <div class="container">
+            <div class="card card-profile shadow mt-3">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="mt-5">
+                            <div class="mt-5 py-5 border-top ">
+                                <h3>Détail {{sujet | upper}} : </h3>
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <tr>
+                                            <th style="color: black;">Libellé de la maintenance : </th>
+                                            <td> {{type_maintenance.libelle_maint}} </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+    {% elif sujet == 'personne' %}
+    <div class="bg-image">
+        <div class="container">
+            <div class="card card-profile shadow mt-3">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="mt-5">
+                            <div class="mt-5 py-5 border-top ">
+                                <h3>Détail {{sujet | upper}} : </h3>
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <tr>
+                                            <th style="color: black;">Nom : </th>
+                                            <td> {{personne.nom}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Prénom : </th>
+                                            <td> {{personne.prenom}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Contact : </th>
+                                            <td> {{personne.contact}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Grade : </th>
+                                            <td> {{personne.grade.libelle_grade}} </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% elif sujet == 'utilisateur' %}
+    <div class="bg-image">
+        <div class="container">
+            <div class="card card-profile shadow mt-3">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="mt-5">
+                            <div class="mt-5 py-5 border-top ">
+                                <h3>Détail {{sujet | upper}} : </h3>
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <tr>
+                                            <th style="color: black;">Nom : </th>
+                                            <td> {{personne.user.last_name}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Prénom : </th>
+                                            <td> {{personne.user.first_name}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Email : </th>
+                                            <td> {{personne.user.email}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Contact : </th>
+                                            <td> {{personne.contact}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Grade : </th>
+                                            <td> {{personne.grade.libelle_grade}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Nom d'utilisateur : </th>
+                                            <td> {{personne.user.username}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Mot de passe : </th>
+                                            <td> {{personne.user.password}} </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% elif sujet == 'marque' %}
+    <div class="bg-image">
+        <div class="container">
+            <div class="card card-profile shadow mt-3">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="mt-5">
+                            <div class="mt-5 py-5 border-top ">
+                                <h3>Détail {{sujet | upper}} : </h3>
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <tr>
+                                            <th style="color: black;">Nom de la marque : </th>
+                                            <td> {{marque.nom_marque}} </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% elif sujet == 'modele' %}
+    <div class="bg-image">
+        <div class="container">
+            <div class="card card-profile shadow mt-3">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="mt-5">
+                            <div class="mt-5 py-5 border-top ">
+                                <h3>Détail {{sujet | upper}} : </h3>
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <tr>
+                                            <th style="color: black;">Nom du modèle : </th>
+                                            <td> {{modele.nom_modele}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Marque : </th>
+                                            <td> {{modele.marque.nom_marque}} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Année : </th>
+                                            <td> {{modele.annee}} </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% elif sujet == 'vidange_engin' %}
+    <div class="bg-image">
+        <div class="container">
+            <div class="card card-profile shadow mt-3">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="mt-5">
+                            <div class="mt-5 py-5 border-top ">
+                                <h3>Détail {{sujet | upper}} : </h3>
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <tr>
+                                            <th style="color: black;">Engin concerné : </th>
+                                            <td> {{ vidange.engin_vid.immatriculation }} </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: black;">Date de vidange : </th>
+                                            <td> {{ vidange.date_vid }} </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+    {% elif sujet == 'grade' %}
+    <div class="bg-image">
+        <div class="container">
+            <div class="card card-profile shadow mt-3">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="mt-5">
+                            <div class="mt-5 py-5 border-top ">
+                                <h3>Détail {{sujet | upper}} : </h3>
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <tr>
+                                            <th style="color: black;">Libellé du grade : </th>
+                                            <td> {{grade.libelle_grade}} </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+    {% endif %}
+
+
+{% endblock contenu %}

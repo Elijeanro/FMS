@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+{% load static %}
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -30,10 +30,12 @@
   <!-- Navbar -->
   <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg bg-white navbar-light position-sticky top-0 shadow py-2">
     <div class="container">
-      <a class="navbar-brand mr-lg-5" href="./index.html">
-        <img src="./assets/img/brand/blue.png">
+      <a class="navbar-brand mr-lg-5" href="./index.html" style="width: 25%; height: 25%;">
+        <img src="{% static 'images/Logo_EV_final.png' %}" style="width: 45%; height: 25%;">
+        <img src="{% static 'assets/img/brand/FMS_logo.png' %}" style="width: 45%; height: 25%;">
       </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global"
+        aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="navbar-collapse collapse" id="navbar_global">
@@ -45,7 +47,8 @@
               </a>
             </div>
             <div class="col-6 collapse-close">
-              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global"
+                aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
                 <span></span>
                 <span></span>
               </button>
@@ -54,60 +57,89 @@
         </div>
         <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link" data-toggle="dropdown"  role="button">
+            <a href="#" class="nav-link" data-toggle="dropdown" href="#" role="button">
               <i class="ni ni-ui-04 d-lg-none"></i>
-              <span class="nav-link-inner--text">Components</span>
+              <img src="{% static 'images/traffic-jam.png' %}" alt="parc" style="width: 12%;">
+              <span class="nav-link-inner--text">Parc Automobile</span>
             </a>
             <div class="dropdown-menu dropdown-menu-xl">
               <div class="dropdown-menu-inner">
-                <a href="https://demos.creative-tim.com/argon-design-system/docs/getting-started/overview.html" class="media d-flex align-items-center">
+                <a href="{% url 'gestionnaire:lists' 'engin' %}"
+                  class="media d-flex align-items-center">
                   <div class="icon icon-shape bg-gradient-primary rounded-circle text-white">
-                    <i class="ni ni-spaceship"></i>
+                    <i class="ni ni-settings"></i>
                   </div>
                   <div class="media-body ml-3">
-                    <h6 class="heading text-primary mb-md-1">Getting started</h6>
-                    <p class="description d-none d-md-inline-block mb-0">Learn how to use compiling Scss, change brand colors and more.</p>
+                    <h6 class="heading text-primary mb-md-1">Interventions</h6>
+                    <p class="description d-none d-md-inline-block mb-0">Créer et consultez la liste des interventions sur tous les engins de la société.</p>
                   </div>
                 </a>
-                <a href="https://demos.creative-tim.com/argon-design-system/docs/foundation/colors.html" class="media d-flex align-items-center">
+                <a href=""
+                  class="media d-flex align-items-center">
                   <div class="icon icon-shape bg-gradient-success rounded-circle text-white">
-                    <i class="ni ni-palette"></i>
+                    <i class="fa fa-list-alt"></i>
                   </div>
                   <div class="media-body ml-3">
-                    <h6 class="heading text-primary mb-md-1">Foundation</h6>
-                    <p class="description d-none d-md-inline-block mb-0">Learn more about colors, typography, icons and the grid system we used for .</p>
+                    <h6 class="heading text-primary mb-md-1">Metrics</h6>
+                    <p class="description d-none d-md-inline-block mb-0">Ajouter et consulter des données relatives aux engins.</p>
                   </div>
                 </a>
-                <a href="https://demos.creative-tim.com/argon-design-system/docs/components/alerts.html" class="media d-flex align-items-center">
+                <a href=""
+                  class="media d-flex align-items-center">
                   <div class="icon icon-shape bg-gradient-warning rounded-circle text-white">
-                    <i class="ni ni-ui-04"></i>
+                    <i class="ni ni-settings-gear-65"></i>
                   </div>
                   <div class="media-body ml-3">
-                    <h5 class="heading text-warning mb-md-1">Components</h5>
-                    <p class="description d-none d-md-inline-block mb-0">Browse our 50 beautiful handcrafted components offered in the Free version.</p>
+                    <h5 class="heading text-warning mb-md-1">Parc Automobile</h5>
+                    <p class="description d-none d-md-inline-block mb-0">Ajouter des nouveaux engins, modèles, marques, fournisseurs, etc.</p>
                   </div>
                 </a>
               </div>
             </div>
           </li>
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link" data-toggle="dropdown"  role="button">
+            <a href="#" class="nav-link" data-toggle="dropdown" href="#" role="button">
               <i class="ni ni-collection d-lg-none"></i>
-              <span class="nav-link-inner--text">Examples</span>
+              <img src="{% static 'images/auto.png' %}" alt="parc" style="width: 12%;">
+              <span class="nav-link-inner--text">Analyse</span>
             </a>
             <div class="dropdown-menu">
               <a href="./examples/landing.html" class="dropdown-item">Landing</a>
               <a href="./examples/profile.html" class="dropdown-item">Profile</a>
-              <a href="./examples/login.html" class="dropdown-item">Login</a>
-              <a href="./examples/register.html" class="dropdown-item">Register</a>
+              <a href="{% url 'administratif:login' %}" class="dropdown-item">Login</a>
+              
+              {% if grade_id == 2 %}
+                <a href="" class="dropdown-item">Register</a>  
+              {% endif %}
+              
             </div>
+          </li>
+          <!-- Chat Zone -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="ni ni-chat-round"></i>
+              <span class="nav-link-inner--text">Chats</span>
+            </a>
+          </li>
+          <!-- Notifications Zone -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="ni ni-bell-55"></i>
+              <span class="nav-link-inner--text">Notifications</span>
+            </a>
+          </li>
+          <!-- Search Zone -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="ni ni-hat-3"></i>
+              <span class="nav-link-inner--text"> {{ grade.libelle_grade }} : {{ username }} </span>
+            </a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  <!-- End Navbar -->
-    
+  <!-- End Navbar -->    
     {% block contenu %}
         
     {% endblock contenu %}

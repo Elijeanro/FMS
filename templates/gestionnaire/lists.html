@@ -1,0 +1,786 @@
+{% extends 'bases/base1.html' %}
+
+{% load static %}
+
+{% block title %}
+liste {{sujet}}
+{% endblock title %}
+
+{% block contenu %}
+<div class="wrapper">
+
+    {% if sujet == 'attribution' %}
+    <!--  -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">Date</th>
+                        <th>Nom prénom du conducteur</th>
+                        <th>Engin attribué</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for o in objet %}
+                    <tr>
+                        <td class="text-center"> {{o.date_attribution}} </td>
+                        <td> {{o.conducteur.nom | upper}} {{o.conducteur.prenom}} </td>
+                        <td> {{o.engin.immatriculation}} </td>
+                        <td class="td-actions text-right">
+                            <div class="dropdown no-arrow">
+                                <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown"
+                                aria-haspopup="false" aria-expanded="false">
+                            </a>
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                    aria-labelledby="dropdownMenuLink">
+                                    <div class="dropdown-header">Options:</div>
+                                    <a class="dropdown-item"
+                                        href="">Modifier</a>
+                                    <a class="dropdown-item"
+                                        href="">Supprimer</a>
+                                    <!-- <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Something else here</a> -->
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<!--  -->
+{% elif sujet == 'engin' %}
+<!--  -->
+<div class="container">
+    <div class="row justify-content-center">
+        <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center">Immatriculattion</th>
+                    <th>Couleur</th>
+                    <th>Informations techniques</th>
+                    <th>Marque</th>
+                    <th>Modèle</th>
+                    <th>Type</th>
+                    <th>Fournisseur</th>
+                    <th>Etat</th>
+                    <th>Est obsolète?</th>
+                    <th>Date de création</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in objet %}
+                <tr>
+                    <td class="text-center"> {{o.immatriculation}} </td>
+                    <td> {{o.couleur}} </td>
+                    <td> {{o.info_engin.info}} </td>
+                    <td> {{o.modele_engin.marque.nom_marque}} </td>
+                    <td> {{o.modele_engin.nom_modele}} </td>
+                    <td> {{o.type_engin.designation}} </td>
+                    <td> {{o.fournisseur_engin.nom_fournisseur}} </td>
+                    <td> {{o.etat_engin.libelle_etat}} </td>
+                    <td> {{o.est_obsolete}} </td>
+                    <td> {{o.date_creation}} </td>
+                    <td class="td-actions text-right">
+                        <div class="dropdown no-arrow">
+                            <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown"
+                                aria-haspopup="false" aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
+                                <a class="dropdown-item"
+                                    href="">Modifier</a>
+                                <a class="dropdown-item"
+                                    href="">Supprimer</a>
+                                <!-- <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--  -->
+{% elif sujet == 'etat_engin' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center">Libellé de l'état</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in objet %}
+                <tr>
+                    <td class="text-center"> {{o.libelle_etat}} </td>
+                    
+                    <td class="td-actions text-right">
+                        <div class="dropdown no-arrow">
+                            <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown"
+                                aria-haspopup="false" aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item"
+                                    href="">Supprimer</a>
+                                <!-- <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Something else here</a> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% elif sujet == 'fournisseur' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center">Nom du fournisseur</th>
+                    <th>Adresse</th>
+                    <th>Activités</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in objet %}
+                <tr>
+                    <td class="text-center"> {{o.nom_fournisseur}} </td>
+                    <td> {{o.adresse}} </td>
+                    <td> {{o.description}} </td>
+                    <td class="td-actions text-right">
+                        <div class="dropdown no-arrow">
+                            <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown"
+                                aria-haspopup="false" aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
+                                <a class="dropdown-item"
+                                    href="">Modifier</a>
+                                <a class="dropdown-item"
+                                    href="">Supprimer</a>
+                                <!-- <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% elif sujet == 'info_engin' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center">Titre de l'Information</th>
+                    <th>Consommation</th>
+                    <th>Vidange</th>
+                    <th>Révision</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in objet %}
+                <tr>
+                    <td class="text-center"> {{o.info}} </td>
+                    <td> {{o.consommation}} L/100Km </td>
+                    <td> à chaque {{o.vidande}} Km </td>
+                    <td> tous les {{o.revision}} jours </td>
+                    <td class="td-actions text-right">
+                        <div class="dropdown no-arrow">
+                            <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown"
+                                aria-haspopup="false" aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
+                                <a class="dropdown-item"
+                                    href="">Modifier</a>
+                                <a class="dropdown-item"
+                                    href="">Supprimer</a>
+                                <!-- <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% elif sujet == 'maintenance_engin' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center">Date</th>
+                    <th>Motif</th>
+                    <th>Engin</th>
+                    <th>Type de maintenance</th>
+                    <th>Coût de maintenance</th>
+                    <th>Fournisseur de maintenance</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in objet %}
+                <tr>
+                    <td class="text-center"> {{o.date_maint}} </td>
+                    <td> {{o.motif_maint}} </td>
+                    <td> {{o.engin_maint.immatriculation}} </td>
+                    <td> {{o.type_maint.libelle_type}} </td>
+                    <td> {{o.cout_maint}} F CFA</td>
+                    <td> {{o.fournisseur_maint.nom_fournisseur}} </td>
+                    <td class="td-actions text-right">
+                        <div class="dropdown no-arrow">
+                            <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown"
+                                aria-haspopup="false" aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
+                                <a class="dropdown-item"
+                                    href="">Modifier</a>
+                                <a class="dropdown-item"
+                                    href="">Supprimer</a>
+                                <!-- <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--  -->
+{% elif sujet == 'ravitaillement_carburant' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center">Date de ravitaillement</th>
+                    <th>Coût de ravitaillement</th>
+                    <th>Quantité ravitaillée</th>
+                    <th>Engin ravitaillé</th>
+                    <th>Fournisseur du carburant</th>
+                    <th>Plein ?</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in objet %}
+                <tr>
+                    <td class="text-center"> {{o.date_rav}} </td>
+                    <td> {{o.cout_rav}} </td>
+                    <td> {{o.quantite_rav}} </td>
+                    <td> {{o.engin_rav.immatriculation}} </td>
+                    <td> {{o.fournisseur_rav.nom_fournisseur}} </td>
+                    <td> {{o.plein}} </td>
+                    <td class="td-actions text-right">
+                        <div class="dropdown no-arrow">
+                            <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown"
+                                aria-haspopup="false" aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
+                                <a class="dropdown-item"
+                                    href="">Modifier</a>
+                                <a class="dropdown-item"
+                                    href="">Supprimer</a>
+                                <!-- <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% elif sujet == 'releve_distance' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center">Date</th>
+                    <th>Engin</th>
+                    <th>Kilométrage au départ</th>
+                    <th>Kilométrage à l'arrivée</th>
+                    <th>Distance parcourue</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in objet %}
+                <tr>
+                    <td class="text-center"> {{o.date_releve}} </td>
+                    <td> {{o.engin_releve.immatriculation}} </td>
+                    <td> {{o.nbKmDebut}} </td>
+                    <td> {{o.nbKmFin}} </td>
+                    <td> {{o.distance}} </td>
+                    <td class="td-actions text-right">
+                        <div class="dropdown no-arrow">
+                            <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown"
+                                aria-haspopup="false" aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
+                                <a class="dropdown-item"
+                                    href="">Modifier</a>
+                                <a class="dropdown-item"
+                                    href="">Supprimer</a>
+                                <!-- <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% elif sujet == 'type_engin' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center">Designation</th>
+                    <th>Description</th>
+                    <th>Nombre de roues</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in objet %}
+                <tr>
+                    <td class="text-center"> {{o.designation}} </td>
+                    <td> {{o.description}} </td>
+                    <td> {{o.nombre_roue}} </td>
+                    <td class="td-actions text-right">
+                        <div class="dropdown no-arrow">
+                            <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown"
+                                aria-haspopup="false" aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
+                                <a class="dropdown-item"
+                                    href="">Modifier</a>
+                                <a class="dropdown-item"
+                                    href="">Supprimer</a>
+                                <!-- <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% elif sujet == 'type_maintenance' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center">Libellé de la maintenance</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in objet %}
+                <tr>
+                    <td class="text-center"> {{o.libelle_maint}} </td>
+                    <td class="td-actions text-right">
+                        <div class="dropdown no-arrow">
+                            <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown"
+                                aria-haspopup="false" aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
+                                <a class="dropdown-item"
+                                    href="">Modifier</a>
+                                <a class="dropdown-item"
+                                    href="">Supprimer</a>
+                                <!-- <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% elif sujet == 'personne' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center">Nom</th>
+                    <th>Prénom(s)</th>
+                    <th>Contact</th>
+                    <th>Grade</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in objet %}
+                <tr>
+                    <td class="text-center"> {{o.nom}} </td>
+                    <td> {{o.prenom}} </td>
+                    <td> {{o.contact}} </td>
+                    <td> {{o.grade.libelle_grade}} </td>
+                    <td class="td-actions text-right">
+                        <div class="dropdown no-arrow">
+                            <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown"
+                                aria-haspopup="false" aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
+                                <a class="dropdown-item"
+                                    href="">Modifier</a>
+                                <a class="dropdown-item"
+                                    href="">Supprimer</a>
+                                <!-- <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% elif sujet == 'utilisateur' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center">Nom</th>
+                    <th>Prénom(s)</th>
+                    <th>Nom d'utilisateur</th>
+                    <th>Date de création</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in objet %}
+                <tr>
+                    <td class="text-center"> {{o.last_name}} </td>
+                    <td> {{o.first_name}} </td>
+                    <td> {{o.username}} </td>
+                    <td> {{o.date_joined}} </td>
+                    <td class="td-actions text-right">
+                        <div class="dropdown no-arrow">
+                            <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown"
+                                aria-haspopup="false" aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
+                                <a class="dropdown-item"
+                                    href="">Modifier</a>
+                                <a class="dropdown-item"
+                                    href="">Supprimer</a>
+                                <!-- <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="bg-image">
+    <div class="container">
+        <div class="card card-profile shadow mt-3">
+            <div class="px-4">
+                <div class="row justify-content-center">
+                    <div class="mt-5">
+                        <div class="mt-5 py-5 border-top ">
+                            <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <tr>
+                                    <th style="color: black;">Nom : </th>
+                                    <td> {{personne.user.last_name}} </td>
+                                </tr>
+                                <tr>
+                                    <th style="color: black;">Prénom : </th>
+                                    <td> {{personne.user.first_name}} </td>
+                                </tr>
+                                <tr>
+                                    <th style="color: black;">Email : </th>
+                                    <td> {{personne.user.email}} </td>
+                                </tr>
+                                <tr>
+                                    <th style="color: black;">Contact : </th>
+                                    <td> {{personne.contact}} </td>
+                                </tr>
+                                <tr>
+                                    <th style="color: black;">Grade : </th>
+                                    <td> {{personne.grade.libelle_grade}} </td>
+                                </tr>
+                                <tr>
+                                    <th style="color: black;">Nom d'utilisateur : </th>
+                                    <td> {{personne.user.username}} </td>
+                                </tr>
+                                <tr>
+                                    <th style="color: black;">Mot de passe : </th>
+                                    <td> {{personne.user.password}} </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% elif sujet == 'marque' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center">Nom de la marque</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in objet %}
+                <tr>
+                    <td class="text-center"> {{o.nom_marque}} </td>
+                    <td class="td-actions text-right">
+                        <div class="dropdown no-arrow">
+                            <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown"
+                                aria-haspopup="false" aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
+                                <a class="dropdown-item"
+                                    href="">Modifier</a>
+                                <a class="dropdown-item"
+                                    href="">Supprimer</a>
+                                <!-- <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% elif sujet == 'modele' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center">Nom du modèle</th>
+                    <th>Marque</th>
+                    <th>Année</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in objet %}
+                <tr>
+                    <td class="text-center"> {{o.nom_modele}} </td>
+                    <td> {{o.marque.nom_marque}} </td>
+                    <td> {{o.annee}} </td>
+                    <td class="td-actions text-right">
+                        <div class="dropdown no-arrow">
+                            <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown"
+                                aria-haspopup="false" aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
+                                <a class="dropdown-item"
+                                    href="">Modifier</a>
+                                <a class="dropdown-item"
+                                    href="">Supprimer</a>
+                                <!-- <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% elif sujet == 'vidange_engin' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center">Date</th>
+                    <th>Engin concerné</th>
+                    <th>Fournisseur de vidange</th>
+                    <th>Coût de la vidange</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in objet %}
+                <tr>
+                    <td class="text-center"> {{o.date_vid}} </td>
+                    <td> {{ o.engin_vid.immatriculation }} </td>
+                    <td> {{ o.maint_vid.fournisseur_maint.nom_fournisseur }} </td>
+                    <td> {{ o.maint_vid.cout_maint }} </td>
+                    <td class="td-actions text-right">
+                        <div class="dropdown no-arrow">
+                            <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown"
+                                aria-haspopup="false" aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
+                                <a class="dropdown-item"
+                                    href="">Modifier</a>
+                                <a class="dropdown-item"
+                                    href="">Supprimer</a>
+                                <!-- <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% elif sujet == 'grade' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center">Libellé du grade</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in objet %}
+                <tr>
+                    <td class="text-center"> {{o.libelle_grade}} </td>
+                    <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm " data-original-title=""
+                            title="">
+                            <i class="ni ni-circle-08 pt-1"></i>
+                        </button>
+                        <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm "
+                            data-original-title="" title="">
+                            <i class="ni ni-settings-gear-65 pt-1"></i>
+                        </button>
+                        <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm "
+                            data-original-title="" title="">
+                            <i class="ni ni-fat-remove pt-1"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endif %}
+
+
+{% endblock contenu %}

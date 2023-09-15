@@ -23,75 +23,140 @@ def delete(request,sujet):
     context['sujet']=sujet
     return render(request,'gestionnaire/delete.html',context)
 
-def details(request,pk,sujet):
-    context={}
-    context['pk']=pk
-    objet=None
-    if sujet=='personne':
-        objet=get_object_or_404(Personne, pk=pk)
-    elif sujet=='marque':
-        objet=get_object_or_404(Marque, pk=pk)
-    elif sujet=='modele':
-        objet=get_object_or_404(Modele, pk=pk)
-    elif sujet=='fournisseur':
-        objet=get_object_or_404(Fournisseur, pk=pk)
-    elif sujet=='engin':
-        objet=get_object_or_404(Engin, pk=pk)
-    elif sujet=='type_engin':
-        objet=get_object_or_404(TypeEngin, pk=pk)
-    elif sujet=='etat_engin':
-        objet=get_object_or_404(EtatEngin, pk=pk)
-    elif sujet=='info_engin':
-        objet=get_object_or_404(InfoEngin, pk=pk)
-    elif sujet=='ravitaillement_engin':
-        objet=get_object_or_404(RavitaillementCarburant, pk=pk)
-    elif sujet=='vidange_engin':
-        objet=get_object_or_404(VidangeEngin, pk=pk)
-    elif sujet=='type_maintenance':
-        objet=get_object_or_404(TypeMaintenance, pk=pk)
-    elif sujet=='maintenance_engin':
-        objet=get_object_or_404(MaintenanceEngin, pk=pk)
-    elif sujet=='attribution':
-        objet=get_object_or_404(Attribution, pk=pk)
-    elif sujet=='releve_distance':
-        objet=get_object_or_404(ReleveDistance, pk=pk)
-    context['objet']=objet
-    return render(request,'gestionnaire/details.html',context)
+# def details(request,pk,sujet):
+#     context={}
+#     context['pk']=pk
+#     objet=None
+#     if sujet=='personne':
+#         objet=get_object_or_404(Personne, pk=pk)
+#     elif sujet=='marque':
+#         objet=get_object_or_404(Marque, pk=pk)
+#     elif sujet=='modele':
+#         objet=get_object_or_404(Modele, pk=pk)
+#     elif sujet=='fournisseur':
+#         objet=get_object_or_404(Fournisseur, pk=pk)
+#     elif sujet=='engin':
+#         objet=get_object_or_404(Engin, pk=pk)
+#     elif sujet=='type_engin':
+#         objet=get_object_or_404(TypeEngin, pk=pk)
+#     elif sujet=='etat_engin':
+#         objet=get_object_or_404(EtatEngin, pk=pk)
+#     elif sujet=='info_engin':
+#         objet=get_object_or_404(InfoEngin, pk=pk)
+#     elif sujet=='ravitaillement_engin':
+#         objet=get_object_or_404(RavitaillementCarburant, pk=pk)
+#     elif sujet=='vidange_engin':
+#         objet=get_object_or_404(VidangeEngin, pk=pk)
+#     elif sujet=='type_maintenance':
+#         objet=get_object_or_404(TypeMaintenance, pk=pk)
+#     elif sujet=='maintenance_engin':
+#         objet=get_object_or_404(MaintenanceEngin, pk=pk)
+#     elif sujet=='attribution':
+#         objet=get_object_or_404(Attribution, pk=pk)
+#     elif sujet=='releve_distance':
+#         objet=get_object_or_404(ReleveDistance, pk=pk)
+#         distance=objet.nbKmFin-objet.nbKmDebut
+#         context['distance']=distance
+#     context['objet']=objet
+#     return render(request,'gestionnaire/details.html',context)
 
-def lists(request,sujet):
-    context={}
+def details(request, pk, sujet):
+    context = {'pk': pk}
     context['sujet']=sujet
-    objet=None
-    if sujet=='personne':
-        objet=Personne.objects.all()
-    elif sujet=='marque':
-        objet=Marque.objects.all()
-    elif sujet=='modele':
-        objet=Modele.objects.all()
-    elif sujet=='fournisseur':
-        objet=Fournisseur.objects.all()
-    elif sujet=='engin':
-        objet=Engin.objects.all()
-    elif sujet=='type_engin':
-        objet=TypeEngin.objects.all()
-    elif sujet=='etat_engin':
-        objet=EtatEngin.objects.all()
-    elif sujet=='info_engin':
-        objet=InfoEngin.objects.all()
-    elif sujet=='ravitaillement_engin':
-        objet=RavitaillementCarburant.objects.all()
-    elif sujet=='vidange_engin':
-        objet=VidangeEngin.objects.all()
-    elif sujet=='type_maintenance':
-        objet=TypeMaintenance.objects.all()
-    elif sujet=='maintenance_engin':
-        objet=MaintenanceEngin.objects.all()
-    elif sujet=='attribution':
-        objet=Attribution.objects.all()
-    elif sujet=='releve_distance':
-        objet=ReleveDistance.objects.all()
-    context['objet']=objet
-    return render(request,'gestionnaire/lists.html',context)
+    sujet_to_model = {
+        'utilisateur':User,
+        'personne': Personne,
+        'marque': Marque,
+        'modele': Modele,
+        'fournisseur': Fournisseur,
+        'engin': Engin,
+        'type_engin': TypeEngin,
+        'etat_engin': EtatEngin,
+        'info_engin': InfoEngin,
+        'ravitaillement_engin': RavitaillementCarburant,
+        'vidange_engin': VidangeEngin,
+        'type_maintenance': TypeMaintenance,
+        'maintenance_engin': MaintenanceEngin,
+        'attribution': Attribution,
+        'releve_distance': ReleveDistance,
+    }
+    
+    if sujet in sujet_to_model:
+        objet = get_object_or_404(sujet_to_model[sujet], pk=pk)
+        
+        if sujet == 'releve_distance':
+            distance = objet.nbKmFin - objet.nbKmDebut
+            context['distance'] = distance
+    else:
+        objet = None
+    
+    context['objet'] = objet
+    return render(request, 'gestionnaire/details.html', context)
+
+def lists(request, sujet):
+    context = {}
+    context['sujet'] = sujet
+    sujet_to_model = {
+        'utilisateur':User,
+        'personne': Personne,
+        'marque': Marque,
+        'modele': Modele,
+        'fournisseur': Fournisseur,
+        'engin': Engin,
+        'type_engin': TypeEngin,
+        'etat_engin': EtatEngin,
+        'info_engin': InfoEngin,
+        'ravitaillement_engin': RavitaillementCarburant,
+        'vidange_engin': VidangeEngin,
+        'type_maintenance': TypeMaintenance,
+        'maintenance_engin': MaintenanceEngin,
+        'attribution': Attribution,
+        'releve_distance': ReleveDistance,
+    }
+
+    if sujet in sujet_to_model:
+        objet = sujet_to_model[sujet].objects.all()
+    else:
+        objet = None
+
+    context['objet'] = objet
+    return render(request, 'gestionnaire/lists.html', context)
+
+
+# def lists(request,sujet):
+#     context={}
+#     context['sujet']=sujet
+#     objet=None
+#     if sujet=='personne':
+#         objet=Personne.objects.all()
+#     elif sujet=='marque':
+#         objet=Marque.objects.all()
+#     elif sujet=='modele':
+#         objet=Modele.objects.all()
+#     elif sujet=='fournisseur':
+#         objet=Fournisseur.objects.all()
+#     elif sujet=='engin':
+#         objet=Engin.objects.all()
+#     elif sujet=='type_engin':
+#         objet=TypeEngin.objects.all()
+#     elif sujet=='etat_engin':
+#         objet=EtatEngin.objects.all()
+#     elif sujet=='info_engin':
+#         objet=InfoEngin.objects.all()
+#     elif sujet=='ravitaillement_engin':
+#         objet=RavitaillementCarburant.objects.all()
+#     elif sujet=='vidange_engin':
+#         objet=VidangeEngin.objects.all()
+#     elif sujet=='type_maintenance':
+#         objet=TypeMaintenance.objects.all()
+#     elif sujet=='maintenance_engin':
+#         objet=MaintenanceEngin.objects.all()
+#     elif sujet=='attribution':
+#         objet=Attribution.objects.all()
+#     elif sujet=='releve_distance':
+#         objet=ReleveDistance.objects.all()
+#     context['objet']=objet
+#     return render(request,'gestionnaire/lists.html',context)
 
 def results(request,sujet):
     context={}
@@ -123,7 +188,7 @@ def create_personne(request):
                 personne.save()
                 pk=personne.id
                 messages.info(request,"Succès d'enrégistrement ! ")
-                return redirect(reverse('gestionnaire:details',args=[sujet]))
+                return redirect(reverse('gestionnaire:details',args=[pk, sujet]))
     else:
         form=PersonneForm()
     return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet})        
@@ -140,9 +205,11 @@ def create_marque(request):
             if existing_marque:
                 messages.error(request, 'Une marque avec ce nom existe déjà.')
             else:
-                form.save()
-                pk=Marque.objects.filter(nom_marque=nom_marque).values('id')
-                return redirect(reverse('gestionnaire:details',args=[sujet]))  
+                marque = Marque(
+                    nom_marque=nom_marque,
+                )
+                marque.save() 
+                return redirect(reverse('gestionnaire:details', args=[marque.id, sujet]))  
     else:
         form = MarqueForm()
         
@@ -157,15 +224,18 @@ def create_modele(request):
         if form.is_valid():
             nom_modele = form.cleaned_data['nom_modele']
             marque = form.cleaned_data['marque']
-            
-            # Vérifier si un modèle avec le même nom et la même marque existe déjà
-            existing_modele = Modele.objects.filter(nom_modele=nom_modele, marque=marque).first()
+            annee = form.cleaned_data['annee']
+            existing_modele = Modele.objects.filter(nom_modele=nom_modele, marque=marque, annee=annee).first()
             if existing_modele:
-                # Modèle existe déjà, affichez un message d'erreur ou redirigez selon vos besoins
                 messages.error(request, 'Un modèle avec ce nom et cette marque existe déjà.')
-            else:
-                form.save()
-                return redirect(reverse('gestionnaire:details',args=[sujet]))  
+            else:  
+                modele=Modele(
+                    nom_modele=nom_modele,
+                    marque=marque,
+                    annee=annee,
+                )
+                modele.save()
+                return redirect(reverse('gestionnaire:details',args=[modele.id, sujet]))  
     else:
         form = ModeleForm()
         
@@ -178,20 +248,19 @@ def create_fournisseur(request):
         form = FournisseurForm(request.POST)
         if form.is_valid():
             nom_fournisseur = form.cleaned_data['nom_fournisseur']
-            
-            # Vérifier si un fournisseur avec le même nom existe déjà
             existing_fournisseur = Fournisseur.objects.filter(nom_fournisseur=nom_fournisseur).first()
             if existing_fournisseur:
-                # Fournisseur existe déjà, affichez un message d'erreur ou redirigez selon vos besoins
                 messages.error(request, 'Un fournisseur avec ce nom existe déjà.')
             else:
-                form.save()
-                return redirect(reverse('gestionnaire:details',args=[sujet]))  
+                fournisseur=Fournisseur(
+                    nom_fournisseur=nom_fournisseur,
+                )
+                fournisseur.save()
+                return redirect(reverse('gestionnaire:details',args=[fournisseur.id, sujet]))  
     else:
         form = FournisseurForm()
         
     return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet})
-
 
 def create_engin(request):
     sujet = 'engin'
@@ -200,19 +269,45 @@ def create_engin(request):
         form = EnginForm(request.POST)
         if form.is_valid():
             immatriculation = form.cleaned_data['immatriculation']
-            
-            # Vérifier si un engin avec le même numéro d'immatriculation existe déjà
             existing_engin = Engin.objects.filter(immatriculation=immatriculation).first()
             if existing_engin:
-                # Engin existe déjà, affichez un message d'erreur ou redirigez selon vos besoins
-                messages.error(request, 'Un engin avec ce numéro d''immatriculation existe déjà.')
+                messages.error(request, 'Un engin avec ce numéro d\'immatriculation existe déjà.')
             else:
-                form.save()
-                return redirect(reverse('gestionnaire:details',args=[sujet]))  
+                couleur = form.cleaned_data['couleur']
+                modele_id = form.cleaned_data['modele_engin']
+                modele = Modele.objects.get(id=modele_id)
+                
+                type_engin_id = form.cleaned_data['type_engin']
+                type_engin = TypeEngin.objects.get(id=type_engin_id)
+                
+                info_engin_id = form.cleaned_data['info_engin']  # Récupérez l'ID des informations d'engin
+                info_engin = InfoEngin.objects.get(id=info_engin_id)  # Obtenez l'instance des informations d'engin à partir de l'ID
+                
+                etat_engin_id = form.cleaned_data['etat_engin']  # Récupérez l'ID de l'état d'engin
+                etat_engin = EtatEngin.objects.get(id=etat_engin_id)  # Obtenez l'instance de l'état d'engin à partir de l'ID
+                
+                fournisseur_engin_id = form.cleaned_data['fournisseur_engin']  # Récupérez l'ID du fournisseur d'engin
+                fournisseur_engin = Fournisseur.objects.get(id=fournisseur_engin_id)  # Obtenez l'instance du fournisseur d'engin à partir de l'ID
+                
+                est_obsolete = form.cleaned_data['est_obsolete']
+                
+                engin = Engin(
+                    immatriculation=immatriculation,
+                    couleur=couleur,
+                    modele_engin=modele,
+                    type_engin=type_engin,
+                    info_engin=info_engin,  
+                    etat_engin=etat_engin,  
+                    fournisseur_engin=fournisseur_engin,  
+                    est_obsolete=est_obsolete,
+                )
+                engin.save()
+                return redirect(reverse('gestionnaire:details', args=[engin.id, sujet]))  
     else:
         form = EnginForm()
         
     return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet})
+
 
 def create_type_engin(request):
     sujet = 'type_engin'
@@ -221,15 +316,20 @@ def create_type_engin(request):
         form = TypeEnginForm(request.POST)
         if form.is_valid():
             designation = form.cleaned_data['designation']
-            
-            # Vérifier si un type d'engin avec le même libellé de désignation existe déjà
             existing_type_engin = TypeEngin.objects.filter(designation=designation).first()
             if existing_type_engin:
-                # Type d'engin existe déjà, affichez un message d'erreur ou redirigez selon vos besoins
                 messages.error(request, 'Un type d''engin avec ce libellé de désignation existe déjà.')
             else:
-                form.save()
-                return redirect(reverse('gestionnaire:details',args=[sujet]))  
+                description=form.cleaned_data['description']
+                nombre_roue=form.cleaned_data['nombre_roue']
+                
+                type_engin=TypeEngin(
+                    designation=designation,
+                    description=description,
+                    nombre_roue=nombre_roue,
+                )
+                type_engin.save()
+                return redirect(reverse('gestionnaire:details',args=[type_engin.id, sujet]))  
     else:
         form = TypeEnginForm()
         
@@ -243,15 +343,15 @@ def create_etat_engin(request):
         form = EtatEnginForm(request.POST)
         if form.is_valid():
             libelle_etat = form.cleaned_data['libelle_etat']
-            
-            # Vérifier si un état d'engin avec le même libellé existe déjà
             existing_etat_engin = EtatEngin.objects.filter(libelle_etat=libelle_etat).first()
             if existing_etat_engin:
-                # État d'engin existe déjà, affichez un message d'erreur ou redirigez selon vos besoins
                 messages.error(request, 'Un état d\'engin avec ce libellé existe déjà.')
             else:
-                form.save()
-                return redirect(reverse('gestionnaire:details',args=[sujet]))  
+                etat_engin=EtatEngin(
+                    libelle_etat=libelle_etat,
+                )
+                etat_engin.save()
+                return redirect(reverse('gestionnaire:details',args=[etat_engin.id, sujet]))  
     else:
         form = EtatEnginForm()
         
@@ -265,15 +365,22 @@ def create_info_engin(request):
         form = InfoEnginForm(request.POST)
         if form.is_valid():
             info = form.cleaned_data['info']
-            
-            # Vérifier si des informations d'engin avec le même libellé existent déjà
             existing_info_engin = InfoEngin.objects.filter(info=info).first()
             if existing_info_engin:
-                # Informations d'engin existent déjà, affichez un message d'erreur ou redirigez selon vos besoins
                 messages.error(request, 'Des informations d\'engin avec ce libellé existent déjà.')
             else:
-                form.save()
-                return redirect(reverse('gestionnaire:details',args=[sujet]))  
+                consommation=form.cleaned_data['consommation']
+                vidange=form.cleaned_data['vidange']
+                revision=form.cleaned_data['revision']
+                
+                info_engin=InfoEngin(
+                    info=info,
+                    consommation=consommation,
+                    vidange=vidange,
+                    revision=revision,
+                )
+                info_engin.save()
+                return redirect(reverse('gestionnaire:details',args=[info_engin.id, sujet]))  
     else:
         form = InfoEnginForm()
         
@@ -284,8 +391,23 @@ def create_ravitaillement_carburant(request):
     if request.method == "POST":
         form = RavitaillementCarburantForm(request.POST)
         if form.is_valid():
+            cout_rav=form.cleaned_data['cout_rav']
+            quantite_rav=cout_rav/700
+            engin_rav_id = form.cleaned_data['engin_rav']
+            engin_rav = Engin.objects.get(id=engin_rav_id)
+            fournisseur_carburant_id = form.cleaned_data['fournisseur_carburant']
+            fournisseur_carburant = Fournisseur.objects.get(id=fournisseur_carburant_id)
+            plein=form.cleaned_data['plein']
             
-            return redirect(reverse('gestionnaire:details',args=[sujet]))  
+            ravitaillement_carburant=RavitaillementCarburant(
+                cout_rav=cout_rav,
+                quantite_rav=quantite_rav,
+                engin_rav=engin_rav,
+                fournisseur_carburant=fournisseur_carburant,
+                plein=plein,
+            )
+            ravitaillement_carburant.save()
+            return redirect(reverse('gestionnaire:details',args=[ravitaillement_carburant.id, sujet]))  
     else:
         form = RavitaillementCarburantForm()
     return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet})
@@ -295,8 +417,14 @@ def create_vidange_engin(request):
     if request.method == "POST":
         form = VidangeEnginForm(request.POST)
         if form.is_valid():
+            engin_vid_id = form.cleaned_data['engin_vid']
+            engin_vid = Engin.objects.get(id=engin_vid_id)
             
-            return redirect(reverse('gestionnaire:details',args=[sujet]))  
+            vidange=VidangeEngin(
+                engin_vid=engin_vid
+            )
+            vidange.save()
+            return redirect(reverse('gestionnaire:details',args=[vidange.id, sujet]))  
     else:
         form = VidangeEnginForm()
     return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet})
@@ -308,15 +436,15 @@ def create_type_maintenance(request):
         form = TypeMaintenanceForm(request.POST)
         if form.is_valid():
             libelle_maint = form.cleaned_data['libelle_maint']
-            
-            # Vérifier si un type de maintenance avec le même libellé existe déjà
             existing_type_maintenance = TypeMaintenance.objects.filter(libelle_maint=libelle_maint).first()
             if existing_type_maintenance:
-                # Type de maintenance existe déjà, affichez un message d'erreur ou redirigez selon vos besoins
-                messages.error(request, 'Un type de maintenance avec ce libellé existe déjà.')
+                 messages.error(request, 'Un type de maintenance avec ce libellé existe déjà.')
             else:
-                form.save()
-                return redirect(reverse('gestionnaire:details',args=[sujet]))  
+                type_maintenance=TypeMaintenance(
+                    libelle_maint=libelle_maint,
+                )
+                type_maintenance.save()
+                return redirect(reverse('gestionnaire:details',args=[type_maintenance.id , sujet]))  
     else:
         form = TypeMaintenanceForm()
         
@@ -328,8 +456,24 @@ def create_maintenance_engin(request):
     if request.method == "POST":
         form = MaintenanceEnginForm(request.POST)
         if form.is_valid():
+            motif_maint=form.cleaned_data['motif_maint']
+            engin_maint_id = form.cleaned_data['engin_maint']
+            engin_maint = Engin.objects.get(id=engin_maint_id)
+            type_maint_id = form.cleaned_data['type_maint']
+            type_maint = TypeMaintenance.objects.get(id=type_maint_id)
+            fournisseur_maint_id = form.cleaned_data['fournisseur_maint']
+            fournisseur_maint = Fournisseur.objects.get(id=fournisseur_maint_id)
+            cout_maint=form.cleaned_data['cout_maint']
             
-            return redirect(reverse('gestionnaire:details',args=[sujet]))  
+            maintenance=MaintenanceEngin(
+                motif_maint=motif_maint,
+                engin_maint=engin_maint,
+                type_maint=type_maint,
+                fournisseur_maint=fournisseur_maint,
+                cout_maint=cout_maint
+            )
+            maintenance.save()
+            return redirect(reverse('gestionnaire:details',args=[maintenance.id, sujet]))  
     else:
         form = MaintenanceEnginForm()
     return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet})
@@ -339,8 +483,17 @@ def create_attribution(request):
     if request.method == "POST":
         form = AttributionForm(request.POST)
         if form.is_valid():
+            conducteur_id = form.cleaned_data['conducteur']
+            conducteur = Personne.objects.get(id=conducteur_id)
+            engin_id = form.cleaned_data['engin']
+            engin = Engin.objects.get(id=engin_id)
             
-            return redirect(reverse('gestionnaire:details',args=[sujet]))  
+            attribution=Attribution(
+                conducteur=conducteur,
+                engin=engin,
+            )
+            attribution.save()
+            return redirect(reverse('gestionnaire:details',args=[attribution.id, sujet]))  
     else:
         form = AttributionForm()
     return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet})
@@ -350,7 +503,20 @@ def create_releve_distance(request):
     if request.method == "POST":
         form = ReleveDistanceForm(request.POST)
         if form.is_valid():
-            return redirect(reverse('gestionnaire:details',args=[sujet]))  
+            nbKmDebut=form.cleaned_data['nbKmDebut']
+            nbKmFin=form.cleaned_data['nbKmFin']
+            engin_releve_id = form.cleaned_data['engin_releve']
+            engin_releve = Engin.objects.get(id=engin_releve_id)
+            distance = nbKmFin - nbKmDebut
+            
+            releve_distance=ReleveDistance(
+                nbKmDebut=nbKmDebut,
+                nbKmFin=nbKmFin,
+                engin_releve=engin_releve,
+                distance=distance,
+            )
+            releve_distance.save()
+            return redirect(reverse('gestionnaire:details',args=[releve_distance.id, sujet]))  
     else:
         form = ReleveDistanceForm()
     return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet})

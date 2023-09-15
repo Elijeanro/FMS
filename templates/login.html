@@ -26,69 +26,14 @@
   <link href="{% static 'assets/css/argon-design-system.css' %}" rel="stylesheet" />
 </head>
 
-<body class="login-page" >
+<body class="login-page">
   <!-- Navbar -->
-  <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light py-2">
-    <div class="container">
       {% for message in messages %}
       <strong><i style="color: green;">{{message}}</i></strong>
       {% endfor %} 
-      <!-- <div class="navbar-brand mr-lg-5">
-        <img src="{% static 'assets/img/brand/FMS.png' %}">
-      </div> -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="navbar-collapse collapse" id="navbar_global">
-        <div class="navbar-collapse-header">
-          <div class="row">
-            <div class="col-6 collapse-brand">
-              <a href="">
-                <img src="{% static 'assets/img/brand/FMS.png' %}">
-              </a>
-            </div>
-            <div class="col-6 collapse-close">
-              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        <ul class="navbar-nav align-items-lg-center ml-lg-auto">
-          <li class="nav-item">
-            <a class="nav-link nav-link-icon" href="https://www.facebook.com/CreativeTim/" target="_blank" data-toggle="tooltip" title="Like us on Facebook">
-              <i class="fa fa-facebook-square"></i>
-              <span class="nav-link-inner--text d-lg-none">Facebook</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link nav-link-icon" href="https://www.instagram.com/creativetimofficial" target="_blank" data-toggle="tooltip" title="Follow us on Instagram">
-              <i class="fa fa-instagram"></i>
-              <span class="nav-link-inner--text d-lg-none">Instagram</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link nav-link-icon" href="https://twitter.com/creativetim" target="_blank" data-toggle="tooltip" title="Follow us on Twitter">
-              <i class="fa fa-twitter-square"></i>
-              <span class="nav-link-inner--text d-lg-none">Twitter</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link nav-link-icon" href="https://github.com/creativetimofficial/argon-design-system" target="_blank" data-toggle="tooltip" title="Star us on Github">
-              <i class="fa fa-github"></i>
-              <span class="nav-link-inner--text d-lg-none">Github</span>
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <!-- End Navbar -->
-  <section class="section section-shaped section-lg">
-    <div class="shape shape-style-1 bg-gradient-default">
+<!-- End of Navbar -->
+  <section class="section-shaped section-sm" style="padding-top: -300px; margin-top: -100px;">
+    <div class="shape shape-style-1 bg-gradient-gray">
       <span></span>
       <span></span>
       <span></span>
@@ -98,7 +43,7 @@
       <span></span>
       <span></span>
     </div>
-    <div class="container pt-lg-7">
+    <div class="container pt-lg-7" style="padding-top: -100px;">
       <div class="row justify-content-center">
         <div class="col-lg-5">
           <div class="card bg-secondary shadow border-0">
@@ -148,22 +93,13 @@
       </div>
     </div>
   </section>
-  <footer class="footer">
-    <div class="container">
-      <div class="row row-grid align-items-center mb-5">
-        
-        
+  <footer class="footer container-sm" style="padding-top: -100px; margin-top: -15px;">
+
+    <div class="container container-sm">
+      <div class="copyright">
+        &copy; 2023 <a href="" target="_blank">JRo</a>.
       </div>
-      <hr>
-      <div class="row align-items-center justify-content-md-between">
-        <div class="col-md-6">
-          <div class="copyright">
-            &copy; 2023 <a href="" target="_blank">JRo</a>.
-          </div>
-        </div>
-        
-      </div>
-    </div>
+       </div>
   </footer>
   
 </body>

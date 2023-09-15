@@ -1,6 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 class Marque(models.Model):
     nom_marque = models.CharField(max_length=40)
@@ -24,6 +25,7 @@ class Personne(models.Model):
     prenom = models.CharField(max_length=50)
     contact = PhoneNumberField(region='TG')
     grade = models.ForeignKey('Grade', on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     def __str__(self):
         return f"{self.nom} {self.prenom}"
     
@@ -78,6 +80,7 @@ class RavitaillementCarburant(models.Model):
         return f"Ravitaillement en carburant du {self.date_rav}"
 
 class VidangeEngin(models.Model):
+    maint_vid=models.OneToOneField('MaintenanceEngin', primary_key=True, on_delete=models.CASCADE, default=0)
     date_vid = models.DateField(auto_now_add=True)
     engin_vid = models.ForeignKey('Engin',on_delete=models.CASCADE)
     def __str__(self):
@@ -109,6 +112,7 @@ class ReleveDistance(models.Model):
     date_releve = models.DateField(auto_now_add=True)
     nbKmDebut = models.FloatField()
     nbKmFin = models.FloatField()
+    distance = models.FloatField( default=0)
     engin_releve = models.ForeignKey('Engin', on_delete=models.CASCADE)
     def __str__(self):
         return f"Relevé du {self.date_releve}"
