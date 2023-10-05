@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!-- <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png"> -->
   <link rel="icon" type="image/png" href="{% static 'assets/img/favicon.png' %}">
   <title>
-   
-   {% block titre %}
-    
-   {% endblock titre %}
-    
+
+    {% block titre %}
+
+    {% endblock titre %}
+
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
@@ -28,10 +29,18 @@
 
 <body class="login-page">
   <!-- Navbar -->
-      {% for message in messages %}
-      <strong><i style="color: green;">{{message}}</i></strong>
-      {% endfor %} 
-<!-- End of Navbar -->
+  <!-- {% for message in messages %}
+  <strong><i style="color: green;">{{message}}</i></strong>
+  {% endfor %}
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %} -->
+  <!-- End of Navbar -->
   <section class="section-shaped section-sm" style="padding-top: -300px; margin-top: -100px;">
     <div class="shape shape-style-1 bg-gradient-gray">
       <span></span>
@@ -47,35 +56,45 @@
       <div class="row justify-content-center">
         <div class="col-lg-5">
           <div class="card bg-secondary shadow border-0">
-            
+
             <div class="card-body px-lg-5 py-lg-5">
               <img src="{% static 'images/Logo_EV_final.png' %}" style="width: 45%;">
               <img src="{% static 'assets/img/brand/FMS_logo.png' %}" style="width: 45%;">
               <div class="text-center text-muted mb-4">
-                <small>Connectez-vous à votre espace de travail</small>
+                <b style="font-size: large; color: black;">Connectez-vous à votre espace de travail !!!</b>
+                <br>
+                  {% for message in messages %}
+                  <strong><i style="color: rgb(192, 9, 9);">{{message}}</i></strong>
+                  {% endfor %}
+                <br>
+                <h5 class="display-4 font-weight-normal text-info">{{message}}</h5>
               </div>
               <form method="post">
                 {% csrf_token %}
                 <div class="form-group mb-3">
                   <div class="input-group input-group-alternative">
                     <div class="input-group-prepend">
-                      <span class="input-group-text"><label for="username">Username</label></span>
+                      <span class="input-group-text"><label for="username"
+                          style="font-size: large; color: black;">Username</label></span>
                     </div>
-                    <input class="form-control" type="text" id="username" name="username" placeholder="Nom d'utilisateur" required>
+                    <input class="form-control" type="text" id="username" name="username"
+                      placeholder="Nom d'utilisateur" required>
                   </div>
                 </div>
                 <div class="form-group focused">
                   <div class="input-group input-group-alternative">
                     <div class="input-group-prepend">
                       <span class="input-group-text">
-                        <label for="password">Password</label></span>
+                        <label for="password" style="font-size: large; color: black;">Password</label></span>
                     </div>
-                    <input class="form-control" type="password" id="password" name="password" placeholder="Mot de passe" required>
+                    <input class="form-control" type="password" id="password" name="password" placeholder="Mot de passe"
+                      required>
                   </div>
                 </div>
                 <div class="custom-control custom-control-alternative custom-checkbox">
                   <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
-                  <label class="custom-control-label" for=" customCheckLogin"><span>Se souvenir de moi</span></label>
+                  <label class="custom-control-label" for=" customCheckLogin"><span style="font-size: large;">Se
+                      souvenir de moi</span></label>
                 </div>
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary my-4">Connexion</button>
@@ -85,9 +104,9 @@
           </div>
           <div class="row mt-3">
             <div class="col-6">
-              <a href="#" class="text-light"><small>Mot de passe oublié?</small></a>
+              <a href="#" class="text-white-50"><small style="font-size: large;">Mot de passe oublié?</small></a>
             </div>
-            
+
           </div>
         </div>
       </div>
@@ -99,9 +118,9 @@
       <div class="copyright">
         &copy; 2023 <a href="" target="_blank">JRo</a>.
       </div>
-       </div>
+    </div>
   </footer>
-  
+
 </body>
 
 </html>

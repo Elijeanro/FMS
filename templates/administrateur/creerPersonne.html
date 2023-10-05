@@ -8,29 +8,38 @@
   
 
 {% block contenu %}
-<form role="form" method="post">
-  {% csrf_token %}
-  <div class="form-group">
-    <div class="input-group input-group-alternative mb-3">
-      <!-- <div class="input-group-prepend">
-        <span class="input-group-text"><i class="ni ni-per-3"></i></span>
-      </div> -->
-      {{form.as_p}}
-      <!-- <input class="form-control" id="firstname" name="firstname" placeholder="Saisissez votre prénom ici" type="text"> -->
-    </div>
-  </div>
-  
-  <div class="row my-4">
-    <div class="col-12">
-      <div class="custom-control custom-control-alternative custom-checkbox">
-        <input class="custom-control-input" id="customCheckRegister" type="checkbox">
-        <label class="custom-control-label" for="customCheckRegister"><span>I agree with the <a href="#">Privacy Policy</a></span></label>
+<div class="wrapper">
+  <div class="section section-hero section-shaped">
+    <div class="container pt-lg-3 bg-gradient-gray">
+      <div class="row justify-content-center">
+        <div class="col-lg-5">
+          <form role="form" method="post">
+            {% csrf_token %}
+            <div class="form-group mb-4">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="ni ni-laptop"></i></span>
+              </div>
+              {{ form.as_p }}
+            </div>
+
+            <div class="text-center mb-6">
+              <button type="submit" class="btn btn-success mt-4">ENREGISTRER</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-  <div class="text-center">
-    <button type="button" class="btn btn-primary mt-4">Create account</button>
-  </div>
-</form>
+</div>
 {% endblock contenu %}
-  
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      var gradeSelect = document.getElementById('id_grade');
+      gradeSelect.addEventListener('change', function() {
+          if (this.value === 'create') {
+              window.location.href = "{% url 'administrateur:create_grade' %}";  // Redirigez vers la vue de création de grade
+          }
+      });
+  });
+</script>

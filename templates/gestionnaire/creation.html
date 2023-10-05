@@ -10,19 +10,24 @@ Enrégistrer {{sujet}}
 {% block contenu %}
 <div class="wrapper">
   <div class="section section-hero section-shaped">
-    <!-- <div class="shape shape-style-3 shape-default"> -->
-    <!-- <span class="span-150"></span> -->
-    <!-- <span class="span-50"></span> -->
-    <!-- <span class="span-75"></span> -->
-    <!-- </div> -->
-    <div class="container pt-lg-7">
+    <div class="container pt-lg-3 bg-gradient-gray">
       <div class="row justify-content-center">
         <div class="col-lg-5">
+          {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
           <form role="form" method="post">
             {% csrf_token %}
             <div class="form-group mb-4">
               <div class="input-group-prepend">
-                <span class="input-group-text"><i class="ni ni-laptop"></i></span>
+                <span class="input-group-text"><i class="ni ni-laptop"></i>
+                  <h5>Enregistrer {{sujet}}</h5>
+                </span>
               </div>
               {{ form.as_p }}
             </div>

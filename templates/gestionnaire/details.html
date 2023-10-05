@@ -7,34 +7,34 @@ Details {{sujet}}
 {% endblock title %}
 
 {% block contenu %}
-<div class="wrapper">
-
+<div class="wrapper bg-gradient-light">
+    <p class="lead text-gray-800 mb-5"> Succès de création {{sujet}} </p>
     {% if sujet == 'attribution' %}
     <!--  -->
-    <div class="bg-image">
+    <div class="bg-gradient-blue">
         <div class="container">
-            <div class="card card-profile shadow mt-3">
+            <div class="card card-profile shadow mt-2">
                 <div class="px-4">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center bg-gradient-light">
                         <div class="mt-5">
-                            <div class="mt-5 py-5 border-top ">
-                                <h3>Détail {{sujet | upper}} : </h3>
+                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Nom : </th>
-                                            <td> {{objet.conducteur.nom}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.conducteur.nom}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Prénom : </th>
-                                            <td> {{objet.conducteur.prenom}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.conducteur.prenom}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Engin attribué : </th>
-                                            <td> {{objet.engin.immatriculation}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.engin.immatriculation}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Date d'attribution : </th>
-                                            <td> {{objet.date_attribution}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.date_attribution}} </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -50,48 +50,48 @@ Details {{sujet}}
     <!--  -->
     <div class="bg-image">
         <div class="container">
-            <div class="card card-profile shadow mt-3">
+            <div class="card card-profile shadow mt-0">
                 <div class="px-4">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center bg-gradient-light">
                         <div class="mt-5">
-                            <div class="mt-5 py-5 border-top ">
-                                <h3>Détail {{sujet | upper}} : </h3>
-                                <table class="table table-bordered" width="100%" cellspacing="0">
+                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                <h3>Détails de création {{sujet | upper}} : </h3>
+                                <table class="table table-bordered" width="100%" cellspacing="2">
                                     <tr>
                                         <th style="color: black;">Immatriculattion : </th>
-                                        <td> {{objet.immatriculation}} </td>
+                                        <td style="color: rgb(1, 82, 1);"> {{objet.immatriculation}} </td>
                                     </tr>
                                     <tr>
                                         <th style="color: black;">Couleur : </th>
-                                        <td> {{objet.couleur}} </td>
+                                        <td style="color: rgb(1, 82, 1);"> {{objet.couleur}} </td>
                                     </tr>
                                     <tr>
                                         <th style="color: black;">Informations techniques : </th>
-                                        <td> {{objet.info_engin.info}} </td>
+                                        <td style="color: rgb(1, 82, 1);"> {{objet.info_engin.info}} </td>
                                     </tr>
                                     <tr>
                                         <th style="color: black;">Modèle : </th>
-                                        <td> {{objet.modele_engin.nom_modele}} </td>
+                                        <td style="color: rgb(1, 82, 1);"> {{objet.modele_engin.nom_modele}} </td>
                                     </tr>
                                     <tr>
                                         <th style="color: black;">Type : </th>
-                                        <td> {{objet.type_engin.designation}} </td>
+                                        <td style="color: rgb(1, 82, 1);"> {{objet.type_engin.designation}} </td>
                                     </tr>
                                     <tr>
                                         <th style="color: black;">Fournisseur : </th>
-                                        <td> {{objet.fournisseur_engin.nom_fournisseur}} </td>
+                                        <td style="color: rgb(1, 82, 1);"> {{objet.fournisseur_engin.nom_fournisseur}} </td>
                                     </tr>
                                     <tr>
                                         <th style="color: black;">Etat : </th>
-                                        <td> {{objet.etat_engin.libelle_etat}} </td>
+                                        <td style="color: rgb(1, 82, 1);"> {{objet.etat_engin.libelle_etat}} </td>
                                     </tr>
                                     <tr>
                                         <th style="color: black;">Obsolète? : </th>
-                                        <td> {{objet.est_obsolete}} </td>
+                                        <td style="color: rgb(1, 82, 1);"> {{objet.est_obsolete}} </td>
                                     </tr>
                                     <tr>
                                         <th style="color: black;">Date de création : </th>
-                                        <td> {{objet.date_creation}} </td>
+                                        <td style="color: rgb(1, 82, 1);"> {{objet.date_creation}} </td>
                                     </tr>
 
                                 </table>
@@ -109,14 +109,14 @@ Details {{sujet}}
         <div class="container">
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center bg-gradient-light">
                         <div class="mt-5">
-                            <div class="mt-5 py-5 border-top ">
-                                <h3>Détail {{sujet | upper}} : </h3>
+                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Libellé de l'état : </th>
-                                            <td> {{objet.libelle_etat}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.libelle_etat}} </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -134,22 +134,22 @@ Details {{sujet}}
         <div class="container">
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center bg-gradient-light">
                         <div class="mt-5">
-                            <div class="mt-5 py-5 border-top ">
-                                <h3>Détail {{sujet | upper}} : </h3>
+                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Nom du fournisseur : </th>
-                                            <td> {{objet.nom_fournisseur}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.nom_fournisseur}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Adresse : </th>
-                                            <td> {{objet.adresse}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.adresse}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Description du fournisseur : </th>
-                                            <td> {{objet.description_fournisseur}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.description_fournisseur}} </td>
                                         </tr>
 
                                     </table>
@@ -167,26 +167,26 @@ Details {{sujet}}
         <div class="container">
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center bg-gradient-light">
                         <div class="mt-5">
-                            <div class="mt-5 py-5 border-top ">
-                                <h3>Détail {{sujet | upper}} : </h3>
+                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Info : </th>
-                                            <td> {{objet.info}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.info}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Consommation : </th>
-                                            <td> {{objet.consommation}} L/100Km</td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.consommation}} L/100Km</td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Vidange : </th>
-                                            <td>Chaque {{objet.vidange}} Km </td>
+                                            <td style="color: rgb(1, 82, 1);">Chaque {{objet.vidange}} Km </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Révision : </th>
-                                            <td>Tous les {{objet.revision}} jours </td>
+                                            <td style="color: rgb(1, 82, 1);">Tous les {{objet.revision}} jours </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -203,34 +203,34 @@ Details {{sujet}}
         <div class="container">
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center bg-gradient-light">
                         <div class="mt-5">
-                            <div class="mt-5 py-5 border-top ">
-                                <h3>Détail {{sujet | upper}} : </h3>
+                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Motif : </th>
-                                            <td> {{objet.motif_maint}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.motif_maint}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Engin : </th>
-                                            <td> {{objet.engin_maint.immatriculation}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.engin_maint.immatriculation}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Type de maintenance : </th>
-                                            <td> {{objet.type_maint.libelle_maint}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.type_maint.libelle_maint}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Coût de la maintenance : </th>
-                                            <td> {{objet.cout_maint}} F CFA</td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.cout_maint}} F CFA</td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Fournisseur de la maintenance : </th>
-                                            <td> {{objet.fournisseur_maint.nom_fournisseur}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.fournisseur_maint.nom_fournisseur}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Date de la maintenance : </th>
-                                            <td> {{objet.date_maint}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.date_maint}} </td>
                                         </tr>
 
                                     </table>
@@ -248,34 +248,34 @@ Details {{sujet}}
         <div class="container">
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center bg-gradient-light">
                         <div class="mt-5">
-                            <div class="mt-5 py-5 border-top ">
-                                <h3>Détail {{sujet | upper}} : </h3>
+                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Coût de ravitaillement : </th>
-                                            <td> {{objet.cout_rav}} F CFA</td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.cout_rav}} F CFA</td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Quantité équivalente : </th>
-                                            <td> {{objet.quantite_rav}} Litres</td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.quantite_rav}} Litres</td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;"> Plein ? : </th>
-                                            <td> {{objet.plein}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.plein}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Engin ravitaillé : </th>
-                                            <td> {{objet.engin_rav.immatriculation}} Litres</td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.engin_rav.immatriculation}} Litres</td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;"> Fournisseur de carburant : </th>
-                                            <td> {{objet.forurnisseur_carburant.nom_fournisseur}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.forurnisseur_carburant.nom_fournisseur}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Date de ravitaillement : </th>
-                                            <td> {{objet.date_rav}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.date_rav}} </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -292,31 +292,31 @@ Details {{sujet}}
         <div class="container">
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center bg-gradient-light">
                         <div class="mt-5">
-                            <div class="mt-5 py-5 border-top ">
-                                <h3>Détail {{sujet | upper}} : </h3>
+                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Date : </th>
-                                            <td> {{objet.date_releve}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.date_releve}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Engin : </th>
-                                            <td> {{objet.engin_releve.immatriculation}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.engin_releve.immatriculation}} </td>
                                         </tr>
 
                                         <tr>
                                             <th style="color: black;">Kilometrage de début : </th>
-                                            <td> {{objet.nbKmDebut}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.nbKmDebut}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Kilometrage de fin : </th>
-                                            <td> {{objet.nbKmFin}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.nbKmFin}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Distance parcourue : </th>
-                                            <td> {{objet.distance}} Km</td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.distance}} Km</td>
                                         </tr>
 
                                     </table>
@@ -334,22 +334,22 @@ Details {{sujet}}
         <div class="container">
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center bg-gradient-light">
                         <div class="mt-5">
-                            <div class="mt-5 py-5 border-top ">
-                                <h3>Détail {{sujet | upper}} : </h3>
+                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Désignation : </th>
-                                            <td> {{objet.designation}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.designation}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Description : </th>
-                                            <td> {{objet.description}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.description}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Nombre de roues : </th>
-                                            <td> {{objet.nombre_roue}} roues</td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.nombre_roue}} roues</td>
                                         </tr>
 
                                     </table>
@@ -367,14 +367,14 @@ Details {{sujet}}
         <div class="container">
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center bg-gradient-light">
                         <div class="mt-5">
-                            <div class="mt-5 py-5 border-top ">
-                                <h3>Détail {{sujet | upper}} : </h3>
+                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Libellé de la maintenance : </th>
-                                            <td> {{type_maintenance.libelle_maint}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{type_maintenance.libelle_maint}} </td>
                                         </tr>
 
                                     </table>
@@ -392,26 +392,26 @@ Details {{sujet}}
         <div class="container">
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center bg-gradient-light">
                         <div class="mt-5">
-                            <div class="mt-5 py-5 border-top ">
-                                <h3>Détail {{sujet | upper}} : </h3>
+                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Nom : </th>
-                                            <td> {{personne.nom}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{personne.nom}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Prénom : </th>
-                                            <td> {{personne.prenom}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{personne.prenom}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Contact : </th>
-                                            <td> {{personne.contact}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{personne.contact}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Grade : </th>
-                                            <td> {{personne.grade.libelle_grade}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{personne.grade.libelle_grade}} </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -427,38 +427,38 @@ Details {{sujet}}
         <div class="container">
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center bg-gradient-light">
                         <div class="mt-5">
-                            <div class="mt-5 py-5 border-top ">
-                                <h3>Détail {{sujet | upper}} : </h3>
+                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Nom : </th>
-                                            <td> {{personne.user.last_name}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{personne.user.last_name}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Prénom : </th>
-                                            <td> {{personne.user.first_name}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{personne.user.first_name}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Email : </th>
-                                            <td> {{personne.user.email}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{personne.user.email}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Contact : </th>
-                                            <td> {{personne.contact}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{personne.contact}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Grade : </th>
-                                            <td> {{personne.grade.libelle_grade}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{personne.grade.libelle_grade}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Nom d'utilisateur : </th>
-                                            <td> {{personne.user.username}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{personne.user.username}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Mot de passe : </th>
-                                            <td> {{personne.user.password}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{personne.user.password}} </td>
                                         </tr>
 
                                     </table>
@@ -475,14 +475,14 @@ Details {{sujet}}
         <div class="container">
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center bg-gradient-light">
                         <div class="mt-5">
-                            <div class="mt-5 py-5 border-top ">
-                                <h3>Détail {{sujet | upper}} : </h3>
+                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Nom de la marque : </th>
-                                            <td> {{marque.nom_marque}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{marque.nom_marque}} </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -498,22 +498,22 @@ Details {{sujet}}
         <div class="container">
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center bg-gradient-light">
                         <div class="mt-5">
-                            <div class="mt-5 py-5 border-top ">
-                                <h3>Détail {{sujet | upper}} : </h3>
+                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Nom du modèle : </th>
-                                            <td> {{modele.nom_modele}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{modele.nom_modele}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Marque : </th>
-                                            <td> {{modele.marque.nom_marque}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{modele.marque.nom_marque}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Année : </th>
-                                            <td> {{modele.annee}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{modele.annee}} </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -529,18 +529,18 @@ Details {{sujet}}
         <div class="container">
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center bg-gradient-light">
                         <div class="mt-5">
-                            <div class="mt-5 py-5 border-top ">
-                                <h3>Détail {{sujet | upper}} : </h3>
+                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Engin concerné : </th>
-                                            <td> {{ vidange.engin_vid.immatriculation }} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{ vidange.engin_vid.immatriculation }} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Date de vidange : </th>
-                                            <td> {{ vidange.date_vid }} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{ vidange.date_vid }} </td>
                                         </tr>
 
                                     </table>
@@ -558,14 +558,14 @@ Details {{sujet}}
         <div class="container">
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center bg-gradient-light">
                         <div class="mt-5">
-                            <div class="mt-5 py-5 border-top ">
-                                <h3>Détail {{sujet | upper}} : </h3>
+                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Libellé du grade : </th>
-                                            <td> {{grade.libelle_grade}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{grade.libelle_grade}} </td>
                                         </tr>
                                     </table>
                                 </div>

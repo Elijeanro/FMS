@@ -1,7 +1,11 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils import timezone
-from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User, Group, Permission
+from django.utils.translation import gettext_lazy as _
+
+
 
 class Marque(models.Model):
     nom_marque = models.CharField(max_length=40)
@@ -25,7 +29,8 @@ class Personne(models.Model):
     prenom = models.CharField(max_length=50)
     contact = PhoneNumberField(region='TG')
     grade = models.ForeignKey('Grade', on_delete=models.CASCADE)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    utilisateur = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    date_creation_personne = models.DateField(default=timezone.now)
     def __str__(self):
         return f"{self.nom} {self.prenom}"
     
@@ -94,7 +99,7 @@ class TypeMaintenance(models.Model):
 class MaintenanceEngin(models.Model):
     date_maint = models.DateField(auto_now_add=True)
     type_maint = models.ForeignKey('TypeMaintenance',on_delete=models.CASCADE)
-    motif_maint = models.CharField(max_length=120, null=True)
+    motif_maint = models.CharField(max_length=500, null=True)
     engin_maint = models.ForeignKey('Engin',on_delete=models.CASCADE)
     cout_maint = models.FloatField(default=0)
     fournisseur_maint = models.ForeignKey('Fournisseur', on_delete=models.CASCADE, null=True)

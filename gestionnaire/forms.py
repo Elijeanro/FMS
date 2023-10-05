@@ -2,6 +2,7 @@ from django import forms
 from django.forms import DateTimeInput
 from gestionnaire.models import TypeEngin,TypeMaintenance,Grade,InfoEngin,Engin,VidangeEngin,\
     MaintenanceEngin,Marque,Modele,Personne,RavitaillementCarburant,ReleveDistance,Fournisseur,EtatEngin
+from django.contrib.auth.models import User
 from phonenumbers.phonenumberutil import NumberParseException
 from phonenumbers import parse, format_number, PhoneNumberFormat, NumberParseException
 from django.contrib.admin.widgets import  AdminDateWidget, AdminTimeWidget, AdminSplitDateTime
@@ -23,15 +24,16 @@ class PersonneForm(forms.Form):
         choices=[('','Choisir un grade')]+
                 [(g.id, g.libelle_grade) for g in Grade.objects.all()]+
                 [('create', 'Ajouter un grade')],
-        widget=forms.Select(attrs={'class':'form-control mb-3'}),
+        widget=forms.Select(attrs={'class':'form-control mb-3','id':'id_grade'}),
         required=True
     )
     def clean_grade(self):
         grade_id=self.cleaned_data['grade']
         if grade_id =='create':
-            create_url=reverse('create_grade')
+            create_url=reverse('administrateur:create_grade')
             raise forms.ValidationError(create_url)
         return grade_id
+
     
     def clean_contact(self):
         contact = self.cleaned_data['contact']
@@ -44,7 +46,7 @@ class PersonneForm(forms.Form):
             raise forms.ValidationError("Erreur lors de l'analyse du numéro de téléphone.")
         except ValueError:
             raise forms.ValidationError("Numéro de téléphone invalide.")
-
+        
 class MarqueForm(forms.ModelForm):
     class Meta:
         model = Marque
@@ -270,7 +272,7 @@ class MaintenanceEnginForm(forms.Form):
         required=True
     )
     motif_maint = forms.CharField(
-        max_length=120,
+        max_length=500,
         widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Motif de la maintenance'}),
         required=False
     )

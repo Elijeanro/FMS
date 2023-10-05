@@ -95,20 +95,14 @@
             </div>
           </li>
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link" data-toggle="dropdown" href="#" role="button">
+            <a href="#" class="nav-link" data-toggle="dropdown" role="button">
               <i class="ni ni-collection d-lg-none"></i>
               <img src="{% static 'images/auto.png' %}" alt="parc" style="width: 12%;">
               <span class="nav-link-inner--text">Analyse</span>
             </a>
             <div class="dropdown-menu">
-              <a href="./examples/landing.html" class="dropdown-item">Landing</a>
-              <a href="./examples/profile.html" class="dropdown-item">Profile</a>
-              <a href="{% url 'administratif:login' %}" class="dropdown-item">Login</a>
-              
-              {% if grade_id == 2 %}
-                <a href="" class="dropdown-item">Register</a>  
-              {% endif %}
-              
+              <a href="./examples/landing.html" class="dropdown-item">Financières</a>
+              <a href="./examples/profile.html" class="dropdown-item">Techniques</a>
             </div>
           </li>
           <!-- Chat Zone -->
@@ -126,11 +120,22 @@
             </a>
           </li>
           <!-- Search Zone -->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link" data-toggle="dropdown" role="button">
               <i class="ni ni-hat-3"></i>
               <span class="nav-link-inner--text"> {{ grade.libelle_grade }} : {{ username }} </span>
             </a>
+            <div class="dropdown-menu">
+              <a href="./examples/landing.html" class="dropdown-item">Landing</a>
+              <a href="./examples/profile.html" class="dropdown-item">Profile</a>
+              <a href="{% url 'administratif:login' %}" class="dropdown-item">Login</a>
+              <a href="{% url 'gestionnaire:create_personne' %}" class="dropdown-item">Register</a>
+              
+              <!-- {% if grade_id == 2 and grade_id == 1 %} -->
+                <a href="{% url 'gestionnaire:create_personne' %}" class="dropdown-item">Register</a>  
+              <!-- {% endif %} -->
+              
+            </div>
           </li>
         </ul>
       </div>
@@ -149,9 +154,11 @@
                 class="btn btn-lg btn-primary btn-icon mb-3 mb-sm-0">
                 <span class="btn-inner--icon"><i class="ni ni-settings-gear-65"></i></span>
                 <span class="btn-inner--text">Nouveau</span>
-              </a>
-              <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
+                ||
+                <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
               <span class="btn-inner--text">Engin</span>
+              </a>
+              
               <form class="form-inline ml-9">
                 <div class="input-group input-group-merge">
                   <input type="text" class="form-control" placeholder="Rechercher">
@@ -255,8 +262,11 @@
                                         href="">Modifier</a>
                                     <a class="dropdown-item"
                                         href="">Supprimer</a>
-                                    <!-- <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Something else here</a> -->
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item"
+                                        href="">Analyse Financière</a>
+                                    <a class="dropdown-item"
+                                        href="">Analyse Technique</a>
                                 </div>
                             </div>
                         </td>

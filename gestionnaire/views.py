@@ -280,14 +280,14 @@ def create_engin(request):
                 type_engin_id = form.cleaned_data['type_engin']
                 type_engin = TypeEngin.objects.get(id=type_engin_id)
                 
-                info_engin_id = form.cleaned_data['info_engin']  # Récupérez l'ID des informations d'engin
-                info_engin = InfoEngin.objects.get(id=info_engin_id)  # Obtenez l'instance des informations d'engin à partir de l'ID
+                info_engin_id = form.cleaned_data['info_engin']  
+                info_engin = InfoEngin.objects.get(id=info_engin_id)
                 
-                etat_engin_id = form.cleaned_data['etat_engin']  # Récupérez l'ID de l'état d'engin
-                etat_engin = EtatEngin.objects.get(id=etat_engin_id)  # Obtenez l'instance de l'état d'engin à partir de l'ID
+                etat_engin_id = form.cleaned_data['etat_engin']
+                etat_engin = EtatEngin.objects.get(id=etat_engin_id)
                 
-                fournisseur_engin_id = form.cleaned_data['fournisseur_engin']  # Récupérez l'ID du fournisseur d'engin
-                fournisseur_engin = Fournisseur.objects.get(id=fournisseur_engin_id)  # Obtenez l'instance du fournisseur d'engin à partir de l'ID
+                fournisseur_engin_id = form.cleaned_data['fournisseur_engin']
+                fournisseur_engin = Fournisseur.objects.get(id=fournisseur_engin_id)
                 
                 est_obsolete = form.cleaned_data['est_obsolete']
                 

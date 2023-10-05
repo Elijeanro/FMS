@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from gestionnaire.models import Personne,Engin,Grade
 
+
 def signin(request):
     message = ''
     if request.method == "POST":
@@ -13,33 +14,33 @@ def signin(request):
 
         if user is not None:
             try:
-                personne = Personne.objects.get(user=user)
+                personne = Personne.objects.get(utilisateur=user)
                 login(request, user)
                 return redirect(reverse('administratif:espace_utilisateur', args=[personne.grade.id, user.username]))
             except Personne.DoesNotExist:
-                message = 'Identifiant ou mot de passe incorrect.'
-                messages.error(request, "L'utilisateur n'a pas de grade ou d'informations associées.")
+                message = 'Identifiant ou mot de passe incorrect!'
+                messages.error(request, "Mauvaise authentification!")
                 return redirect(reverse('administratif:msg_erreur') + f'?message={message}')
         else:
             try:
                 my_user = User.objects.get(username=username)
                 if not my_user.is_active:
-                    messages.error(request, "Vous n'avez pas confirmé votre email. Veuillez le confirmer pour activer votre compte.")
-                    return redirect(reverse('administratif:login'))
+                    message = 'Une erreur est survenue, veuillez reprendre!'
+                    messages.error(request, "Vous n'avez pas confirmé votre email. Veuillez le confirmer pour activer votre compte!")
+                    return redirect(reverse('administratif:msg_erreur'))
                 else:
-                    message = 'Identifiant ou mot de passe incorrect.'
-                    messages.error(request, 'Mauvaise authentification')
-                    return redirect(reverse('administratif:msg_erreur') + f'?message={message}')
+                    messages.error(request, 'Identifiant ou mot de passe incorrect!')
+                    return redirect(reverse('administratif:login') + f'?message={message}')
             except User.DoesNotExist:
-                message = 'Identifiant ou mot de passe incorrect.'
-                return redirect(reverse('administratif:msg_erreur') + f'?message={message}')
+                messages.error(request, 'Identifiant ou mot de passe incorrect!')
+                return redirect(reverse('administratif:login') + f'?message={message}')
 
     return render(request, 'login.html')
 
 
 def signout(request):
     logout(request)
-    messages.success(request, 'logout successfully!')
+    messages.success(request, 'Vous avez été déconnexté avec succès!')
     return redirect(reverse('administratif:login'))
 
 """
