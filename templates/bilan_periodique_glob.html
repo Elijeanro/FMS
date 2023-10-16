@@ -85,7 +85,8 @@ Bilan périodique
 
           <div class="row d-sm-flex justify-content-center mb-2">
 
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#carburantSection"
+              aria-expanded="false" aria-controls="carburantSection">
               <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -94,15 +95,14 @@ Bilan périodique
                         Coût total de ravitaillement en carburant</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"> {{cout_r}} F CFA</div>
                     </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
+
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#maintenanceSection"
+              aria-expanded="false" aria-controls="maintenanceSection">
               <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -111,16 +111,15 @@ Bilan périodique
                         Coût total de maintenance des engins</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">{{cout_m}} F CFA</div>
                     </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
+
                   </div>
                 </div>
               </div>
             </div>
 
             <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#vidangeSection"
+              aria-expanded="false" aria-controls="vidangeSection">
               <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -137,9 +136,7 @@ Bilan périodique
 
                       </div>
                     </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
+
                   </div>
                 </div>
               </div>
@@ -148,54 +145,6 @@ Bilan périodique
 
           </div>
           <div class="row d-sm-flex justify-content-center mb-2">
-
-            <!-- Area Chart -->
-            <style>
-              .sticky-navigation {
-                position: -webkit-sticky;
-                position: sticky;
-                top: 0;
-                /* La valeur "0" signifie que l'élément reste bloqué en haut de la fenêtre */
-                background: white;
-                /* Fond de la barre de navigation */
-                z-index: 100;
-                /* Réglez le z-index pour empiler correctement la barre de navigation sur d'autres éléments */
-                padding: 0px 50px 3px 50px;
-                /* Ajoutez une certaine marge pour compenser la barre de navigation */
-                box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
-                /* Ombre légère pour un effet de défilement */
-              }
-            </style>
-            <div class="sticky-navigation">
-              <div class="row">
-                <div class="mb-3 pl-xlg-9">
-                  <small class="h5 text-primary font-weight-bold mb-2">Carburant</small>
-                </div>
-                <label class="custom-toggle ml-3">
-                  <input type="checkbox" data-toggle="collapse" data-target="#carburantSection" aria-expanded="false"
-                    aria-controls="carburantSection">
-                  <span class="custom-toggle-slider rounded-circle pr-lg-5"></span>
-                </label>
-
-                <div class="mb-3 pl-lg-7">
-                  <small class="h5 text-primary font-weight-bold mb-2">Maintenance</small>
-                </div>
-                <label class="custom-toggle ml-3">
-                  <input type="checkbox" data-toggle="collapse" data-target="#maintenanceSection" aria-expanded="false"
-                    aria-controls="maintenanceSection">
-                  <span class="custom-toggle-slider rounded-circle"></span>
-                </label>
-
-                <div class="mb-3 pl-lg-7">
-                  <small class="h5 text-primary font-weight-bold mb-2">Vidange</small>
-                </div>
-                <label class="custom-toggle ml-3">
-                  <input type="checkbox" data-toggle="collapse" data-target="#vidangeSection" aria-expanded="false"
-                    aria-controls="vidangeSection">
-                  <span class="custom-toggle-slider rounded-circle"></span>
-                </label>
-              </div>
-            </div>
 
 
             <div class="container mt-3">
@@ -249,9 +198,26 @@ Bilan périodique
                         {% endfor %}
                       </tbody>
                     </table>
-                  </div>
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection"
+                      aria-expanded="false" aria-controls="carburantSection">
+                      Replier le tableau
+                    </button>
 
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection"
+                      aria-expanded="false" aria-controls="maintenanceSection">
+                      voir maintenance
+                    </button>
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection"
+                      aria-expanded="false" aria-controls="vidangeSection">
+                      voir vidange
+                    </button>
+                  </div>
+                  <br><br>
                   <div class="collapse" id="maintenanceSection">
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection"
+                      aria-expanded="false" aria-controls="carburantSection">
+                      Voir ravitaillement
+                    </button>
                     <h4 class="h3 mb-0 text-gray-800">Point sur les maintenances</h4>
                     <table class="table table-bordered" id="dataTable3" width="100%" cellspacing="0">
                       <thead>
@@ -288,9 +254,30 @@ Bilan périodique
                         {% endfor %}
                       </tbody>
                     </table>
-                  </div>
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection"
+                      aria-expanded="false" aria-controls="maintenanceSection">
+                      Replier le tableau
+                    </button>
 
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection"
+                      aria-expanded="false" aria-controls="carburantSection">
+                      voir ravitaillement
+                    </button>
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection"
+                      aria-expanded="false" aria-controls="vidangeSection">
+                      voir vidange
+                    </button>
+                  </div>
+                  <br><br>
                   <div class="collapse" id="vidangeSection">
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection"
+                      aria-expanded="false" aria-controls="carburantSection">
+                      voir ravitaillement
+                    </button>
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection"
+                      aria-expanded="false" aria-controls="maintenanceSection">
+                      voir maintenance
+                    </button>
                     <h4 class="h3 mb-0 text-gray-800">Point sur les vidanges</h4>
                     <table class="table table-bordered" id="dataTable4" width="100%" cellspacing="0">
                       <thead>
@@ -326,6 +313,18 @@ Bilan périodique
                         {% endfor %}
                       </tbody>
                     </table>
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection"
+                      aria-expanded="false" aria-controls="vidangeSection">
+                      Replier le tableau
+                    </button>
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection"
+                      aria-expanded="false" aria-controls="carburantSection">
+                      voir ravitaillement
+                    </button>
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection"
+                      aria-expanded="false" aria-controls="maintenanceSection">
+                      voir maintenance
+                    </button>
                   </div>
                 </div>
               </div>
@@ -334,236 +333,261 @@ Bilan périodique
         </div>
       </div>
     </div>
-  </div>
-  <div class="container mt-3">
-    <div class="row">
-      <div class="col">
-        <div class="collapse" id="bilan_technique">
-          <div class="row d-sm-flex justify-content-center mb-2">
-            <br>
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col">
+          <div class="collapse" id="bilan_technique">
             <div class="row d-sm-flex justify-content-center mb-2">
+              <br>
+              <div class="row d-sm-flex justify-content-center mb-2">
 
-              <h1 class="h3 mb-0 text-gray-800">Bilan Technique </h1>
+                <h1 class="h3 mb-0 text-gray-800">Bilan Technique </h1>
 
-            </div>
-
-            <div class="row d-sm-flex justify-content-center mb-2">
-
-              <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                          Quantité totale de carburant ravitaillé</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"> {{quantite_r}} </div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fa fa-credit-card-alt fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                  </div>
-                </div>
               </div>
 
-              <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                          Nombre total de maintenance de l'engin</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{nb_maintenance}}</div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-gears fa-2x text-gray-300"></i>
+              <div class="row d-sm-flex justify-content-center mb-2">
+
+                <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#carburantSection1"
+                  aria-expanded="false" aria-controls="carburantSection1">
+                  <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Quantité totale de carburant ravitaillé</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800"> {{quantite_r}} Litres</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fa fa-credit-card-alt fa-2x text-gray-300"></i>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Earnings (Monthly) Card Example -->
-              <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Nombre total de vidange
-                          de l'engin
+                <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#maintenanceSection1"
+                  aria-expanded="false" aria-controls="maintenanceSection1">
+                  <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Nombre total de maintenance de l'engin</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">{{nb_maintenance}}</div>
                         </div>
-                        <div class="row no-gutters align-items-center">
-                          <div class="col-auto">
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{nb_vidange}}
-                            </div>
+                        <div class="col-auto">
+                          <i class="fas fa-gears fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#vidangeSection1"
+                  aria-expanded="false" aria-controls="vidangeSection1">
+                  <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Nombre total de vidange
+                            de l'engin
                           </div>
+                          <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                              <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{nb_vidange}}
+                              </div>
+                            </div>
 
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-gear fa-2x text-gray-300"></i>
+                        <div class="col-auto">
+                          <i class="fas fa-gear fa-2x text-gray-300"></i>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="row d-sm-flex justify-content-center mb-2">
+              <div class="row d-sm-flex justify-content-center mb-2">
 
-              <!-- Area Chart -->
+                <div class="container mt-3">
+                  <div class="row">
+                    <div class="col">
 
-              <div class="sticky-navigation">
-                <div class="row">
-                  <div class="mb-3 pl-xlg-9">
-                    <small class="h5 text-primary font-weight-bold mb-2">Carburant</small>
-                  </div><label class="custom-toggle ml-3">
-                    <input type="checkbox" data-toggle="collapse" data-target="#carburantSection1" aria-expanded="false"
-                      aria-controls="carburantSection1">
-                    <span class="custom-toggle-slider rounded-circle pr-lg-5"></span>
-                  </label>
+                      <div class="collapse" id="carburantSection1">
 
-                  <div class="mb-3 pl-lg-7">
-                    <small class="h5 text-primary font-weight-bold mb-2">Maintenance</small>
-                  </div><label class="custom-toggle ml-3">
-                    <input type="checkbox" data-toggle="collapse" data-target="#maintenanceSection1"
-                      aria-expanded="false" aria-controls="maintenanceSection1">
-                    <span class="custom-toggle-slider rounded-circle"></span>
-                  </label>
+                        <h4 class="h3 mb-0 text-gray-800">Point sur les interventions en carburant</h4>
 
-                  <div class="mb-3 pl-lg-7">
-                    <small class="h5 text-primary font-weight-bold mb-2">Vidange</small>
-                  </div><label class="custom-toggle ml-3">
-                    <input type="checkbox" data-toggle="collapse" data-target="#vidangeSection1" aria-expanded="false"
-                      aria-controls="vidangeSection1">
-                    <span class="custom-toggle-slider rounded-circle"></span>
-                  </label>
-                </div>
-              </div>
+                        <table class="table table-bordered" id="dataTable5" width="100%" cellspacing="0">
+                          <thead>
+                            <tr>
+                              <th>Date</th>
+                              <th>Engin</th>
+                              <th>Marque</th>
+                              <th>Modèle</th>
+                              <th>Immat.</th>
+                              <th>Quantité</th>
+                              <th>Carb. Dispo</th>
+                              <th>Distance à parcourir</th>
+                              <th>Voir</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for r in ravitaillements %}
+                            <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}"
+                              aria-expanded="false" aria-controls="details_{{ forloop.counter }}">
+                              <td>{{ r.date_rav }}</td>
+                              <td>{{ r.engin_rav.type_engin.designation}} </td>
+                              <td>{{r.modele_engin.marque.nom_marque}}</td>
+                              <td>{{r.modele_engin.nom_modele}}</td>
+                              <td>{{r.engin_rav.immatriculation}} </td>
+                              <td>{{r.quantite_rav}} </td>
+                              <td>{{r.carb_dispo}}</td>
+                              <td>{{r.dap}} Km</td>
+                              <td></td>
+                            </tr>
 
-              <div class="container mt-3">
-                <div class="row">
-                  <div class="col">
-                    <div class="collapse" id="carburantSection1">
-                      <h4 class="h3 mb-0 text-gray-800">Point sur les interventions en carburant</h4>
-                      <table class="table table-bordered" id="dataTable5" width="100%" cellspacing="0">
-                        <thead>
-                          <tr>
-                            <th>Date</th>
-                            <th>Engin</th>
-                            <th>Marque</th>
-                            <th>Modèle</th>
-                            <th>Immat.</th>
-                            <th>Quantité</th>
-                            <th>Carb. Dispo</th>
-                            <th>Distance à parcourir</th>
-                            <th>Voir</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {% for r in ravitaillements %}
-                          <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}"
-                            aria-expanded="false" aria-controls="details_{{ forloop.counter }}">
-                            <td>{{ r.date_rav }}</td>
-                            <td>{{ r.engin_rav.type_engin.designation}} </td>
-                            <td>{{r.modele_engin.marque.nom_marque}}</td>
-                            <td>{{r.modele_engin.nom_modele}}</td>
-                            <td>{{r.engin_rav.immatriculation}} </td>
-                            <td>{{r.quantite_rav}} </td>
-                            <td>{{r.carb_dispo}}</td>
-                            <td>{{r.dap}} Km</td>
-                            <td></td>
-                          </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection1"
+                          aria-expanded="false" aria-controls="carburantSection1">
+                          Replier le tableau
+                        </button>
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection1"
+                          aria-expanded="false" aria-controls="maintenanceSection1">
+                          voir maintenance
+                        </button>
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection1"
+                          aria-expanded="false" aria-controls="vidangeSection1">
+                          voir vidange
+                        </button>
+                      </div>
+                      <br><br>
 
-                          {% endfor %}
-                        </tbody>
-                      </table>
-                    </div>
+                      <div class="collapse" id="maintenanceSection1">
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection1"
+                          aria-expanded="false" aria-controls="carburantSection1">
+                          Voir ravitaillement
+                        </button>
+                        <h4 class="h3 mb-0 text-gray-800">Point sur les interventions en maintenance</h4>
+                        <table class="table table-bordered" id="dataTable6" width="100%" cellspacing="0">
+                          <thead>
+                            <tr>
+                              <th>Date</th>
+                              <th>Engin</th>
+                              <th>Marque</th>
+                              <th>Modèle</th>
+                              <th>Immat.</th>
+                              <th>Montant</th>
+                              <th>Fournisseur</th>
+                              <th>Type de maintenance</th>
+                              <th>Motif</th>
+                              <th>Révision</th>
+                              <th>Voir</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for m in maintenances %}
+                            <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}"
+                              aria-expanded="false" aria-controls="details_{{ forloop.counter }}">
+                              <td>{{ m.date_maint }}</td>
+                              <td>{{ m.engin_maint.type_engin.designation}} </td>
+                              <td>{{m.modele_engin.marque.nom_marque}}</td>
+                              <td>{{m.modele_engin.nom_modele}}</td>
+                              <td>{{m.engin_maint.immatriculation}} </td>
+                              <td>{{m.cout_maint}} </td>
+                              <td>{{m.fournisseur_maint.nom_fournisseur}} </td>
+                              <td>{{m.type_maint.libelle_maint}} </td>
+                              <td>{{m.motif_maint}} </td>
+                              <td>Dans {{m.reviz}} jours</td>
+                              <td></td>
+                            </tr>
 
-                    <div class="collapse" id="maintenanceSection1">
-                      <h4 class="h3 mb-0 text-gray-800">Point sur les interventions en maintenance</h4>
-                      <table class="table table-bordered" id="dataTable6" width="100%" cellspacing="0">
-                        <thead>
-                          <tr>
-                            <th>Date</th>
-                            <th>Engin</th>
-                            <th>Marque</th>
-                            <th>Modèle</th>
-                            <th>Immat.</th>
-                            <th>Montant</th>
-                            <th>Fournisseur</th>
-                            <th>Type de maintenance</th>
-                            <th>Motif</th>
-                            <th>Révision</th>
-                            <th>Voir</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {% for m in maintenances %}
-                          <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}"
-                            aria-expanded="false" aria-controls="details_{{ forloop.counter }}">
-                            <td>{{ m.date_maint }}</td>
-                            <td>{{ m.engin_maint.type_engin.designation}} </td>
-                            <td>{{m.modele_engin.marque.nom_marque}}</td>
-                            <td>{{m.modele_engin.nom_modele}}</td>
-                            <td>{{m.engin_maint.immatriculation}} </td>
-                            <td>{{m.cout_maint}} </td>
-                            <td>{{m.fournisseur_maint.nom_fournisseur}} </td>
-                            <td>{{m.type_maint.libelle_maint}} </td>
-                            <td>{{m.motif_maint}} </td>
-                            <td>Dans {{m.reviz}} jours</td>
-                            <td></td>
-                          </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection1"
+                          aria-expanded="false" aria-controls="maintenanceSection1">
+                          Replier le tableau
+                        </button>
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection1"
+                          aria-expanded="false" aria-controls="carburantSection1">
+                          voir ravitaillement
+                        </button>
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection1"
+                          aria-expanded="false" aria-controls="vidangeSection1">
+                          voir vidange
+                        </button>
+                      </div>
+                      <br><br>
+                      <div class="collapse" id="vidangeSection1">
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection1"
+                          aria-expanded="false" aria-controls="carburantSection1">
+                          voir ravitaillement
+                        </button>
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection1"
+                          aria-expanded="false" aria-controls="maintenanceSection1">
+                          voir maintenance
+                        </button>
+                        <h4 class="h3 mb-0 text-gray-800">Point sur les interventions en vidange</h4>
+                        <table class="table table-bordered" id="dataTable7" width="100%" cellspacing="0">
+                          <thead>
+                            <tr>
+                              <th>Date</th>
+                              <th>Engin</th>
+                              <th>Marque</th>
+                              <th>Modèle</th>
+                              <th>Immat.</th>
+                              <th>Montant</th>
+                              <th>Fournisseur</th>
+                              <th>Kilométrage à la vidange</th>
+                              <th>Prochaine vidange</th>
+                              <th>Voir</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for v in vidanges %}
+                            <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}"
+                              aria-expanded="false" aria-controls="details_{{ forloop.counter }}">
+                              <td>{{ v.date_maint }}</td>
+                              <td>{{ v.engin_maint.type_engin.designation}} </td>
+                              <td>{{v.modele_engin.marque.nom_marque}}</td>
+                              <td>{{v.modele_engin.nom_modele}}</td>
+                              <td>{{v.engin_vid.immatriculation}} </td>
+                              <td>{{v.cout_maint}} </td>
+                              <td>{{v.fournisseur_maint.nom_fournisseur}} </td>
 
-                          {% endfor %}
-                        </tbody>
-                      </table>
-                    </div>
+                              <td>{{v.Km_maint}} </td>
+                              <td>
 
-                    <div class="collapse" id="vidangeSection1">
-                      <h4 class="h3 mb-0 text-gray-800">Point sur les interventions en vidange</h4>
-                      <table class="table table-bordered" id="dataTable7" width="100%" cellspacing="0">
-                        <thead>
-                          <tr>
-                            <th>Date</th>
-                            <th>Engin</th>
-                            <th>Marque</th>
-                            <th>Modèle</th>
-                            <th>Immat.</th>
-                            <th>Montant</th>
-                            <th>Fournisseur</th>
-                            <th>Kilométrage à la vidange</th>
-                            <th>Prochaine vidange</th>
-                            <th>Voir</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {% for v in vidanges %}
-                          <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}"
-                            aria-expanded="false" aria-controls="details_{{ forloop.counter }}">
-                            <td>{{ v.date_maint }}</td>
-                            <td>{{ v.engin_maint.type_engin.designation}} </td>
-                            <td>{{v.modele_engin.marque.nom_marque}}</td>
-                            <td>{{v.modele_engin.nom_modele}}</td>
-                            <td>{{v.engin_vid.immatriculation}} </td>
-                            <td>{{v.cout_maint}} </td>
-                            <td>{{v.fournisseur_maint.nom_fournisseur}} </td>
-
-                            <td>{{v.Km_maint}} </td>
-                            <td>
-                              
-                              {% if v.engin_maint.type_engin.designation == 'TRICYCLE' %}
+                                {% if v.engin_maint.type_engin.designation == 'TRICYCLE' %}
                                 Dans {{v.vid}} jours
-                              {% else %}
+                                {% else %}
                                 Après {{v.vid}} Km
-                              {% endif %}
-                                
-                            </td>
-                            <td></td>
-                          </tr>
+                                {% endif %}
 
-                          {% endfor %}
-                        </tbody>
-                      </table>
+                              </td>
+                              <td></td>
+                            </tr>
+
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection1"
+                          aria-expanded="false" aria-controls="vidangeSection1">
+                          Replier le tableau
+                        </button>
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection1"
+                          aria-expanded="false" aria-controls="carburantSection1">
+                          voir ravitaillement
+                        </button>
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection1"
+                          aria-expanded="false" aria-controls="maintenanceSection1">
+                          voir maintenance
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -575,4 +599,4 @@ Bilan périodique
     </div>
   </div>
 </div>
-  {% endblock contenu %}
+{% endblock contenu %}

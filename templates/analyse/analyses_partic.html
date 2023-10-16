@@ -9,22 +9,7 @@ Analyses globales
 
 {% block contenu %}
 <div class="wrapper">
-  <style>
-    .sticky-navigation {
-      position: -webkit-sticky;
-      position: sticky;
-      top: 0;
-      /* La valeur "0" signifie que l'élément reste bloqué en haut de la fenêtre */
-      background: white;
-      /* Fond de la barre de navigation */
-      z-index: 100;
-      /* Réglez le z-index pour empiler correctement la barre de navigation sur d'autres éléments */
-      padding: 0px 50px 3px 50px;
-      /* Ajoutez une certaine marge pour compenser la barre de navigation */
-      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
-      /* Ombre légère pour un effet de défilement */
-    }
-  </style>
+  
   {% if type_bilan == 'finances' %}
   <!-- Page Heading -->
   <br>
@@ -37,7 +22,8 @@ Analyses globales
 
   <div class="row d-sm-flex justify-content-center mb-2">
 
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#carburantSection" aria-expanded="false"
+    aria-controls="carburantSection">
       <div class="card border-left-primary shadow h-100 py-2">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
@@ -46,15 +32,14 @@ Analyses globales
                 Total dépensé en ravitaillement de carburant</div>
               <div class="h5 mb-0 font-weight-bold text-gray-800"> {{cout_r}} F CFA</div>
             </div>
-            <div class="col-auto">
-              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-            </div>
+            
           </div>
         </div>
       </div>
     </div>
 
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#maintenanceSection" aria-expanded="false"
+    aria-controls="maintenanceSection">
       <div class="card border-left-success shadow h-100 py-2">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
@@ -63,16 +48,15 @@ Analyses globales
                 Total dépensé en maintenance de l'engin</div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">{{cout_m}} F CFA</div>
             </div>
-            <div class="col-auto">
-              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-            </div>
+            
           </div>
         </div>
       </div>
     </div>
 
     <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#vidangeSection" aria-expanded="false"
+    aria-controls="vidangeSection">
       <div class="card border-left-info shadow h-100 py-2">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
@@ -88,9 +72,7 @@ Analyses globales
 
               </div>
             </div>
-            <div class="col-auto">
-              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-            </div>
+            
           </div>
         </div>
       </div>
@@ -99,40 +81,6 @@ Analyses globales
 
   </div>
   <div class="row d-sm-flex justify-content-center mb-2">
-
-    <!-- Area Chart -->
-
-    <div class="sticky-navigation">
-      <div class="row">
-        <div class="mb-3 pl-xlg-9">
-          <small class="h5 text-primary font-weight-bold mb-2">Carburant</small>
-        </div>
-        <label class="custom-toggle ml-3">
-          <input type="checkbox" data-toggle="collapse" data-target="#carburantSection" aria-expanded="false"
-            aria-controls="carburantSection">
-          <span class="custom-toggle-slider rounded-circle pr-lg-5"></span>
-        </label>
-
-        <div class="mb-3 pl-lg-7">
-          <small class="h5 text-primary font-weight-bold mb-2">Maintenance</small>
-        </div>
-        <label class="custom-toggle ml-3">
-          <input type="checkbox" data-toggle="collapse" data-target="#maintenanceSection" aria-expanded="false"
-            aria-controls="maintenanceSection">
-          <span class="custom-toggle-slider rounded-circle"></span>
-        </label>
-
-        <div class="mb-3 pl-lg-7">
-          <small class="h5 text-primary font-weight-bold mb-2">Vidange</small>
-        </div>
-        <label class="custom-toggle ml-3">
-          <input type="checkbox" data-toggle="collapse" data-target="#vidangeSection" aria-expanded="false"
-            aria-controls="vidangeSection">
-          <span class="custom-toggle-slider rounded-circle"></span>
-        </label>
-      </div>
-    </div>
-
 
     <div class="container mt-3">
       <div class="row">
@@ -196,9 +144,27 @@ Analyses globales
                 {% endfor %}
               </tbody>
             </table>
-          </div>
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection"
+            aria-expanded="false" aria-controls="carburantSection">
+            Replier le tableau
+          </button>
+
+          <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection"
+            aria-expanded="false" aria-controls="maintenanceSection">
+            voir maintenance
+          </button>
+          <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection"
+            aria-expanded="false" aria-controls="vidangeSection">
+            voir vidange
+          </button>
+</div>
+<br><br>
 
           <div class="collapse" id="maintenanceSection">
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection"
+                      aria-expanded="false" aria-controls="carburantSection">
+                      Voir ravitaillement
+                    </button>
             <h4 class="h3 mb-0 text-gray-800">Point sur les maintenances</h4>
             <table class="table table-bordered" id="dataTable3" width="100%" cellspacing="0">
               <thead>
@@ -235,9 +201,30 @@ Analyses globales
                 {% endfor %}
               </tbody>
             </table>
-          </div>
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection"
+            aria-expanded="false" aria-controls="maintenanceSection">
+            Replier le tableau
+          </button>
 
-          <div class="collapse" id="vidangeSection">
+          <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection"
+            aria-expanded="false" aria-controls="carburantSection">
+            voir ravitaillement
+          </button>
+          <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection"
+            aria-expanded="false" aria-controls="vidangeSection">
+            voir vidange
+          </button>
+</div>
+<br><br>
+<div class="collapse" id="vidangeSection">
+  <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection"
+            aria-expanded="false" aria-controls="carburantSection">
+            voir ravitaillement
+          </button>
+          <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection"
+            aria-expanded="false" aria-controls="maintenanceSection">
+            voir maintenance
+          </button>
             <h4 class="h3 mb-0 text-gray-800">Point sur les vidanges</h4>
             <table class="table table-bordered" id="dataTable4" width="100%" cellspacing="0">
               <thead>
@@ -273,6 +260,18 @@ Analyses globales
                 {% endfor %}
               </tbody>
             </table>
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection"
+                      aria-expanded="false" aria-controls="vidangeSection">
+                      Replier le tableau
+                    </button>
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection"
+                      aria-expanded="false" aria-controls="carburantSection">
+                      voir ravitaillement
+                    </button>
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection"
+                      aria-expanded="false" aria-controls="maintenanceSection">
+                      voir maintenance
+                    </button>
           </div>
         </div>
       </div>
@@ -292,7 +291,8 @@ Analyses globales
 
 <div class="row d-sm-flex justify-content-center mb-2">
 
-  <div class="col-xl-3 col-md-6 mb-4">
+  <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#carburantSection1" aria-expanded="false"
+  aria-controls="carburantSection1">
     <div class="card border-left-primary shadow h-100 py-2">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
@@ -301,15 +301,14 @@ Analyses globales
               Quantité totale de carburant ravitaillé</div>
             <div class="h5 mb-0 font-weight-bold text-gray-800"> {{quantite_rav}} F CFA</div>
           </div>
-          <div class="col-auto">
-            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-          </div>
+          
         </div>
       </div>
     </div>
   </div>
 
-  <div class="col-xl-3 col-md-6 mb-4">
+  <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#maintenanceSection1" aria-expanded="false"
+  aria-controls="maintenanceSection1">
     <div class="card border-left-success shadow h-100 py-2">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
@@ -318,16 +317,15 @@ Analyses globales
               Nombre total de maintenance de l'engin</div>
             <div class="h5 mb-0 font-weight-bold text-gray-800">{{nb_maintenance}} F CFA</div>
           </div>
-          <div class="col-auto">
-            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-          </div>
+          
         </div>
       </div>
     </div>
   </div>
 
   <!-- Earnings (Monthly) Card Example -->
-  <div class="col-xl-3 col-md-6 mb-4">
+  <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#vidangeSection1" aria-expanded="false"
+  aria-controls="vidangeSection1">
     <div class="card border-left-info shadow h-100 py-2">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
@@ -343,9 +341,7 @@ Analyses globales
 
             </div>
           </div>
-          <div class="col-auto">
-            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-          </div>
+          
         </div>
       </div>
     </div>
@@ -354,37 +350,6 @@ Analyses globales
 
 </div>
 <div class="row d-sm-flex justify-content-center mb-2">
-
-  <!-- Area Chart -->
-
-  <div class="sticky-navigation">
-    <div class="row">
-      <div class="mb-3 pl-xlg-9">
-        <small class="h5 text-primary font-weight-bold mb-2">Carburant</small>
-      </div><label class="custom-toggle ml-3">
-        <input type="checkbox" data-toggle="collapse" data-target="#carburantSection1" aria-expanded="false"
-          aria-controls="carburantSection1">
-        <span class="custom-toggle-slider rounded-circle pr-lg-5"></span>
-      </label>
-
-      <div class="mb-3 pl-lg-7">
-        <small class="h5 text-primary font-weight-bold mb-2">Maintenance</small>
-      </div><label class="custom-toggle ml-3">
-        <input type="checkbox" data-toggle="collapse" data-target="#maintenanceSection1" aria-expanded="false"
-          aria-controls="maintenanceSection1">
-        <span class="custom-toggle-slider rounded-circle"></span>
-      </label>
-
-      <div class="mb-3 pl-lg-7">
-        <small class="h5 text-primary font-weight-bold mb-2">Vidange</small>
-      </div><label class="custom-toggle ml-3">
-        <input type="checkbox" data-toggle="collapse" data-target="#vidangeSection1" aria-expanded="false"
-          aria-controls="vidangeSection1">
-        <span class="custom-toggle-slider rounded-circle"></span>
-      </label>
-    </div>
-  </div>
-
   <div class="container mt-3">
     <div class="row">
       <div class="col">
@@ -447,9 +412,25 @@ Analyses globales
               {% endfor %}
             </tbody>
           </table>
-        </div>
-
-        <div class="collapse" id="maintenanceSection1">
+          <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection1"
+          aria-expanded="false" aria-controls="carburantSection1">
+          Replier le tableau
+        </button>
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection1"
+          aria-expanded="false" aria-controls="maintenanceSection1">
+          voir maintenance
+        </button>
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection1"
+          aria-expanded="false" aria-controls="vidangeSection1">
+          voir vidange
+        </button>
+</div>
+<br><br>
+<div class="collapse" id="maintenanceSection1">
+<button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection1"
+          aria-expanded="false" aria-controls="carburantSection1">
+          Voir ravitaillement
+        </button>
           <h4 class="h3 mb-0 text-gray-800">Point sur les interventions en maintenance</h4>
           <table class="table table-bordered" id="dataTable6" width="100%" cellspacing="0">
             <thead>
@@ -487,9 +468,29 @@ Analyses globales
               {% endfor %}
             </tbody>
           </table>
-        </div>
-
-        <div class="collapse" id="vidangeSection1">
+          <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection1"
+          aria-expanded="false" aria-controls="maintenanceSection1">
+          Replier le tableau
+        </button>
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection1"
+          aria-expanded="false" aria-controls="carburantSection1">
+          voir ravitaillement
+        </button>
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection1"
+          aria-expanded="false" aria-controls="vidangeSection1">
+          voir vidange
+        </button>
+</div>
+<br><br>
+<div class="collapse" id="vidangeSection1">
+<button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection1"
+          aria-expanded="false" aria-controls="carburantSection1">
+          voir ravitaillement
+        </button>
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection1"
+          aria-expanded="false" aria-controls="maintenanceSection1">
+          voir maintenance
+        </button>
           <h4 class="h3 mb-0 text-gray-800">Point sur les interventions en vidange</h4>
           <table class="table table-bordered" id="dataTable7" width="100%" cellspacing="0">
             <thead>
@@ -534,6 +535,18 @@ Analyses globales
               {% endfor %}
             </tbody>
           </table>
+          <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection1"
+                          aria-expanded="false" aria-controls="vidangeSection1">
+                          Replier le tableau
+                        </button>
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection1"
+                          aria-expanded="false" aria-controls="carburantSection1">
+                          voir ravitaillement
+                        </button>
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection1"
+                          aria-expanded="false" aria-controls="maintenanceSection1">
+                          voir maintenance
+                        </button>
         </div>
       </div>
     </div>
@@ -542,6 +555,5 @@ Analyses globales
   <h4>TYPE NON TROUV</h4>
 
   {% endif %}
-</div>
 </div>
 {% endblock contenu %}
