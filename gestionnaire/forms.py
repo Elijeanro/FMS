@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import DateTimeInput
-from gestionnaire.models import TypeEngin,TypeMaintenance,Grade,InfoEngin,Engin,VidangeEngin,\
+from gestionnaire.models import TypeEngin,TypeMaintenance,Grade,InfoEngin,Engin,\
     MaintenanceEngin,Marque,Modele,Personne,RavitaillementCarburant,ReleveDistance,Fournisseur,EtatEngin
 from django.contrib.auth.models import User
 from phonenumbers.phonenumberutil import NumberParseException
@@ -140,6 +140,14 @@ class EnginForm(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control mb-3'}),
         required=False,
     )
+    vik = forms.FloatField(
+        widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Valeur initiale du compteur'}),
+        required=True
+    )
+    capa_reserv = forms.FloatField(
+        widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Capacité du réservoir'}),
+        required=True
+    )
 
     def clean_model_engin(self):
         model_id = self.cleaned_data['modele_engin']
@@ -227,6 +235,11 @@ class RavitaillementCarburantForm(forms.Form):
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         required=False
     )
+    Km_plein = forms.FloatField(
+        widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Kilometrage au plein'}),
+        initial=0,
+        required=True
+    )
     def clean_engin_rav(self):
         engin_id=self.cleaned_data['engin_rav']
         if engin_id == 'create':
@@ -240,21 +253,6 @@ class RavitaillementCarburantForm(forms.Form):
             create_url=reverse('create_fournisseur')
             raise forms.ValidationError(create_url)
         return fournisseur_id
-
-class VidangeEnginForm(forms.Form):
-    engin_vid = forms.ChoiceField(
-        choices=[('','Choisir un engin')]+
-                [(e.id, e.immatriculation) for e in Engin.objects.filter(est_obsolete=False)]+
-                [('create', 'Ajouter un engin')],
-        widget=forms.Select(attrs={'class':'form-control mb-3'}),
-        required=True
-    )
-    def clean_engin_vid(self):
-        engin_id=self.cleaned_data['engin_vid']
-        if engin_id == 'create':
-            create_url=reverse('create_engin')
-            raise forms.ValidationError(create_url)
-        return engin_id
 
 class TypeMaintenanceForm(forms.Form):
     libelle_maint = forms.CharField(
@@ -348,20 +346,25 @@ class AttributionForm(forms.Form):
         return engin_id
 
 class ReleveDistanceForm(forms.Form):
-    nbKmDebut = forms.FloatField(
-        widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Kilométrage initial'}),
-        required=True
-    )
-    nbKmFin = forms.FloatField(
-        widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Kilométrage final'}),
-        required=True
-    )
     engin_releve = forms.ChoiceField(
         choices=[('','Choisir un engin')]+
                 [(e.id, e.immatriculation) for e in Engin.objects.filter(est_obsolete=False)]+
                 [('create', 'Ajouter un engin')],
         widget=forms.Select(attrs={'class':'form-control mb-3'}),
         required=True
+    )
+    nbKmFin = forms.FloatField(
+        widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Kilométrage en fin d''activité de la journée'}),
+        required=True
+    )
+    
+    mode_4x4 = forms.BooleanField(
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input ml-3'}),
+        required=False
+    )
+    ravitaille = forms.BooleanField(
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input ml-3'}),
+        required=False
     )
     
     def clean_engin_releve(self):
@@ -370,3 +373,22 @@ class ReleveDistanceForm(forms.Form):
             create_url=reverse('create_engin')
             raise forms.ValidationError(create_url)
         return engin_id
+    
+class T_CardForm(forms.Form):
+    solde = forms.FloatField(
+        widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Solde de la carte'}),
+        required=True
+    )
+    type_engin_tcard = forms.ChoiceField(
+        choices=[('','Sélectionner le type d''engin')]+
+                [(t.id, t.designation) for t in TypeEngin.objects.all()]+
+                [('create', 'Ajouter un type d''engin')],
+        widget=forms.Select(attrs={'class':'form-control mb-3'}),
+        required=True
+    )
+    def clean_type_engin_tcard(self):
+        type_engin_id=self.cleaned_data['type_engin_tcard']
+        if type_engin_id == 'create':
+            create_url=reverse('create_type_engin')
+            raise forms.ValidationError(create_url)
+        return type_engin_id

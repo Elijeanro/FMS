@@ -28,19 +28,7 @@
 </head>
 
 <body class="login-page">
-  <!-- Navbar -->
-  <!-- {% for message in messages %}
-  <strong><i style="color: green;">{{message}}</i></strong>
-  {% endfor %}
-  {% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
-    </li>
-    {% endfor %}
-  </ul>
-  {% endif %} -->
-  <!-- End of Navbar -->
+  
   <section class="section-shaped section-sm" style="padding-top: -300px; margin-top: -100px;">
     <div class="shape shape-style-1 bg-gradient-gray">
       <span></span>
@@ -73,20 +61,21 @@
                 {% csrf_token %}
                 <div class="form-group mb-3">
                   <div class="input-group input-group-alternative">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><label for="username"
-                          style="font-size: large; color: black;">Username</label></span>
-                    </div>
+                    <!-- <div class="input-group-prepend"> -->
+                      <span class="input-group-text bg-body"><label for="username"
+                          style="font-size: medium; color: rgb(8, 8, 8); width: 125px;">Nom d'utilisateur:</label></span>
+                    <!-- </div> -->
                     <input class="form-control" type="text" id="username" name="username"
                       placeholder="Nom d'utilisateur" required>
                   </div>
                 </div>
                 <div class="form-group focused">
                   <div class="input-group input-group-alternative">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <label for="password" style="font-size: large; color: black;">Password</label></span>
-                    </div>
+                    <!-- <div class="input-group-prepend"> -->
+                      <span class="input-group-text bg-body">
+                        <label for="password" style="font-size: medium; color: rgb(8, 8, 8); width: 125px;">Mot de passe:</label></span>
+                    <!-- </div> -->
+                    <div></div>
                     <input class="form-control" type="password" id="password" name="password" placeholder="Mot de passe"
                       required>
                   </div>

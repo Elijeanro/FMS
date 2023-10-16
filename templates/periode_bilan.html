@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+{% extends 'bases/base1.html' %}
+
+{% block title %}
+Bilan périodique
+{% endblock title %}
+
+
+{% block contenu %}
+{% if type_bilan == 'general' or type_bilan == 'finances' %}
+<div class="row d-sm-flex justify-content-center mb-2">
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-info shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">RENSEIGNER LA PERIODE
+            </div>
+            <div class="row no-gutters align-items-center">
+              <div class="col-auto">
+                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-calendar-alt fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row d-sm-flex justify-content-center mb-2">
+  <br><br>
+  {% for message in messages %}
+  <strong><i style="color: rgb(192, 9, 9);">{{message}}</i></strong>
+  {% endfor %}
+
+  <!-- Area Chart -->
+  <div class="container pt-lg-1" style="padding-top: -100px;">
+    <div class="row justify-content-center">
+      <div class="col-lg-5">
+        <div class="card bg-gradient-teal shadow border-5">
+          <div class="container mt-3">
+            <div class="row">
+              
+              <div class="col">
+                <h4 class="h6 m-3 text-darker bg-body">Cliquez <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#engin_spe"
+                  aria-expanded="false" aria-controls="engin_spe">ici</button> pour spécifier un engin</h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="row justify-content-center">
+                  <h4 class="h5 m-3 text-darker bg-body">Veuillez sélectionner les dates</h4>
+                </div>
+                
+                <form method="post" name="periode_form">
+                  {% csrf_token %}
+                  <div class="form-group mb-3">
+                    <div class="collapse" id="engin_spe">
+                      <div class="input-group input-group-alternative">
+                        <span class="input-group-text bg-body">
+                          <label for="engin"
+                            style="font-size: medium; color: rgb(8, 8, 8); width: 125px; height: 10px;">Engin : </label>
+                        </span>
+                        <select class="form-control" id="engin" name="engin">
+                          <option value="">Sélectionner un engin</option>
+
+                          {% for e in engin %}
+                          <option value="{{e.id}}">{{e.immatriculation}}</option>
+                          {% endfor %}
+
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group mb-3">
+                    
+                    <div class="input-group input-group-alternative">
+                      <span class="input-group-text bg-body">
+                        <label for="mois_1"
+                          style="font-size: medium; color: rgb(8, 8, 8); width: 125px; height: 10px;">Date de
+                          début:</label>
+                      </span>
+                      <select class="form-control" id="mois_1" name="mois_1" required>
+                        <option value="">Mois</option>
+                        <option value="1">Janvier</option>
+                        <option value="2">Février</option>
+                        <option value="3">Mars</option>
+                        <option value="4">Avril</option>
+                        <option value="5">Mai</option>
+                        <option value="6">Juin</option>
+                        <option value="7">Juillet</option>
+                        <option value="8">Août</option>
+                        <option value="9">Septembre</option>
+                        <option value="10">Octobre</option>
+                        <option value="11">Novembre</option>
+                        <option value="12">Décembre</option>
+                      </select>
+                      <select class="form-control" id="annee_1" name="annee_1" required>
+                        <option value="">Année</option>
+                        <!-- La liste des années sera remplie dynamiquement en JavaScript -->
+                      </select>
+                      <select class="form-control" id="jour_1" name="jour_1" required>
+                        <option value="">Jour</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group-alternative">
+                      <span class="input-group-text bg-body">
+                        <label for="mois_2"
+                          style="font-size: medium; color: rgb(8, 8, 8); width: 125px; height: 10px;">Date de
+                          fin:</label>
+                      </span>
+                      <select class="form-control" id="mois_2" name="mois_2" required>
+                        <option value="">Mois</option>
+                        <option value="1">Janvier</option>
+                        <option value="2">Février</option>
+                        <option value="3">Mars</option>
+                        <option value="4">Avril</option>
+                        <option value="5">Mai</option>
+                        <option value="6">Juin</option>
+                        <option value="7">Juillet</option>
+                        <option value="8">Août</option>
+                        <option value="9">Septembre</option>
+                        <option value="10">Octobre</option>
+                        <option value="11">Novembre</option>
+                        <option value="12">Décembre</option>
+                      </select>
+                      <select class="form-control" id="annee_2" name="annee_2" required>
+                        <option value="">Année</option>
+                        <!-- La liste des années sera remplie dynamiquement en JavaScript -->
+                      </select>
+                      <select class="form-control" id="jour_2" name="jour_2" required>
+                        <option value="">Jour</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" name="submit_periode" class="btn btn-primary my-4">VALIDER</button>
+                  </div>
+                </form>
+
+                <script>
+                  // Obtenez les éléments des listes déroulantes des jours et des années
+                  var days1 = document.getElementById('jour_1');
+                  var days2 = document.getElementById('jour_2');
+                  var months1 = document.getElementById('mois_1');
+                  var months2 = document.getElementById('mois_2');
+                  var years1 = document.getElementById('annee_1');
+                  var years2 = document.getElementById('annee_2');
+
+                  // Obtenez l'année en cours
+                  var currentYear = new Date().getFullYear();
+
+                  // Remplissez la liste déroulante des années avec les années actuelles et les 5 années précédentes
+                  for (var i = currentYear; i >= currentYear - 5; i--) {
+                    var option1 = document.createElement('option');
+                    option1.value = i;
+                    option1.text = i;
+
+                    var option2 = option1.cloneNode(true);
+
+                    years1.appendChild(option1);
+                    years2.appendChild(option2);
+                  }
+
+                  // Remplissez les listes déroulantes des jours (1-31)
+                  for (var i = 1; i <= 31; i++) {
+                    var option1 = document.createElement('option');
+                    option1.value = i;
+                    option1.text = i;
+
+                    var option2 = option1.cloneNode(true);
+
+                    days1.appendChild(option1);
+                    days2.appendChild(option2);
+                  }
+
+                  // Lorsque le mois change, ajustez le nombre de jours en fonction du mois
+                  months1.addEventListener('change', updateDays1);
+                  months2.addEventListener('change', updateDays2);
+                  // Ajoutez un gestionnaire d'événement "change" aux listes déroulantes des années
+                  years1.addEventListener('change', updateDays1);
+                  years2.addEventListener('change', updateDays2);
+
+                  function updateDays1() {
+                    var selectedMonth = parseInt(months1.value);
+                    var selectedYear = parseInt(years1.value);
+                    var maxDays = 31;
+
+                    if ([4, 6, 9, 11].includes(selectedMonth)) {
+                      maxDays = 30;
+                    } else if (selectedMonth === 2) {
+                      maxDays = (selectedYear % 400 === 0 || (selectedYear % 4 === 0 && selectedYear % 100 !== 0)) ? 29 : 28;
+                    }
+
+                    updateDayOptions1(maxDays);
+                  }
+
+                  function updateDays2() {
+                    var selectedMonth = parseInt(months2.value);
+                    var selectedYear = parseInt(years2.value);
+                    var maxDays = 31;
+
+                    if ([4, 6, 9, 11].includes(selectedMonth)) {
+                      maxDays = 30;
+                    } else if (selectedMonth === 2) {
+                      maxDays = (selectedYear % 400 === 0 || (selectedYear % 4 === 0 && selectedYear % 100 !== 0)) ? 29 : 28;
+                    }
+
+                    updateDayOptions2(maxDays);
+                  }
+
+
+                  // Fonction pour mettre à jour les options des jours en fonction du nombre de jours
+                  function updateDayOptions1(maxDays) {
+                    var dayOptions1 = days1.querySelectorAll('option');
+                    for (var i = 0; i < dayOptions1.length; i++) {
+                      if (i >= maxDays + 1) {
+                        dayOptions1[i].style.display = 'none';
+                      } else {
+                        dayOptions1[i].style.display = 'block';
+                      }
+                    }
+                  }
+
+                  function updateDayOptions2(maxDays) {
+                    var dayOptions2 = days2.querySelectorAll('option');
+                    for (var i = 0; i < dayOptions2.length; i++) {
+                      if (i >= maxDays + 1) {
+                        dayOptions2[i].style.display = 'none';
+                      } else {
+                        dayOptions2[i].style.display = 'block';
+                      }
+                    }
+                  }
+
+                </script>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+{% endblock contenu %}

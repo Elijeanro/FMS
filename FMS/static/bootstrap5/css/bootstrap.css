@@ -2157,7 +2157,7 @@ progress {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #212529;
+  color: #010408;
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
@@ -2205,7 +2205,7 @@ progress {
   margin: -0.375rem -0.75rem;
   -webkit-margin-end: 0.75rem;
   margin-inline-end: 0.75rem;
-  color: #212529;
+  color: #0f1113;
   background-color: #e9ecef;
   pointer-events: none;
   border-color: inherit;

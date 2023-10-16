@@ -32,16 +32,14 @@ liste {{sujet}}
                         <td class="td-actions text-right">
                             <div class="dropdown no-arrow">
                                 <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                                id="dropdownMenuLink1" data-toggle="dropdown"
-                                aria-haspopup="false" aria-expanded="false">
-                            </a>
+                                    id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
+                                    aria-expanded="false">
+                                </a>
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                     aria-labelledby="dropdownMenuLink">
                                     <div class="dropdown-header">Options:</div>
-                                    <a class="dropdown-item"
-                                        href="">Modifier</a>
-                                    <a class="dropdown-item"
-                                        href="">Supprimer</a>
+                                    <a class="dropdown-item" href="">Modifier</a>
+                                    <a class="dropdown-item" href="">Supprimer</a>
                                     <!-- <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#">Something else here</a> -->
                                 </div>
@@ -71,6 +69,7 @@ liste {{sujet}}
                     <th>Modèle</th>
                     <th>Type</th>
                     <th>Fournisseur</th>
+                    <th>Activité</th>
                     <th>Etat</th>
                     <th>Est obsolète?</th>
                     <th>Date de création</th>
@@ -80,29 +79,34 @@ liste {{sujet}}
             <tbody>
                 {% for o in objet %}
                 <tr>
-                    <td class="text-center"> {{o.immatriculation}} </td>
+                    <td class="text-center" {% if o.nja < 5 %} style="background-color: rgb(100, 233, 100);" {% elif
+                        o.nja < 8 %} style="background-color: rgb(230, 233, 55);" {% elif o.nja < 10 %}
+                        style="background-color: rgb(235, 163, 70);" {% elif o.nja < 12 %}
+                        style="background-color: rgb(235, 89, 70);" {% endif %}> {{o.immatriculation}} </td>
                     <td> {{o.couleur}} </td>
                     <td> {{o.info_engin.info}} </td>
                     <td> {{o.modele_engin.marque.nom_marque}} </td>
                     <td> {{o.modele_engin.nom_modele}} </td>
                     <td> {{o.type_engin.designation}} </td>
                     <td> {{o.fournisseur_engin.nom_fournisseur}} </td>
+                    <td {% if o.nja < 5 %} style="background-color: rgb(100, 233, 100);" {% elif o.nja < 8 %}
+                        style="background-color: rgb(230, 233, 55);" {% elif o.nja < 10 %}
+                        style="background-color: rgb(235, 163, 70);" {% elif o.nja < 12 %}
+                        style="background-color: rgb(235, 89, 70);" {% endif %}> {{o.nja}} jours</td>
                     <td> {{o.etat_engin.libelle_etat}} </td>
                     <td> {{o.est_obsolete}} </td>
                     <td> {{o.date_creation}} </td>
                     <td class="td-actions text-right">
                         <div class="dropdown no-arrow">
                             <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                                id="dropdownMenuLink1" data-toggle="dropdown"
-                                aria-haspopup="false" aria-expanded="false">
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
+                                aria-expanded="false">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                 aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
-                                <a class="dropdown-item"
-                                    href="">Modifier</a>
-                                <a class="dropdown-item"
-                                    href="">Supprimer</a>
+                                <a class="dropdown-item" href="">Modifier</a>
+                                <a class="dropdown-item" href="">Supprimer</a>
                                 <!-- <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a> -->
                             </div>
@@ -131,17 +135,16 @@ liste {{sujet}}
                 {% for o in objet %}
                 <tr>
                     <td class="text-center"> {{o.libelle_etat}} </td>
-                    
+
                     <td class="td-actions text-right">
                         <div class="dropdown no-arrow">
                             <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                                id="dropdownMenuLink1" data-toggle="dropdown"
-                                aria-haspopup="false" aria-expanded="false">
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
+                                aria-expanded="false">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                 aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item"
-                                    href="">Supprimer</a>
+                                <a class="dropdown-item" href="">Supprimer</a>
                                 <!-- <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Something else here</a> -->
                             </div>
@@ -176,16 +179,14 @@ liste {{sujet}}
                     <td class="td-actions text-right">
                         <div class="dropdown no-arrow">
                             <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                                id="dropdownMenuLink1" data-toggle="dropdown"
-                                aria-haspopup="false" aria-expanded="false">
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
+                                aria-expanded="false">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                 aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
-                                <a class="dropdown-item"
-                                    href="">Modifier</a>
-                                <a class="dropdown-item"
-                                    href="">Supprimer</a>
+                                <a class="dropdown-item" href="">Modifier</a>
+                                <a class="dropdown-item" href="">Supprimer</a>
                                 <!-- <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a> -->
                             </div>
@@ -222,16 +223,14 @@ liste {{sujet}}
                     <td class="td-actions text-right">
                         <div class="dropdown no-arrow">
                             <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                                id="dropdownMenuLink1" data-toggle="dropdown"
-                                aria-haspopup="false" aria-expanded="false">
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
+                                aria-expanded="false">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                 aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
-                                <a class="dropdown-item"
-                                    href="">Modifier</a>
-                                <a class="dropdown-item"
-                                    href="">Supprimer</a>
+                                <a class="dropdown-item" href="">Modifier</a>
+                                <a class="dropdown-item" href="">Supprimer</a>
                                 <!-- <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a> -->
                             </div>
@@ -271,16 +270,14 @@ liste {{sujet}}
                     <td class="td-actions text-right">
                         <div class="dropdown no-arrow">
                             <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                                id="dropdownMenuLink1" data-toggle="dropdown"
-                                aria-haspopup="false" aria-expanded="false">
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
+                                aria-expanded="false">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                 aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
-                                <a class="dropdown-item"
-                                    href="">Modifier</a>
-                                <a class="dropdown-item"
-                                    href="">Supprimer</a>
+                                <a class="dropdown-item" href="">Modifier</a>
+                                <a class="dropdown-item" href="">Supprimer</a>
                                 <!-- <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a> -->
                             </div>
@@ -321,16 +318,14 @@ liste {{sujet}}
                     <td class="td-actions text-right">
                         <div class="dropdown no-arrow">
                             <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                                id="dropdownMenuLink1" data-toggle="dropdown"
-                                aria-haspopup="false" aria-expanded="false">
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
+                                aria-expanded="false">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                 aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
-                                <a class="dropdown-item"
-                                    href="">Modifier</a>
-                                <a class="dropdown-item"
-                                    href="">Supprimer</a>
+                                <a class="dropdown-item" href="">Modifier</a>
+                                <a class="dropdown-item" href="">Supprimer</a>
                                 <!-- <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a> -->
                             </div>
@@ -369,16 +364,14 @@ liste {{sujet}}
                     <td class="td-actions text-right">
                         <div class="dropdown no-arrow">
                             <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                                id="dropdownMenuLink1" data-toggle="dropdown"
-                                aria-haspopup="false" aria-expanded="false">
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
+                                aria-expanded="false">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                 aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
-                                <a class="dropdown-item"
-                                    href="">Modifier</a>
-                                <a class="dropdown-item"
-                                    href="">Supprimer</a>
+                                <a class="dropdown-item" href="">Modifier</a>
+                                <a class="dropdown-item" href="">Supprimer</a>
                                 <!-- <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a> -->
                             </div>
@@ -413,16 +406,14 @@ liste {{sujet}}
                     <td class="td-actions text-right">
                         <div class="dropdown no-arrow">
                             <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                                id="dropdownMenuLink1" data-toggle="dropdown"
-                                aria-haspopup="false" aria-expanded="false">
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
+                                aria-expanded="false">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                 aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
-                                <a class="dropdown-item"
-                                    href="">Modifier</a>
-                                <a class="dropdown-item"
-                                    href="">Supprimer</a>
+                                <a class="dropdown-item" href="">Modifier</a>
+                                <a class="dropdown-item" href="">Supprimer</a>
                                 <!-- <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a> -->
                             </div>
@@ -453,16 +444,14 @@ liste {{sujet}}
                     <td class="td-actions text-right">
                         <div class="dropdown no-arrow">
                             <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                                id="dropdownMenuLink1" data-toggle="dropdown"
-                                aria-haspopup="false" aria-expanded="false">
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
+                                aria-expanded="false">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                 aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
-                                <a class="dropdown-item"
-                                    href="">Modifier</a>
-                                <a class="dropdown-item"
-                                    href="">Supprimer</a>
+                                <a class="dropdown-item" href="">Modifier</a>
+                                <a class="dropdown-item" href="">Supprimer</a>
                                 <!-- <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a> -->
                             </div>
@@ -499,16 +488,14 @@ liste {{sujet}}
                     <td class="td-actions text-right">
                         <div class="dropdown no-arrow">
                             <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                                id="dropdownMenuLink1" data-toggle="dropdown"
-                                aria-haspopup="false" aria-expanded="false">
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
+                                aria-expanded="false">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                 aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
-                                <a class="dropdown-item"
-                                    href="">Modifier</a>
-                                <a class="dropdown-item"
-                                    href="">Supprimer</a>
+                                <a class="dropdown-item" href="">Modifier</a>
+                                <a class="dropdown-item" href="">Supprimer</a>
                                 <!-- <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a> -->
                             </div>
@@ -545,16 +532,14 @@ liste {{sujet}}
                     <td class="td-actions text-right">
                         <div class="dropdown no-arrow">
                             <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                                id="dropdownMenuLink1" data-toggle="dropdown"
-                                aria-haspopup="false" aria-expanded="false">
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
+                                aria-expanded="false">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                 aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
-                                <a class="dropdown-item"
-                                    href="">Modifier</a>
-                                <a class="dropdown-item"
-                                    href="">Supprimer</a>
+                                <a class="dropdown-item" href="">Modifier</a>
+                                <a class="dropdown-item" href="">Supprimer</a>
                                 <!-- <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a> -->
                             </div>
@@ -632,16 +617,14 @@ liste {{sujet}}
                     <td class="td-actions text-right">
                         <div class="dropdown no-arrow">
                             <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                                id="dropdownMenuLink1" data-toggle="dropdown"
-                                aria-haspopup="false" aria-expanded="false">
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
+                                aria-expanded="false">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                 aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
-                                <a class="dropdown-item"
-                                    href="">Modifier</a>
-                                <a class="dropdown-item"
-                                    href="">Supprimer</a>
+                                <a class="dropdown-item" href="">Modifier</a>
+                                <a class="dropdown-item" href="">Supprimer</a>
                                 <!-- <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a> -->
                             </div>
@@ -676,16 +659,14 @@ liste {{sujet}}
                     <td class="td-actions text-right">
                         <div class="dropdown no-arrow">
                             <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                                id="dropdownMenuLink1" data-toggle="dropdown"
-                                aria-haspopup="false" aria-expanded="false">
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
+                                aria-expanded="false">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                 aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
-                                <a class="dropdown-item"
-                                    href="">Modifier</a>
-                                <a class="dropdown-item"
-                                    href="">Supprimer</a>
+                                <a class="dropdown-item" href="">Modifier</a>
+                                <a class="dropdown-item" href="">Supprimer</a>
                                 <!-- <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a> -->
                             </div>
@@ -722,16 +703,14 @@ liste {{sujet}}
                     <td class="td-actions text-right">
                         <div class="dropdown no-arrow">
                             <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                                id="dropdownMenuLink1" data-toggle="dropdown"
-                                aria-haspopup="false" aria-expanded="false">
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
+                                aria-expanded="false">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                 aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
-                                <a class="dropdown-item"
-                                    href="">Modifier</a>
-                                <a class="dropdown-item"
-                                    href="">Supprimer</a>
+                                <a class="dropdown-item" href="">Modifier</a>
+                                <a class="dropdown-item" href="">Supprimer</a>
                                 <!-- <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a> -->
                             </div>
