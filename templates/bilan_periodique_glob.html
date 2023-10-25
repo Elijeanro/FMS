@@ -163,7 +163,7 @@ Bilan périodique
                           <th>Montant</th>
                           <th>Quantité</th>
                           <th>Carb. Dispo</th>
-                          <th>Voir</th>
+                          <th>Voir</th>  
                         </tr>
                       </thead>
                       <tbody>
@@ -178,18 +178,16 @@ Bilan périodique
                           <td>{{r.cout_rav}} </td>
                           <td>{{r.quantite_rav}} </td>
                           <td>{{r.carb_dispo}}</td>
-
                           <td class="td-actions text-right">
                             <div class="dropdown no-arrow">
                               <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
-                                aria-expanded="false">
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                               </a>
                               <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                 aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header" style="color: black; font-size: 12px;">Option:</div>
-                                <a class="dropdown-item" href="">Bilan périodique</a>
-
+                                <a class="dropdown-item" href="{% url 'administratif:bilan_partic' grade_id r.engin_rav.id 'finances' day_1 month_1 year_1 day_2 month_2 year_2 %}">Bilan de l'engin</a>
+        
                               </div>
                             </div>
                           </td>
@@ -197,6 +195,10 @@ Bilan périodique
 
                         {% endfor %}
                       </tbody>
+                      <tr>
+                        <th>Total dépenses carburant : </th>
+                        <td>{{cout_r}} F CFA</td>
+                      </tr>
                     </table>
                     <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection"
                       aria-expanded="false" aria-controls="carburantSection">
@@ -210,6 +212,10 @@ Bilan périodique
                     <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection"
                       aria-expanded="false" aria-controls="vidangeSection">
                       voir vidange
+                    </button>
+                    <button type="button" class="btn btn-default" onclick="printTable('dataTable2', 'Bilan financier : Point sur le carburant')">
+                      <i class="fas fa-download"></i>
+                      Imprimer ce tableau
                     </button>
                   </div>
                   <br><br>
@@ -231,7 +237,7 @@ Bilan périodique
                           <th>Fournisseur</th>
                           <th>Type de maintenance</th>
                           <th>Motif</th>
-                          <th>Voir</th>
+                          <th>Voir</th>  
                         </tr>
                       </thead>
                       <tbody>
@@ -247,12 +253,27 @@ Bilan périodique
                           <td>{{m.fournisseur_maint.nom_fournisseur}} </td>
                           <td>{{m.type_maint.libelle_maint}} </td>
                           <td>{{m.motif_maint}} </td>
-
-                          <td></td>
+                          <td class="td-actions text-right">
+                            <div class="dropdown no-arrow">
+                              <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header" style="color: black; font-size: 12px;">Option:</div>
+                                <a class="dropdown-item" href="{% url 'administratif:bilan_partic' grade_id m.engin_maint.id 'finances' day_1 month_1 year_1 day_2 month_2 year_2 %}">Bilan de l'engin</a>
+        
+                              </div>
+                            </div>
+                          </td>                          
                         </tr>
 
                         {% endfor %}
                       </tbody>
+                      <tr>
+                        <th>Total dépenses maintenance : </th>
+                        <td>{{cout_m}} F CFA</td>
+                      </tr>
                     </table>
                     <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection"
                       aria-expanded="false" aria-controls="maintenanceSection">
@@ -266,6 +287,10 @@ Bilan périodique
                     <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection"
                       aria-expanded="false" aria-controls="vidangeSection">
                       voir vidange
+                    </button>
+                    <button type="button" class="btn btn-default" onclick="printTable('dataTable3','Bilan financier : Point sur les maintenances')">
+                      <i class="fas fa-download"></i>
+                      Imprimer ce tableau
                     </button>
                   </div>
                   <br><br>
@@ -290,7 +315,7 @@ Bilan périodique
                           <th>Montant</th>
                           <th>Fournisseur</th>
                           <th>Kilométrage à la vidange</th>
-                          <th>Voir</th>
+                          <th>Voir</th>  
                         </tr>
                       </thead>
                       <tbody>
@@ -306,12 +331,27 @@ Bilan périodique
                           <td>{{v.fournisseur_maint.nom_fournisseur}} </td>
 
                           <td>{{v.Km_maint}} </td>
-
-                          <td></td>
+                          <td class="td-actions text-right">
+                            <div class="dropdown no-arrow">
+                              <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header" style="color: black; font-size: 12px;">Option:</div>
+                                <a class="dropdown-item" href="{% url 'administratif:bilan_partic' grade_id v.engin_maint.id 'finances' day_1 month_1 year_1 day_2 month_2 year_2 %}">Bilan de l'engin</a>
+        
+                              </div>
+                            </div>
+                          </td>
                         </tr>
 
                         {% endfor %}
                       </tbody>
+                      <tr>
+                        <th>Total dépenses vidanges : </th>
+                        <td>{{cout_v}} F CFA</td>
+                      </tr>
                     </table>
                     <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection"
                       aria-expanded="false" aria-controls="vidangeSection">
@@ -324,6 +364,10 @@ Bilan périodique
                     <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection"
                       aria-expanded="false" aria-controls="maintenanceSection">
                       voir maintenance
+                    </button>
+                    <button type="button" class="btn btn-default" onclick="printTable('dataTable4','Bilan financier : Point sur les vidanges')">
+                      <i class="fas fa-download"></i>
+                      Imprimer ce tableau
                     </button>
                   </div>
                 </div>
@@ -430,7 +474,7 @@ Bilan périodique
                               <th>Quantité</th>
                               <th>Carb. Dispo</th>
                               <th>Distance à parcourir</th>
-                              <th>Voir</th>
+                              <th>Voir</th>  
                             </tr>
                           </thead>
                           <tbody>
@@ -445,11 +489,27 @@ Bilan périodique
                               <td>{{r.quantite_rav}} </td>
                               <td>{{r.carb_dispo}}</td>
                               <td>{{r.dap}} Km</td>
-                              <td></td>
+                              <td class="td-actions text-right">
+                                <div class="dropdown no-arrow">
+                                  <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                    id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                                  </a>
+                                  <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                    aria-labelledby="dropdownMenuLink">
+                                    <div class="dropdown-header" style="color: black; font-size: 12px;">Option:</div>
+                                    <a class="dropdown-item" href="{% url 'administratif:bilan_partic' grade_id r.engin_rav.id 'techniques' day_1 month_1 year_1 day_2 month_2 year_2 %}">Bilan de l'engin</a>
+            
+                                  </div>
+                                </div>
+                              </td>
                             </tr>
 
                             {% endfor %}
                           </tbody>
+                          <tr>
+                            <th>Quantité totale de carburant : </th>
+                            <td>{{quantite_rav}} Litres</td>
+                          </tr>
                         </table>
                         <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection1"
                           aria-expanded="false" aria-controls="carburantSection1">
@@ -462,6 +522,10 @@ Bilan périodique
                         <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection1"
                           aria-expanded="false" aria-controls="vidangeSection1">
                           voir vidange
+                        </button>
+                        <button type="button" class="btn btn-default" onclick="printTable('dataTable5','Bilan Technique : Point sur les interventions en carburant')">
+                          <i class="fas fa-download"></i>
+                          Imprimer ce tableau
                         </button>
                       </div>
                       <br><br>
@@ -485,7 +549,7 @@ Bilan périodique
                               <th>Type de maintenance</th>
                               <th>Motif</th>
                               <th>Révision</th>
-                              <th>Voir</th>
+                              <th>Voir</th>  
                             </tr>
                           </thead>
                           <tbody>
@@ -502,11 +566,27 @@ Bilan périodique
                               <td>{{m.type_maint.libelle_maint}} </td>
                               <td>{{m.motif_maint}} </td>
                               <td>Dans {{m.reviz}} jours</td>
-                              <td></td>
+                              <td class="td-actions text-right">
+                                <div class="dropdown no-arrow">
+                                  <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                    id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                                  </a>
+                                  <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                    aria-labelledby="dropdownMenuLink">
+                                    <div class="dropdown-header" style="color: black; font-size: 12px;">Option:</div>
+                                    <a class="dropdown-item" href="{% url 'administratif:bilan_partic' grade_id m.engin_maint.id 'techniques' day_1 month_1 year_1 day_2 month_2 year_2 %}">Bilan de l'engin</a>
+            
+                                  </div>
+                                </div>
+                              </td>
                             </tr>
 
                             {% endfor %}
                           </tbody>
+                          <tr>
+                            <th>Nombre total de maintenance : </th>
+                            <td>{{nb_maintenance}}</td>
+                          </tr>
                         </table>
                         <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection1"
                           aria-expanded="false" aria-controls="maintenanceSection1">
@@ -519,6 +599,10 @@ Bilan périodique
                         <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection1"
                           aria-expanded="false" aria-controls="vidangeSection1">
                           voir vidange
+                        </button>
+                        <button type="button" class="btn btn-default" onclick="printTable('dataTable6','Bilan Technique : Point sur les interventions en maintenance')">
+                          <i class="fas fa-download"></i>
+                          Imprimer ce tableau
                         </button>
                       </div>
                       <br><br>
@@ -544,7 +628,7 @@ Bilan périodique
                               <th>Fournisseur</th>
                               <th>Kilométrage à la vidange</th>
                               <th>Prochaine vidange</th>
-                              <th>Voir</th>
+                              <th>Voir</th>  
                             </tr>
                           </thead>
                           <tbody>
@@ -558,7 +642,19 @@ Bilan périodique
                               <td>{{v.engin_vid.immatriculation}} </td>
                               <td>{{v.cout_maint}} </td>
                               <td>{{v.fournisseur_maint.nom_fournisseur}} </td>
-
+                              <td class="td-actions text-right">
+                                <div class="dropdown no-arrow">
+                                  <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                    id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                                  </a>
+                                  <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                    aria-labelledby="dropdownMenuLink">
+                                    <div class="dropdown-header" style="color: black; font-size: 12px;">Option:</div>
+                                    <a class="dropdown-item" href="{% url 'administratif:bilan_partic' grade_id v.engin_maint.id 'techniques' day_1 month_1 year_1 day_2 month_2 year_2 %}">Bilan de l'engin</a>
+            
+                                  </div>
+                                </div>
+                              </td>
                               <td>{{v.Km_maint}} </td>
                               <td>
 
@@ -569,11 +665,15 @@ Bilan périodique
                                 {% endif %}
 
                               </td>
-                              <td></td>
+                              
                             </tr>
 
                             {% endfor %}
                           </tbody>
+                          <tr>
+                            <th>Nombre total de vidange : </th>
+                            <td>{{nb_vidange}}</td>
+                          </tr>
                         </table>
                         <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection1"
                           aria-expanded="false" aria-controls="vidangeSection1">
@@ -587,6 +687,10 @@ Bilan périodique
                           aria-expanded="false" aria-controls="maintenanceSection1">
                           voir maintenance
                         </button>
+                        <button type="button" class="btn btn-default" onclick="printTable('dataTable7','Bilan Technique : Point sur les interventions en vidange')">
+                          <i class="fas fa-download"></i>
+                          Imprimer ce tableau
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -599,4 +703,18 @@ Bilan périodique
     </div>
   </div>
 </div>
+<script>
+  function printTable(tableId, headerText) {
+    var table = document.getElementById(tableId);
+    var newWin = window.open('', 'Print-Window');
+    newWin.document.open();
+    newWin.document.write('<html><head><style>@media print { .header { text-align: center; font-size: 16px; font-weight: bold; margin: 10px; } }</style></head><body onload="window.print()">' +
+      '<div class="header">' + headerText + '</div>' +
+      table.outerHTML + '</body></html>');
+    newWin.document.close();
+    newWin.focus();
+    newWin.print();
+    newWin.close();
+  }
+  </script>
 {% endblock contenu %}

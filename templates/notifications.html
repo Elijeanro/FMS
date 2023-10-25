@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% extends 'bases/base1.html' %}
+
+
+{% block title %}
+    Notifications
+{% endblock title %}
+    
+
+{% block contenu %}
+<br>
+
+<div class="wrapper">
+    <h6 class="justify-content-center pl-9 mb-2"> Date {% now 'd/m/Y H:i:s' %}</h6>
+    <div class="row d-sm-flex justify-content-center mb-2">
+        <div class="col-lg-100 col-l-9 mb-4 w-75 ">
+            <div class="card border-left-info shadow h-100 py-2 mx-4">
+
+                <h3>Vous avez {{nb_engin_notif}} nouvelle(s) notification(s)</h3>
+                <div>
+                    <h5>Détails des notifications</h5>
+                </div>
+                <h4>RAVITAILLEMENT</h4>
+                <ul>
+                    {% for msg in msgs_notif_rav %}
+                    <li>{{ msg.notification_message_ravitaillement }}</li>
+                    
+                    {% endfor %}
+                </ul>
+                <hr>
+                <h4>MAINTENANCE</h4>
+                <ul>
+                    
+                    {% for msg in msgs_notif_maint %}
+                    <li>{{ msg.notification_message_maintenance }}</li>
+                    {% endfor %}
+                        
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock contenu %}

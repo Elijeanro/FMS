@@ -100,7 +100,7 @@ Analyses globales
                   <th>Carb. Dispo</th>
                   <th>Niveau de carburant</th>
                   <th>Observation</th>
-                  <th>Voir</th>
+                  
                 </tr>
               </thead>
               <tbody>
@@ -126,23 +126,15 @@ Analyses globales
 
                     {% if r.niveau_carb < 15 %} Niveau de carburant bas, songez à ravitailler {% elif r.niveau_carb < 35 %} Préparez un ravitaillement {% else %} Peut rouler pendant un bon moment {% endif %} </td>
 
-                  <td class="td-actions text-right">
-                    <div class="dropdown no-arrow">
-                      <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                        id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                        aria-labelledby="dropdownMenuLink">
-                        <div class="dropdown-header" style="color: black; font-size: 12px;">Option:</div>
-                        <a class="dropdown-item" href="">Bilan périodique</a>
-
-                      </div>
-                    </div>
-                  </td>
+                  
                 </tr>
 
                 {% endfor %}
               </tbody>
+              <tr>
+                <th>Total dépenses en carburant : </th>
+                <td>{{cout_r}} F CFA</td>
+              </tr>
             </table>
             <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection"
             aria-expanded="false" aria-controls="carburantSection">
@@ -156,6 +148,16 @@ Analyses globales
           <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection"
             aria-expanded="false" aria-controls="vidangeSection">
             voir vidange
+          </button>
+          <button type="button" class="btn btn-default" onclick="printTable('dataTable2','Point sur le carburant')">
+            <i class="fas fa-download"></i>
+            Imprimer ce tableau
+          </button>
+
+          <button type="button" class="btn btn-default">
+            <i class="fas fa-download"></i>
+            <a href="">
+              Générer un PDF</a>
           </button>
 </div>
 <br><br>
@@ -178,7 +180,7 @@ Analyses globales
                   <th>Fournisseur</th>
                   <th>Type de maintenance</th>
                   <th>Motif</th>
-                  <th>Voir</th>
+                  
                 </tr>
               </thead>
               <tbody>
@@ -195,11 +197,14 @@ Analyses globales
                   <td>{{m.type_maint.libelle_maint}} </td>
                   <td>{{m.motif_maint}} </td>
 
-                  <td></td>
                 </tr>
 
                 {% endfor %}
               </tbody>
+              <tr>
+                <th>Total dépenses en maintenance : </th>
+                <td>{{cout_m}} F CFA</td>
+              </tr>
             </table>
             <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection"
             aria-expanded="false" aria-controls="maintenanceSection">
@@ -213,6 +218,10 @@ Analyses globales
           <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection"
             aria-expanded="false" aria-controls="vidangeSection">
             voir vidange
+          </button>
+          <button type="button" class="btn btn-default" onclick="printTable('dataTable3','Point sur les maintenances')">
+            <i class="fas fa-download"></i>
+            Imprimer ce tableau
           </button>
 </div>
 <br><br>
@@ -237,7 +246,7 @@ Analyses globales
                   <th>Montant</th>
                   <th>Fournisseur</th>
                   <th>Kilométrage à la vidange</th>
-                  <th>Voir</th>
+                  
                 </tr>
               </thead>
               <tbody>
@@ -254,11 +263,14 @@ Analyses globales
 
                   <td>{{v.Km_maint}} </td>
 
-                  <td></td>
                 </tr>
 
                 {% endfor %}
               </tbody>
+              <tr>
+                <th>Total dépenses en vidange : </th>
+                <td>{{cout_v}} F CFA</td>
+              </tr>
             </table>
             <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection"
                       aria-expanded="false" aria-controls="vidangeSection">
@@ -271,6 +283,10 @@ Analyses globales
                     <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection"
                       aria-expanded="false" aria-controls="maintenanceSection">
                       voir maintenance
+                    </button>
+                    <button type="button" class="btn btn-default" onclick="printTable('dataTable4','Point sur les vidanges')">
+                      <i class="fas fa-download"></i>
+                      Imprimer ce tableau
                     </button>
           </div>
         </div>
@@ -367,7 +383,7 @@ Analyses globales
                   <th>Carb. Dispo</th>
                   <th>Ecart de conso.</th>
                   <th>Observation</th>
-                  <th>Voir</th>
+                  
               </tr>
             </thead>
             <tbody>
@@ -394,23 +410,15 @@ Analyses globales
                     {% if r.ecart_conso < 20 %} Consommation acceptable {% elif r.ecart_conso < 35 %} Engin à suivre de
                       près {% else %} Consomme trop, envoyer l'engin en maintenance {% endif %} </td>
 
-                  <td class="td-actions text-right">
-                    <div class="dropdown no-arrow">
-                      <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
-                        id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                        aria-labelledby="dropdownMenuLink">
-                        <div class="dropdown-header" style="color: black; font-size: 12px;">Option:</div>
-                        <a class="dropdown-item" href="">Bilan périodique</a>
-
-                      </div>
-                    </div>
-                  </td>
+                  
               </tr>
 
               {% endfor %}
             </tbody>
+            <tr>
+              <th>Quantité totale de carburant : </th>
+              <td>{{quantite_rav}}</td>
+            </tr>
           </table>
           <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection1"
           aria-expanded="false" aria-controls="carburantSection1">
@@ -423,6 +431,10 @@ Analyses globales
         <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection1"
           aria-expanded="false" aria-controls="vidangeSection1">
           voir vidange
+        </button>
+        <button type="button" class="btn btn-default" onclick="printTable('dataTable5','Point sur les interventions en carburant')">
+          <i class="fas fa-download"></i>
+          Imprimer ce tableau
         </button>
 </div>
 <br><br>
@@ -445,7 +457,7 @@ Analyses globales
                 <th>Type de maintenance</th>
                 <th>Motif</th>
                 <th>Révision</th>
-                <th>Voir</th>
+                
               </tr>
             </thead>
             <tbody>
@@ -462,11 +474,15 @@ Analyses globales
                 <td>{{m.type_maint.libelle_maint}} </td>
                 <td>{{m.motif_maint}} </td>
                 <td>Dans {{m.reviz}} jours</td>
-                <td></td>
+                
               </tr>
 
               {% endfor %}
             </tbody>
+            <tr>
+              <th>Nombre total de maintenance : </th>
+              <td>{{nb_maintenance}}</td>
+            </tr>
           </table>
           <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection1"
           aria-expanded="false" aria-controls="maintenanceSection1">
@@ -480,6 +496,11 @@ Analyses globales
           aria-expanded="false" aria-controls="vidangeSection1">
           voir vidange
         </button>
+        <button type="button" class="btn btn-default" onclick="printTable('dataTable6','Point sur les interventions en maintenance')">
+          <i class="fas fa-download"></i>
+          Imprimer ce tableau
+        </button>
+        
 </div>
 <br><br>
 <div class="collapse" id="vidangeSection1">
@@ -504,7 +525,7 @@ Analyses globales
                 <th>Fournisseur</th>
                 <th>Kilométrage à la vidange</th>
                 <th>Prochaine vidange</th>
-                <th>Voir</th>
+                
               </tr>
             </thead>
             <tbody>
@@ -529,11 +550,14 @@ Analyses globales
                   {% endif %}
 
                 </td>
-                <td></td>
               </tr>
 
               {% endfor %}
             </tbody>
+            <tr>
+              <th>Nombre total de vidange : </th>
+              <td>{{nb_vidange}}</td>
+            </tr>
           </table>
           <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection1"
                           aria-expanded="false" aria-controls="vidangeSection1">
@@ -547,6 +571,10 @@ Analyses globales
                           aria-expanded="false" aria-controls="maintenanceSection1">
                           voir maintenance
                         </button>
+                        <button type="button" class="btn btn-default" onclick="printTable('dataTable7','Point sur les interventions en vidange')">
+                          <i class="fas fa-download"></i>
+                          Imprimer ce tableau
+                        </button>
         </div>
       </div>
     </div>
@@ -556,4 +584,19 @@ Analyses globales
 
   {% endif %}
 </div>
+<script>
+  function printTable(tableId, headerText) {
+    var table = document.getElementById(tableId);
+    var newWin = window.open('', 'Print-Window');
+    newWin.document.open();
+    newWin.document.write('<html><head><style>@media print { .header { text-align: center; font-size: 16px; font-weight: bold; margin: 10px; } }</style></head><body onload="window.print()">' +
+      '<div class="header">' + headerText + '</div>' +
+      table.outerHTML + '</body></html>');
+    newWin.document.close();
+    newWin.focus();
+    newWin.print();
+    newWin.close();
+  }
+  </script>
+  
 {% endblock contenu %}

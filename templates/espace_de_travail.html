@@ -208,7 +208,7 @@
               <span class="nav-link-inner--text"> {{ grade.libelle_grade }} </span>
             </a>
             <div class="dropdown-menu">
-              <a href="./examples/landing.html" class="dropdown-item">Paramètres du compte</a>
+              <a href="" class="dropdown-item">Paramètres du compte</a>
               <a href="{% url 'administratif:logout' %}" class="dropdown-item">Déconnexion</a>
               <a href="{% url 'administratif:login' %}" class="dropdown-item">Se connecter</a>
               {% if grade_id == 1 or grade_id == 2 %}
@@ -298,19 +298,13 @@
             <tbody>
               {% for o in engin %}
               <tr>
-                <td class="text-center" {% if o.nja < 5 %} style="background-color: rgb(100, 233, 100);" {% elif o.nja <
-                  8 %} style="background-color: rgb(230, 233, 55);" {% elif o.nja < 10 %}
-                  style="background-color: rgb(235, 163, 70);" {% elif o.nja < 12 %}
-                  style="background-color: rgb(235, 89, 70);" {% endif %}> {{o.immatriculation}} </td>
+                <td class="text-center"> {{o.immatriculation}} </td>
                 <td> {{o.couleur}} </td>
                 <td> {{o.modele_engin.marque.nom_marque}} </td>
                 <td> {{o.modele_engin.nom_modele}} </td>
                 <td> {{o.type_engin.designation}} </td>
                 <td> {{o.fournisseur_engin.nom_fournisseur}} </td>
-                <td {% if o.nja < 5 %} style="background-color: rgb(100, 233, 100);" {% elif o.nja < 8 %}
-                  style="background-color: rgb(230, 233, 55);" {% elif o.nja < 10 %}
-                  style="background-color: rgb(235, 163, 70);" {% elif o.nja < 12 %}
-                  style="background-color: rgb(235, 89, 70);" {% endif %}> {{o.nja}} jours</td>
+                <td> {{o.nja}} jours</td>
                 <td> {{o.etat_engin.libelle_etat}} </td>
                 <td> {{o.est_obsolete}} </td>
                 <td> {{o.date_creation}} </td>
@@ -323,8 +317,8 @@
                       aria-labelledby="dropdownMenuLink">
                       <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
                       {% if grade_id == 1 or grade_id == 3 %}
-                      <a class="dropdown-item" href="">Modifier</a>
-                      <a class="dropdown-item" href="">Supprimer</a>
+                      <a class="dropdown-item" href="{% url 'gestionnaire:update_engin' o.id grade_id %}">Modifier</a>
+                      <a class="dropdown-item" href="{% url 'gestionnaire:delete_engin' o.id grade_id %}">Supprimer</a>
                       <div class="dropdown-divider"></div>
                       {% endif %}
                       <a class="dropdown-item"
@@ -336,6 +330,7 @@
                     </div>
                   </div>
                 </td>
+                
               </tr>
               {% endfor %}
             </tbody>

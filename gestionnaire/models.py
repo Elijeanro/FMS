@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User, Group, Permission
 from django.utils.translation import gettext_lazy as _
-from django.db.models import F
+from django.db.models import Q
 
 
 class Marque(models.Model):
@@ -77,9 +77,11 @@ class Engin(models.Model):
     vik = models.FloatField(null=True)
     # Capacité du réservoir
     capa_reserv = models.FloatField(default=0, null=True)
+    has_notification = models.BooleanField(default=False)
+
     def __str__(self):
         return str(self.immatriculation)
-  
+    
 class RavitaillementCarburant(models.Model):
     date_rav = models.DateField(auto_now_add=True)
     quantite_rav = models.FloatField(default=0,null=True)
@@ -107,8 +109,8 @@ class RavitaillementCarburant(models.Model):
         if ravitaillement_precedent:
             # Il y a un ravitaillement précédent, soustrayez la valeur de Km_plein
             if self.plein :
-                ecart = self.Km_plein - ravitaillement_precedent.Km_plein
-                return (((self.quantite_rav * 100 / ecart) - self.engin_rav.info_engin.consommation) * 100)
+                ecart = float(self.Km_plein) - float(ravitaillement_precedent.Km_plein)
+                return (((float(self.quantite_rav) * 100 / ecart) - self.engin_rav.info_engin.consommation) * 100)
         else:
             # Aucun ravitaillement précédent, renvoyez une valeur par défaut (0 par exemple)
             return 0
@@ -117,6 +119,8 @@ class RavitaillementCarburant(models.Model):
             return (float(self.carb_dispo)*100/float(self.engin_rav.capa_reserv))
         else :
             return 0
+    def notification_message_ravitaillement(self):
+        return f"{self.engin_rav.immatriculation} a besoin de ravitaillement en carburant (niveau : {self.niveau_carb()} %)"
 
 class TypeMaintenance(models.Model):
     libelle_maint = models.CharField(max_length=30)
@@ -125,7 +129,7 @@ class TypeMaintenance(models.Model):
     
 class MaintenanceEngin(models.Model):
     date_maint = models.DateField(auto_now_add=True)
-    type_maint = models.ForeignKey('TypeMaintenance', on_delete=models.CASCADE)
+    type_maint = models.ForeignKey('TypeMaintenance', on_delete=models.CASCADE, null=True)
     motif_maint = models.CharField(max_length=500, null=True)
     engin_maint = models.ForeignKey('Engin', on_delete=models.CASCADE)
     cout_maint = models.FloatField(default=0)
@@ -138,29 +142,35 @@ class MaintenanceEngin(models.Model):
     def reviz(self):
         # Calcul du nombre de jours restants avant la prochaine révision (30 jours par défaut)
         if self.engin_maint.nja is not None:
-            return 30 - self.engin_maint.nja
+            return 30 - float(self.engin_maint.nja)
         else:
             return None
 
     def vid(self):
-        if self.type_maint_id == 4:
+        if self.type_maint.id == 4:
             # Dans le cas d'une maintenance de type 4, calculez les jours restants avant la prochaine vidange (15 jours par défaut)
             if self.engin_maint.nja is not None:
-                return 15 - self.engin_maint.nja
+                return 15 - float(self.engin_maint.nja)
             else:
                 return None
         else:
             # Dans d'autres cas, calculez les kilomètres restants avant la prochaine vidange en fonction de la consommation
             if self.engin_maint.info_engin is not None:
-                consommation = self.engin_maint.info_engin.consommation
+                consommation = float(self.engin_maint.info_engin.consommation)
                 if consommation > 0:
-                    distance_restante = self.engin_maint.info_engin.vidange - self.Km_vid
+                    distance_restante = float(self.engin_maint.info_engin.vidange) - float(self.Km_vid)
                     return distance_restante * consommation / 100
                 else:
                     return None
             else:
                 return None
 
+    def notification_message_maintenance(self):
+        if self.engin_maint.type_engin == 2:
+            return f"{self.engin_maint.immatriculation} devrait avoir sa vidange dans {self.vid()} jours."
+        else : 
+            f"{self.engin_maint.immatriculation} devrait avoir sa vidange dans {self.vid()} Km."
+        return f"{self.engin_maint.immatriculation} devrait aller en révision dans {self.reviz()} jours."
     
 class Attribution(models.Model):
     date_attribution = models.DateField(auto_now_add=True)

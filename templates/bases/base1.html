@@ -204,11 +204,12 @@
           </li> -->
           <!-- Notifications Zone -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="ni ni-bell-55"></i>
-              <span class="nav-link-inner--text">Notifications</span>
+            <a href="#" class="nav-link {% if engins_avec_notifications %}text-danger{% endif %}" data-toggle="modal" data-target="#notificationModal">
+                <i class="ni ni-bell-55 {% if engins_avec_notifications %}text-danger{% endif %}"></i>
+                <span class="nav-link-inner--text">Notifications</span>
             </a>
-          </li>
+        </li>
+        
           <!-- Search Zone -->
           <li class="nav-item dropdown">
             <a href="#" class="nav-link" data-toggle="dropdown" role="button">
@@ -217,7 +218,7 @@
             </a>
             <div class="dropdown-menu">
               <a href="./examples/landing.html" class="dropdown-item">Paramètres du compte</a>
-              <a href="{% url 'administratif:logout' %}" class="dropdown-item">Déconnexion</a>
+              <a href="#" class="dropdown-item" data-toggle="modal" data-target="#logoutModal">Déconnexion</a>
               <a href="{% url 'administratif:login' %}" class="dropdown-item">Se connecter</a>
               {% if grade_id == 1 or grade_id == 2 %}
               <a href="{% url 'administrateur:creerpersonne' 'personne' %}" class="dropdown-item">Ajouter un compte</a>
@@ -236,10 +237,12 @@
   {% block contenu %}
 
   {% endblock contenu %}
-  <div class="text-center mb-6">
-    <button type="button" class="btn btn-default p-1 d-xl-inline ">
-      <a class="btn" href="javascript:history.go(-1);">&laquo; Revenir en arrière</a>
-    </button>
+  <div class="col">
+    <div class="text-center mb-6">
+      <button type="button" class="btn btn-default p-1 d-xl-inline ">
+        <a class="btn" href="javascript:history.go(-1);">&laquo; Revenir en arrière</a>
+      </button>
+    </div>
   </div>
   <style>
     .back-to-top {
@@ -277,6 +280,25 @@
 
   <!-- JAVASCRIPTS -->
   <script>
+    document.getElementById("printButton").addEventListener("click", function () {
+        // Capturer le contenu de la page
+        html2canvas(document.body).then(function (canvas) {
+            // Convertir le canvas en image de données base64
+            var imgData = canvas.toDataURL("image/png");
+
+            // Créer un objet PDF
+            var pdf = new jsPDF('p', 'mm', 'a4');
+
+            // Ajouter l'image capturée à la page PDF
+            pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
+
+            // Enregistrer le fichier PDF (ouvrir dans un nouvel onglet)
+            pdf.save("page.pdf");
+        });
+    });
+</script>
+
+  <script>
     $(window).scroll(function (event) {
       // A chaque fois que l'utilisateur va scroller (descendre la page)
       var y = $(this).scrollTop(); // On récupère la valeur du scroll vertical
@@ -302,6 +324,7 @@
   <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
   <script src="{% static 'assets/js/plugins/nouislider.min.js' %}" type="text/javascript"></script>
   <script src="{% static 'assets/js/plugins/moment.min.js' %}"></script>
+  <script src="{% static 'assets/js/notifications.js' %}"></script>
   <script src="{% static 'assets/js/plugins/datetimepicker.js' %}" type="text/javascript"></script>
   <script src="{% static 'assets/js/plugins/bootstrap-datepicker.min.js' %}"></script>
   <!-- Control Center for Argon UI Kit: parallax effects, scripts for the example pages etc -->
@@ -316,6 +339,44 @@
         application: "argon-design-system-pro"
       });
   </script>
+  <!-- Notification Modal-->
+  <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Notifications</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">Vous avez {{nb_engin_notif}} notifications.</div>
+        <div class="modal-footer">
+          
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Quitter</button>
+            <a class="btn btn-primary" href="{% url 'administratif:notifications' grade_id %}">Voir</a>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade pt-3" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel1">Déconnexion</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">Voulez-vous vraiment vous déconnecter?</div>
+        <div class="modal-footer">
+          
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+            <a class="btn btn-primary" href="{% url 'administratif:logout' %}">Déconnexion</a>
+        </div>
+    </div>
+</div>
+</div>
+</div>
 </body>
 
 </html>

@@ -45,19 +45,19 @@ urlpatterns = [
     path('update/releve-distance/<int:pk>/<int:grade_id>/', views.update_releve_distance, name='update_releve_distance'),
 
 # Les Suppressions
-    path('delete/modele/<int:modele_id>/', views.delete_modele, name='delete_modele'),
-    path('delete/info-engin/<int:info_engin_id>/', views.delete_info_engin, name='delete_info_engin'),
-    path('delete/ravitaillement-carburant/<int:ravitaillement_carburant_id>/', views.delete_ravitaillement_carburant, name='delete_ravitaillement_carburant'),
-    path('delete/personne/<int:personne_id>/', views.delete_personne, name='delete_personne'),
-    path('delete/marque/<int:marque_id>/', views.delete_marque, name='delete_marque'),
-    path('delete/fournisseur/<int:fournisseur_id>/', views.delete_fournisseur, name='delete_fournisseur'),
-    path('delete/engin/<int:engin_id>/', views.delete_engin, name='delete_engin'),
-    path('delete/type-engin/<int:type_engin_id>/', views.delete_type_engin, name='delete_type_engin'),
-    path('delete/etat-engin/<int:etat_engin_id>/', views.delete_etat_engin, name='delete_etat_engin'),
+    path('delete/modele/<int:modele_id>/<int:grade_id>', views.delete_modele, name='delete_modele'),
+    path('delete/info-engin/<int:info_engin_id>/<int:grade_id>', views.delete_info_engin, name='delete_info_engin'),
+    path('delete/ravitaillement-carburant/<int:ravitaillement_carburant_id>/<int:grade_id>', views.delete_ravitaillement_carburant, name='delete_ravitaillement_carburant'),
+    path('delete/personne/<int:personne_id>/<int:grade_id>', views.delete_personne, name='delete_personne'),
+    path('delete/marque/<int:marque_id>/<int:grade_id>', views.delete_marque, name='delete_marque'),
+    path('delete/fournisseur/<int:fournisseur_id>/<int:grade_id>', views.delete_fournisseur, name='delete_fournisseur'),
+    path('delete/engin/<int:engin_id>/<int:grade_id>', views.delete_engin, name='delete_engin'),
+    path('delete/type-engin/<int:type_engin_id>/<int:grade_id>', views.delete_type_engin, name='delete_type_engin'),
+    path('delete/etat-engin/<int:etat_engin_id>/<int:grade_id>', views.delete_etat_engin, name='delete_etat_engin'),
     
-    path('delete/type-maintenance/<int:type_maintenance_id>/', views.delete_type_maintenance, name='delete_type_maintenance'),
-    path('delete/maintenance-engin/<int:maintenance_engin_id>/', views.delete_maintenance_engin, name='delete_maintenance_engin'),
-    path('delete/attribution/<int:attribution_id>/', views.delete_attribution, name='delete_attribution'),
-    path('delete/releve-distance/<int:releve_distance_id>/', views.delete_releve_distance, name='delete_releve_distance'),
+    path('delete/type-maintenance/<int:type_maintenance_id>/<int:grade_id>', views.delete_type_maintenance, name='delete_type_maintenance'),
+    path('delete/maintenance-engin/<int:maintenance_engin_id>/<int:grade_id>', views.delete_maintenance_engin, name='delete_maintenance_engin'),
+    path('delete/attribution/<int:attribution_id>/<int:grade_id>', views.delete_attribution, name='delete_attribution'),
+    path('delete/releve-distance/<int:releve_distance_id>/<int:grade_id>', views.delete_releve_distance, name='delete_releve_distance'),
 
 ]

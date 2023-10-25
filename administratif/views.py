@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect,get_object_or_404,reverse
 from django.http import HttpResponse
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
 from django.contrib.auth.models import User
 from django.db.models import Sum
 from datetime import datetime, timedelta
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from gestionnaire.views import update_notifications
 
 from gestionnaire.models import Personne,Engin,Grade,Marque,Modele,TypeEngin,Fournisseur,MaintenanceEngin,RavitaillementCarburant,ReleveDistance
 
@@ -40,7 +43,8 @@ def signin(request):
             except User.DoesNotExist:
                 messages.error(request, 'Identifiant ou mot de passe incorrect!')
                 return redirect(reverse('administratif:login') + f'?message={message}')
-
+    engins_avec_notifications = Engin.objects.filter(has_notification=True)
+    context['engins_avec_notifications'] = engins_avec_notifications
     return render(request, 'login.html',context)
 
 
@@ -66,6 +70,8 @@ def espaceDeTravail(request, grade_id):
     context['grade_id'] = grade_id
     context['grade'] = grade
     context['engin'] = engin
+    for e in engin :
+        update_notifications(e.id)
     
     if request.method == "POST":
         num_objet = int(request.POST.get('objet', ''))
@@ -92,44 +98,18 @@ def espaceDeTravail(request, grade_id):
             resultat = engin
 
         context['engin'] = resultat
+    engins_avec_notifications = Engin.objects.filter(has_notification=True)
+    nb_engin_notif = engins_avec_notifications.count()
+    context['nb_engin_notif'] = nb_engin_notif
+    if engins_avec_notifications.exists():
+        print('notification')
+    context['engins_avec_notifications'] = engins_avec_notifications
 
     return render(request, 'espace_de_travail.html', context)
 
 """
     Les analyses
 """
-# def analyse_glob(request, grade_id, type_bilan):
-#     grade = get_object_or_404(Grade, pk=grade_id)
-#     maintenances = MaintenanceEngin.objects.all()
-#     ravitaillements = RavitaillementCarburant.objects.all()
-#     vidanges = MaintenanceEngin.objects.filter(type_maint=4)
-#     releves = ReleveDistance.objects.all()
-    
-#     nb_maintenance= maintenances.count()
-#     nb_vidange= vidanges.count()
-#     quantite_r = ravitaillements.aggregate(Sum('quantite_rav'))['quantite_rav__sum'] or 0
-#     cout_m = maintenances.aggregate(Sum('cout_maint'))['cout_maint__sum'] or 0
-#     cout_v = vidanges.aggregate(Sum('cout_maint'))['cout_maint__sum'] or 0
-#     cout_r = ravitaillements.aggregate(Sum('cout_rav'))['cout_rav__sum'] or 0
-    
-    
-#     context = {
-#         'grade':grade,
-#         'grade_id':grade_id,
-#         'maintenances':maintenances,
-#         'ravitaillements':ravitaillements,
-#         'quantite_rav':quantite_r,
-#         'nb_maintenance':nb_maintenance,
-#         'nb_vidange':nb_vidange,
-#         'vidanges':vidanges,
-#         'releves':releves,
-#         'cout_m':cout_m,
-#         'cout_r':cout_r,
-#         'cout_v':cout_v,
-#         'type_bilan':type_bilan,
-#     }
-#     return render(request,'analyse/analyses_glob.html',context)
-
 def analyse_glob(request, grade_id, type_bilan):
     grade = get_object_or_404(Grade, pk=grade_id)
     maintenances = MaintenanceEngin.objects.all()
@@ -185,6 +165,10 @@ def analyse_glob(request, grade_id, type_bilan):
         'cout_v': cout_v,
         'type_bilan': type_bilan,
     }
+    engins_avec_notifications = Engin.objects.filter(has_notification=True)
+    nb_engin_notif = engins_avec_notifications.count()
+    context['nb_engin_notif'] = nb_engin_notif
+    context['engins_avec_notifications'] = engins_avec_notifications
     return render(request, 'analyse/analyses_glob.html', context)
 
 
@@ -229,6 +213,10 @@ def analyse_partic(request, grade_id, engin_id, type_bilan):
         'cout_v': cout_v,
         'type_bilan':type_bilan,
     }
+    engins_avec_notifications = Engin.objects.filter(has_notification=True)
+    nb_engin_notif = engins_avec_notifications.count()
+    context['nb_engin_notif'] = nb_engin_notif
+    context['engins_avec_notifications'] = engins_avec_notifications
     return render(request, 'analyse/analyses_partic.html', context)
 
 
@@ -246,6 +234,10 @@ def periode_bilan(request, grade_id, type_bilan):
     context = {'type_bilan': type_bilan}
     context['grade_id'] = grade.id
     context['engin'] = engin
+    engins_avec_notifications = Engin.objects.filter(has_notification=True)
+    nb_engin_notif = engins_avec_notifications.count()
+    context['nb_engin_notif'] = nb_engin_notif
+    context['engins_avec_notifications'] = engins_avec_notifications
     
     if request.method == 'POST':
         day_1 = int(request.POST.get('jour_1'))
@@ -335,6 +327,10 @@ def bilan_periodique_glob(request, grade_id, type_bilan, day_1, month_1, year_1,
     cout_r = ravitaillements.aggregate(Sum('cout_rav'))['cout_rav__sum'] or 0
     context['cout_r'] = cout_r
     context['type_bilan'] = type_bilan
+    engins_avec_notifications = Engin.objects.filter(has_notification=True)
+    nb_engin_notif = engins_avec_notifications.count()
+    context['nb_engin_notif'] = nb_engin_notif
+    context['engins_avec_notifications'] = engins_avec_notifications
 
     return render(request, 'bilan_periodique_glob.html', context)
 
@@ -398,5 +394,19 @@ def bilan_periodique_partic(request, grade_id, engin_id,type_bilan, day_1, month
     cout_r = ravitaillements.aggregate(Sum('cout_rav'))['cout_rav__sum'] or 0
     context['cout_r'] = cout_r
     context['type_bilan'] = type_bilan
+    engins_avec_notifications = Engin.objects.filter(has_notification=True)
+    nb_engin_notif = engins_avec_notifications.count()
+    context['nb_engin_notif'] = nb_engin_notif
+    if engins_avec_notifications.exists():
+        print('notification')
+    context['engins_avec_notifications'] = engins_avec_notifications
 
     return render(request, 'bilan_periodique_partic.html', context)
+
+def notifications(request,grade_id):
+    engins_avec_notifications = Engin.objects.filter(has_notification=True)
+    
+    msgs_notif_rav = RavitaillementCarburant.objects.filter(engin_rav__in=engins_avec_notifications)
+    msgs_notif_maint = MaintenanceEngin.objects.filter(engin_maint__in=engins_avec_notifications)
+    nb_engin_notif = msgs_notif_maint.count() + msgs_notif_rav.count()
+    return render(request, 'notifications.html', {'engins_avec_notifications': engins_avec_notifications, 'nb_engin_notif':nb_engin_notif, 'grade_id':grade_id, 'msgs_notif_rav':msgs_notif_rav, 'msgs_notif_maint':msgs_notif_maint})

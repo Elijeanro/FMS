@@ -100,6 +100,27 @@ def update(request,sujet):
     context['sujet']=sujet
     return render(request,'gestionnaire/update.html',context)
 
+def update_notifications(engin_id):
+    # Mise à jour du champ has_notification lors de la sauvegarde
+    ravitaillement_notifications = RavitaillementCarburant.objects.filter(engin_rav=engin_id).order_by('-date_rav').first()
+    maint = MaintenanceEngin.objects.filter(engin_maint=engin_id).order_by('-date_maint').first()
+    engin = Engin.objects.get(id=engin_id)
+    maintenance_notifications = None  # Déclarer la variable en dehors des conditions
+
+    if maint is not None:
+        if maint.type_maint == 4 and maint.vid() <= 15:
+            maintenance_notifications = maint
+        elif maint.type_maint in range(1, 4) and maint.reviz() <= 30:
+            maintenance_notifications = maint
+
+    if ravitaillement_notifications is not None and ravitaillement_notifications.niveau_carb() <= 15:
+        engin.has_notification = True
+
+    if maintenance_notifications is not None:
+        engin.has_notification = True
+
+    engin.save()
+
 """
 LES CREATE
 """
@@ -121,7 +142,7 @@ def create_personne(request, grade_id):
                 personne.save()
                 pk=personne.id
                 messages.info(request,"Succès d'enrégistrement ! ")
-                return redirect(reverse('gestionnaire:details',args=[pk, sujet]))
+                return redirect(reverse('gestionnaire:details',args=[pk, sujet, grade_id]))
     else:
         form=PersonneForm()
     return render(request,'gestionnaire/creation.html',{'form':form, 'sujet':sujet, 'grade_id':grade_id})        
@@ -142,7 +163,7 @@ def create_marque(request, grade_id):
                     nom_marque=nom_marque,
                 )
                 marque.save() 
-                return redirect(reverse('gestionnaire:details', args=[marque.id, sujet]))  
+                return redirect(reverse('gestionnaire:details', args=[marque.id, sujet, grade_id]))  
     else:
         form = MarqueForm()
         
@@ -168,7 +189,7 @@ def create_modele(request, grade_id):
                     annee=annee,
                 )
                 modele.save()
-                return redirect(reverse('gestionnaire:details',args=[modele.id, sujet]))  
+                return redirect(reverse('gestionnaire:details',args=[modele.id, sujet, grade_id]))  
     else:
         form = ModeleForm()
         
@@ -181,15 +202,19 @@ def create_fournisseur(request, grade_id):
         form = FournisseurForm(request.POST)
         if form.is_valid():
             nom_fournisseur = form.cleaned_data['nom_fournisseur']
+            adresse = form.cleaned_data['adresse']
+            description_fournisseur = form.cleaned_data['description_fournisseur']
             existing_fournisseur = Fournisseur.objects.filter(nom_fournisseur=nom_fournisseur).first()
             if existing_fournisseur:
                 messages.error(request, 'Un fournisseur avec ce nom existe déjà.')
             else:
                 fournisseur=Fournisseur(
                     nom_fournisseur=nom_fournisseur,
+                    adresse=adresse,
+                    description_fournisseur=description_fournisseur,
                 )
                 fournisseur.save()
-                return redirect(reverse('gestionnaire:details',args=[fournisseur.id, sujet]))  
+                return redirect(reverse('gestionnaire:details',args=[fournisseur.id, sujet, grade_id]))  
     else:
         form = FournisseurForm()
         
@@ -225,7 +250,6 @@ def create_engin(request, grade_id):
                 
                 est_obsolete = form.cleaned_data['est_obsolete']
                 vik = form.cleaned_data['vik']
-                
                 engin = Engin(
                     immatriculation=immatriculation,
                     couleur=couleur,
@@ -239,7 +263,8 @@ def create_engin(request, grade_id):
                     capa_reserv=capa_reserv,
                 )
                 engin.save()
-                return redirect(reverse('gestionnaire:details', args=[engin.id, sujet]))  
+                print('id = ',engin.id)
+                return redirect(reverse('gestionnaire:details', args=[engin.id, sujet, grade_id]))  
     else:
         form = EnginForm()
         
@@ -266,7 +291,7 @@ def create_type_engin(request, grade_id):
                     nombre_roue=nombre_roue,
                 )
                 type_engin.save()
-                return redirect(reverse('gestionnaire:details',args=[type_engin.id, sujet]))  
+                return redirect(reverse('gestionnaire:details',args=[type_engin.id, sujet, grade_id]))  
     else:
         form = TypeEnginForm()
         
@@ -288,7 +313,7 @@ def create_etat_engin(request, grade_id):
                     libelle_etat=libelle_etat,
                 )
                 etat_engin.save()
-                return redirect(reverse('gestionnaire:details',args=[etat_engin.id, sujet]))  
+                return redirect(reverse('gestionnaire:details',args=[etat_engin.id, sujet, grade_id]))  
     else:
         form = EtatEnginForm()
         
@@ -317,7 +342,7 @@ def create_info_engin(request, grade_id):
                     revision=revision,
                 )
                 info_engin.save()
-                return redirect(reverse('gestionnaire:details',args=[info_engin.id, sujet]))  
+                return redirect(reverse('gestionnaire:details',args=[info_engin.id, sujet, grade_id]))  
     else:
         form = InfoEnginForm()
         
@@ -380,7 +405,8 @@ def create_ravitaillement_carburant(request, grade_id):
                 solde = solde2,
             )
             t_card.save()
-            return redirect(reverse('gestionnaire:details',args=[ravitaillement_carburant.id, sujet]))  
+            update_notifications(engin_rav)
+            return redirect(reverse('gestionnaire:details',args=[ravitaillement_carburant.id, sujet, grade_id]))  
     else:
         form = RavitaillementCarburantForm()
     return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet,'grade_id':grade_id})
@@ -400,7 +426,7 @@ def create_type_maintenance(request, grade_id):
                     libelle_maint=libelle_maint,
                 )
                 type_maintenance.save()
-                return redirect(reverse('gestionnaire:details',args=[type_maintenance.id , sujet]))  
+                return redirect(reverse('gestionnaire:details',args=[type_maintenance.id , sujet, grade_id]))  
     else:
         form = TypeMaintenanceForm()
         
@@ -429,10 +455,8 @@ def create_maintenance_engin(request, grade_id):
                 cout_maint=cout_maint
             )
             maintenance.save()
-            if type_maint_id == 4:
-                return redirect(reverse('gestionnaire:create_vidange_engin'))
-            else :
-                return redirect(reverse('gestionnaire:details',args=[maintenance.id, sujet]))  
+            update_notifications(engin_maint)
+            return redirect(reverse('gestionnaire:details',args=[maintenance.id, sujet, grade_id]))  
     else:
         form = MaintenanceEnginForm()
     return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet,'grade_id':grade_id})
@@ -452,7 +476,7 @@ def create_attribution(request, grade_id):
                 engin=engin,
             )
             attribution.save()
-            return redirect(reverse('gestionnaire:details',args=[attribution.id, sujet]))  
+            return redirect(reverse('gestionnaire:details',args=[attribution.id, sujet, grade_id]))  
     else:
         form = AttributionForm()
     return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet,'grade_id':grade_id})
@@ -520,7 +544,7 @@ def create_releve_distance(request, grade_id):
             releve_distance.save()
             engin_releve.nja += 1 
             engin_releve.save()
-            return redirect(reverse('gestionnaire:details',args=[releve_distance.id, sujet,grade_id]))  
+            return redirect(reverse('gestionnaire:details',args=[releve_distance.id, sujet,grade_id, grade_id]))  
     else:
         form = ReleveDistanceForm()
     return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet,'grade_id':grade_id, 'grade':grade})
@@ -538,7 +562,7 @@ def create_t_card(request,grade_id):
                 solde=solde,
             )
             t_card.save()
-            return redirect(reverse('gestionnaire:details',args=[t_card.id, sujet]))
+            return redirect(reverse('gestionnaire:details',args=[t_card.id, sujet, grade_id]))
     else:
         form = T_CardForm()
     return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet,'grade_id':grade_id})
@@ -619,16 +643,41 @@ def update_ravitaillement_carburant(request, pk, grade_id):
     return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id})
 
 def update_engin(request, pk, grade_id):
-    sujet='engin'
+    sujet = 'engin'
     engin = get_object_or_404(Engin, pk=pk)
+    
     if request.method == 'POST':
-        form = EnginForm(request.POST, instance=engin)
+        form = EnginForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect(reverse('gestionnaire:details', args=[sujet]))  
+            engin.immatriculation = form.cleaned_data['immatriculation']
+            engin.couleur = form.cleaned_data['couleur']
+            engin.modele_engin = form.cleaned_data['modele_engin']
+            engin.type_engin = form.cleaned_data['type_engin']
+            engin.info_engin = form.cleaned_data['info_engin']
+            engin.etat_engin = form.cleaned_data['etat_engin']
+            engin.est_obsolete = form.cleaned_data['est_obsolete']
+            engin.fournisseur_engin = form.cleaned_data['fournisseur_engin']
+            engin.vik = form.cleaned_data['vik']
+            engin.capa_reserv = form.cleaned_data['capa_reserv']
+            
+            engin.save()
+            return redirect(reverse('gestionnaire:details', args=[sujet, grade_id]))
     else:
-        form = EnginForm(instance=engin)
-    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id})
+        form = EnginForm(initial={
+            'immatriculation': engin.immatriculation,
+            'couleur': engin.couleur,
+            'modele_engin': engin.modele_engin,
+            'type_engin': engin.type_engin,
+            'info_engin': engin.info_engin,
+            'etat_engin': engin.etat_engin,
+            'est_obsolete': engin.est_obsolete,
+            'fournisseur_engin': engin.fournisseur_engin,
+            'vik': engin.vik,
+            'capa_reserv': engin.capa_reserv,
+        })
+    
+    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id': grade_id, 'sujet':sujet})
+
 
 def update_marque(request, pk, grade_id):
     sujet='marque'
@@ -766,7 +815,7 @@ def delete_fournisseur(request, fournisseur_id, grade_id):
     
     return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'sujet': 'fournisseur'})
 
-def delete_engin(request, engin_id, grade_id):
+def delete_engin(request, engin_id,grade_id):
     sujet='engin'
     engin = get_object_or_404(Engin, pk=engin_id)
     

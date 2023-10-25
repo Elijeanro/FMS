@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% extends 'bases/base1.html' %}
+{% load static %}
+
+{% block title %}
+Mettre à jour {{sujet}}
+{% endblock title %}
+
+{% block contenu %}
+<div class="wrapper">
+  <div class="section section-hero section-shaped">
+    <div class="container pt-lg-3 bg-gradient-gray">
+      <div class="row justify-content-center">
+        <div class="col-lg-5">
+          {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          <form role="form" method="post">
+            {% csrf_token %}
+            <div class="form-group mb-4">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="ni ni-laptop"></i>
+                  <h5>Mettre à jour {{ sujet }}</h5>
+                </span>
+              </div>
+              {{ form.as_p }}
+            </div>
+            <div class="text-center mb-6">
+              <button type="submit" class="btn btn-primary mt-4">Enregistrer</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock contenu %}

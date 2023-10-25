@@ -23,14 +23,14 @@ class PersonneForm(forms.Form):
     grade = forms.ChoiceField(
         choices=[('','Choisir un grade')]+
                 [(g.id, g.libelle_grade) for g in Grade.objects.all()]+
-                [('create', 'Ajouter un grade')],
-        widget=forms.Select(attrs={'class':'form-control mb-3','id':'id_grade'}),
+                [('create_grade', 'Ajouter un grade')],
+        widget=forms.Select(attrs={'class':'form-control mb-3','id':'grade'}),
         required=True
     )
     def clean_grade(self):
         grade_id=self.cleaned_data['grade']
-        if grade_id =='create':
-            create_url=reverse('administrateur:create_grade')
+        if grade_id =='create_grade':
+            create_url=reverse('create_grade')
             raise forms.ValidationError(create_url)
         return grade_id
 
@@ -59,20 +59,21 @@ class ModeleForm(forms.ModelForm):
     marque = forms.ChoiceField(
         choices=[('','Choisir une marque')]+
                 [(m.id, m.nom_marque) for m in Marque.objects.all()]+
-                [('create', 'Ajouter une marque')],
-        widget=forms.Select(attrs={'class':'form-control mb-3'}),
+                [('create_marque', 'Ajouter une marque')],
+        widget=forms.Select(attrs={'class':'form-control mb-3','id':'marque'}),
         required=True
     )
+    def clean_marque(self):
+        marque_id=self.cleaned_data['marque']
+        if marque_id =='create_marque':
+            create_url=reverse('create_marque')
+            raise forms.ValidationError(create_url)
+        return marque_id
+    
     annee = forms.DateField(
         widget=SelectDateWidget(years=range(1900, 2101), attrs={'class': 'form-control mb-3'}),
         input_formats=['%Y']
     )
-    def clean_marque(self):
-        marque_id=self.cleaned_data['marque']
-        if marque_id =='create':
-            create_url=reverse('create_marque')
-            raise forms.ValidationError(create_url)
-        return marque_id
     
     class Meta:
         model = Modele
@@ -98,48 +99,79 @@ class EnginForm(forms.Form):
     modele_engin = forms.ChoiceField(
         choices=[('', 'Sélectionnez un modèle')] + 
                 [(m.id, m.nom_modele) for m in Modele.objects.all()] + 
-                [('create', 'Créer un modèle')],
-        widget=forms.Select(attrs={'class': 'form-control mb-3'}),
+                [('create_modele', 'Ajouter un modèle')],
+        widget=forms.Select(attrs={'class': 'form-control mb-3', 'id':'modele'}),
         required=False,
     )
+    def clean_modele_engin(self):
+        modele_id = self.cleaned_data['modele_engin']
+        if modele_id == 'create_modele':
+            create_url = reverse('create_modele')  
+            raise forms.ValidationError(create_url)
+        return modele_id
     
     type_engin = forms.ChoiceField(
         choices=[('', 'Sélectionnez un type d\'engin')] + 
                 [(t.id, t.designation) for t in TypeEngin.objects.all()] + 
-                [('create', 'Créer un type d\'engin')],
-        widget=forms.Select(attrs={'class': 'form-control mb-3'}),
+                [('create_type_engin', 'Ajouter un type d\'engin')],
+        widget=forms.Select(attrs={'class': 'form-control mb-3','id':'type_engin'}),
         required=False,
     )
+    def clean_type_engin(self):
+        type_id = self.cleaned_data['type_engin']
+        if type_id == 'create_type_engin':
+            create_url = reverse('create_type_engin')  
+            raise forms.ValidationError(create_url)
+        return type_id
     
     info_engin = forms.ChoiceField(
         choices=[('', 'Informations à propos de cet engin')] + 
                 [(i.id, i.info) for i in InfoEngin.objects.all()] + 
-                [('create', 'Créer des informations')],
-        widget=forms.Select(attrs={'class': 'form-control mb-3'}),
+                [('create_info_engin', 'Ajouter des informations')],
+        widget=forms.Select(attrs={'class': 'form-control mb-3', 'id':'info_engin'}),
         required=False,
     )
+    def clean_info_engin(self):
+        info_id = self.cleaned_data['info_engin']
+        if info_id == 'create_info_engin':
+            create_url = reverse('create_info_engin')  
+            raise forms.ValidationError(create_url)
+        return info_id
     
     etat_engin = forms.ChoiceField(
         choices=[('', 'Sélectionnez l\'état de l\'engin')] + 
                 [(e.id, e.libelle_etat) for e in EtatEngin.objects.all()] + 
-                [('create', 'Créer un état')],
-        widget=forms.Select(attrs={'class': 'form-control mb-3'}),
+                [('create_etat_engin', 'Ajouter un état')],
+        widget=forms.Select(attrs={'class': 'form-control mb-3', 'id':'etat_engin'}),
         required=False,
     )
+    def clean_etat_engin(self):
+        etat_id = self.cleaned_data['etat_engin']
+        if etat_id == 'create_etat_engin':
+            create_url = reverse('create_etat_engin')  
+            raise forms.ValidationError(create_url)
+        return etat_id
     
     est_obsolete = forms.BooleanField(
-        widget=forms.CheckboxInput(attrs={'class': 'form-check-input', 'style': 'display:none'}),
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input ml-3'}),
         required=False,
         initial=False,  
     )
     
     fournisseur_engin = forms.ChoiceField(
-        choices=[('', 'Sélectionnez le fournisseur de l\'engin')] + 
+        choices=[('', 'Sélectionnez le fournisseur de l''engin')] + 
                 [(f.id, f.nom_fournisseur) for f in Fournisseur.objects.all()] + 
-                [('create', 'Créer un fournisseur')],
-        widget=forms.Select(attrs={'class': 'form-control mb-3'}),
+                [('create_fournisseur', 'Ajouter un fournisseur')],
+        widget=forms.Select(attrs={'class': 'form-control mb-3', 'id':'fournisseur'}),
         required=False,
     )
+    def clean_fournisseur_engin(self):
+        fournisseur_id=self.cleaned_data['fournisseur_engin']
+        if fournisseur_id == 'create_fournisseur':
+            create_url=reverse('create_fournisseur')
+            raise forms.ValidationError(create_url)
+        return fournisseur_id
+
     vik = forms.FloatField(
         widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Valeur initiale du compteur'}),
         required=True
@@ -148,41 +180,6 @@ class EnginForm(forms.Form):
         widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Capacité du réservoir'}),
         required=True
     )
-
-    def clean_model_engin(self):
-        model_id = self.cleaned_data['modele_engin']
-        if model_id == 'create':
-            create_url = reverse('create_modele')  
-            raise forms.ValidationError(create_url)
-        return model_id
-
-    def clean_type_engin(self):
-        type_id = self.cleaned_data['type_engin']
-        if type_id == 'create':
-            create_url = reverse('create_type_engin')  
-            raise forms.ValidationError(create_url)
-        return type_id
-
-    def clean_info_engin(self):
-        info_id = self.cleaned_data['info_engin']
-        if info_id == 'create':
-            create_url = reverse('create_info_engin')  
-            raise forms.ValidationError(create_url)
-        return info_id
-
-    def clean_etat_engin(self):
-        etat_id = self.cleaned_data['etat_engin']
-        if etat_id == 'create':
-            create_url = reverse('create_etat_engin')  
-            raise forms.ValidationError(create_url)
-        return etat_id
-    
-    def clean_fournisseur_engin(self):
-        fournisseur_id=self.cleaned_data['fournisseur_engin']
-        if fournisseur_id == 'create':
-            create_url=reverse('create_fournisseur')
-            raise forms.ValidationError(create_url)
-        return fournisseur_id
     
 class TypeEnginForm(forms.ModelForm):
     class Meta:
@@ -208,11 +205,6 @@ class InfoEnginForm(forms.Form):
     revision = forms.DurationField(widget=forms.TextInput(attrs={'class':'form-control mb-3', 'placeholder':'Nombre de jours entre deux révisions'}))
     
 class RavitaillementCarburantForm(forms.Form):
-    quantite_rav = forms.FloatField(
-        widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Quantité de carburant'}),
-        initial=0,
-        required=True
-    )
     cout_rav = forms.FloatField(
         widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Coût du ravitaillement'}),
         required=True
@@ -220,19 +212,33 @@ class RavitaillementCarburantForm(forms.Form):
     engin_rav = forms.ChoiceField(
         choices=[('','Choisir un engin')]+
                 [(e.id, e.immatriculation) for e in Engin.objects.filter(est_obsolete=False)]+
-                [('create', 'Ajouter un engin')],
-        widget=forms.Select(attrs={'class':'form-control mb-3'}),
+                [('create_engin', 'Ajouter un engin')],
+        widget=forms.Select(attrs={'class':'form-control mb-3','id':'engin'}),
         required=True
     )
+    def clean_engin_rav(self):
+        engin_id=self.cleaned_data['engin_rav']
+        if engin_id == 'create_engin':
+            create_url=reverse('create_engin')
+            raise forms.ValidationError(create_url)
+        return engin_id
+    
     fournisseur_carburant = forms.ChoiceField(
         choices=[('', 'Sélectionnez le fournisseur de carburant')] + 
                 [(f.id, f.nom_fournisseur) for f in Fournisseur.objects.all()] + 
-                [('create', 'Ajouter un fournisseur de carburant')],
-        widget=forms.Select(attrs={'class': 'form-control mb-3'}),
+                [('create_fournisseur', 'Ajouter un fournisseur de carburant')],
+        widget=forms.Select(attrs={'class': 'form-control mb-3', 'id':'fournisseur'}),
         required=False,
     )
+    def clean_fournisseur_carburant(self):
+        fournisseur_id=self.cleaned_data['fournisseur_carburant']
+        if fournisseur_id == 'create_fournisseur':
+            create_url=reverse('create_fournisseur')
+            raise forms.ValidationError(create_url)
+        return fournisseur_id
+    
     plein = forms.BooleanField(
-        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input ml-2'}),
         required=False
     )
     Km_plein = forms.FloatField(
@@ -240,19 +246,6 @@ class RavitaillementCarburantForm(forms.Form):
         initial=0,
         required=True
     )
-    def clean_engin_rav(self):
-        engin_id=self.cleaned_data['engin_rav']
-        if engin_id == 'create':
-            create_url=reverse('create_engin')
-            raise forms.ValidationError(create_url)
-        return engin_id
-    
-    def clean_fournisseur_carburant(self):
-        fournisseur_id=self.cleaned_data['fournisseur_carburant']
-        if fournisseur_id == 'create':
-            create_url=reverse('create_fournisseur')
-            raise forms.ValidationError(create_url)
-        return fournisseur_id
 
 class TypeMaintenanceForm(forms.Form):
     libelle_maint = forms.CharField(
@@ -265,10 +258,17 @@ class MaintenanceEnginForm(forms.Form):
     type_maint = forms.ChoiceField(
         choices=[('','Selectionner le type de maintenance')]+
                 [(t.id, t.libelle_maint) for t in TypeMaintenance.objects.all()]+
-                [('create', 'Ajouter un type de maintenance')],
-        widget=forms.Select(attrs={'class':'form-control mb-3'}),
+                [('create_type_maintenance', 'Ajouter un type de maintenance')],
+        widget=forms.Select(attrs={'class':'form-control mb-3','id':'type_maint'}),
         required=True
     )
+    def clean_type_maint(self):
+        type_maint_id=self.cleaned_data['type_maint']
+        if type_maint_id == 'create_type_maintenance':
+            create_url=reverse('create_type_maintenance')
+            raise forms.ValidationError(create_url)
+        return type_maint_id
+    
     motif_maint = forms.CharField(
         max_length=500,
         widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Motif de la maintenance'}),
@@ -277,10 +277,17 @@ class MaintenanceEnginForm(forms.Form):
     engin_maint = forms.ChoiceField(
         choices=[('','Choisir un engin')]+
                 [(e.id, e.immatriculation) for e in Engin.objects.all()]+
-                [('create', 'Ajouter un engin')],
-        widget=forms.Select(attrs={'class':'form-control mb-3'}),
+                [('create_engin', 'Ajouter un engin')],
+        widget=forms.Select(attrs={'class':'form-control mb-3','id':'engin'}),
         required=True
     )
+    def clean_engin_maint(self):
+        engin_id=self.cleaned_data['engin_maint']
+        if engin_id == 'create_engin':
+            create_url=reverse('create_engin')
+            raise forms.ValidationError(create_url)
+        return engin_id
+    
     cout_maint = forms.FloatField(
         widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Coût de la maintenance'}),
         initial=0,
@@ -289,58 +296,42 @@ class MaintenanceEnginForm(forms.Form):
     fournisseur_maint = forms.ChoiceField(
         choices=[('','Selectionner un fournisseur')]+
                 [(f.id, f.nom_fournisseur) for f in Fournisseur.objects.all()]+
-                [('create', 'Ajouter un fournisseur')],
-        widget=forms.Select(attrs={'class':'form-control mb-3'}),
+                [('create_fournisseur', 'Ajouter un fournisseur')],
+        widget=forms.Select(attrs={'class':'form-control mb-3', 'id':'fournisseur'}),
         required=False
     )
-    def clean_type_maint(self):
-        type_maint_id=self.cleaned_data['type_maint']
-        if type_maint_id == 'create':
-            create_url=reverse('create_type_maintenance')
-            raise forms.ValidationError(create_url)
-        return type_maint_id
-    
-    def clean_engin_maint(self):
-        engin_id=self.cleaned_data['engin_maint']
-        if engin_id == 'create':
-            create_url=reverse('create_engin')
-            raise forms.ValidationError(create_url)
-        return engin_id
-    
     def clean_fournisseur_maint(self):
         fournisseur_id=self.cleaned_data['fournisseur_maint']
-        if fournisseur_id == 'create':
+        if fournisseur_id == 'create_fournisseur':
             create_url=reverse('create_fournisseur')
             raise forms.ValidationError(create_url)
         return fournisseur_id
-
+    
 class AttributionForm(forms.Form):
     conducteur = forms.ChoiceField(
         choices=[('','Choisir un conducteur')]+
                 [(p.id, p.nom) for p in Personne.objects.filter(grade=5)]+
-                [('create', 'Ajouter un conducteur')],
-        widget=forms.Select(attrs={'class':'form-control mb-3'}),
+                [('create_personne', 'Ajouter un conducteur')],
+        widget=forms.Select(attrs={'class':'form-control mb-3', 'id':'personne'}),
         required=True
     )
-    
-    engin = forms.ChoiceField(
-        choices=[('','Choisir un engin')]+
-                [(e.id, e.immatriculation) for e in Engin.objects.filter(est_obsolete=False)]+
-                [('create', 'Ajouter un engin')],
-        widget=forms.Select(attrs={'class':'form-control mb-3'}),
-        required=True
-    )
-    
     def clean_conducteur(self):
         conducteur_id=self.cleaned_data['conducteur']
-        if conducteur_id == 'create':
+        if conducteur_id == 'create_personne':
             create_url=reverse('create_personne')
             raise forms.ValidationError(create_url)
         return conducteur_id
     
+    engin = forms.ChoiceField(
+        choices=[('','Choisir un engin')]+
+                [(e.id, e.immatriculation) for e in Engin.objects.filter(est_obsolete=False)]+
+                [('create_engin', 'Ajouter un engin')],
+        widget=forms.Select(attrs={'class':'form-control mb-3', 'id':'engin'}),
+        required=True
+    )
     def clean_engin(self):
         engin_id=self.cleaned_data['engin']
-        if engin_id == 'create':
+        if engin_id == 'create_engin':
             create_url=reverse('create_engin')
             raise forms.ValidationError(create_url)
         return engin_id
@@ -349,10 +340,17 @@ class ReleveDistanceForm(forms.Form):
     engin_releve = forms.ChoiceField(
         choices=[('','Choisir un engin')]+
                 [(e.id, e.immatriculation) for e in Engin.objects.filter(est_obsolete=False)]+
-                [('create', 'Ajouter un engin')],
-        widget=forms.Select(attrs={'class':'form-control mb-3'}),
+                [('create_engin', 'Ajouter un engin')],
+        widget=forms.Select(attrs={'class':'form-control mb-3', 'id':'engin'}),
         required=True
     )
+    def clean_engin_releve(self):
+        engin_id=self.cleaned_data['engin_releve']
+        if engin_id == 'create_engin':
+            create_url=reverse('create_engin')
+            raise forms.ValidationError(create_url)
+        return engin_id
+    
     nbKmFin = forms.FloatField(
         widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Kilométrage en fin d''activité de la journée'}),
         required=True
@@ -365,14 +363,7 @@ class ReleveDistanceForm(forms.Form):
     ravitaille = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input ml-3'}),
         required=False
-    )
-    
-    def clean_engin_releve(self):
-        engin_id=self.cleaned_data['engin_releve']
-        if engin_id == 'create':
-            create_url=reverse('create_engin')
-            raise forms.ValidationError(create_url)
-        return engin_id
+    )   
     
 class T_CardForm(forms.Form):
     solde = forms.FloatField(
@@ -382,13 +373,13 @@ class T_CardForm(forms.Form):
     type_engin_tcard = forms.ChoiceField(
         choices=[('','Sélectionner le type d''engin')]+
                 [(t.id, t.designation) for t in TypeEngin.objects.all()]+
-                [('create', 'Ajouter un type d''engin')],
-        widget=forms.Select(attrs={'class':'form-control mb-3'}),
+                [('create_type_engin', 'Ajouter un type d''engin')],
+        widget=forms.Select(attrs={'class':'form-control mb-3', 'id':'type_engin'}),
         required=True
     )
     def clean_type_engin_tcard(self):
         type_engin_id=self.cleaned_data['type_engin_tcard']
-        if type_engin_id == 'create':
+        if type_engin_id == 'create_type_engin':
             create_url=reverse('create_type_engin')
             raise forms.ValidationError(create_url)
         return type_engin_id

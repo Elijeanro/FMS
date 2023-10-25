@@ -21,5 +21,7 @@ urlpatterns = [
     path('bilan_periodique_general/<int:grade_id>/<str:type_bilan>/<int:day_1>/<int:month_1>/<int:year_1>/<int:day_2>/<int:month_2>/<int:year_2>', views.bilan_periodique_glob,\
         name='bilan_glob'),
     path('bilan_periodique_particulier/<int:grade_id>/<int:engin_id>/<str:type_bilan>/<int:day_1>/<int:month_1>/<int:year_1>/<int:day_2>/<int:month_2>/<int:year_2>', \
-        views.bilan_periodique_partic, name='bilan_partic')    
+        views.bilan_periodique_partic, name='bilan_partic'), 
+    path('notifications/<int:grade_id>', views.notifications, name='notifications'),
+    
 ]
