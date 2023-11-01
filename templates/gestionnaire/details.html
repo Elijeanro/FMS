@@ -262,16 +262,16 @@ Details {{sujet}}
                                             <td style="color: rgb(1, 82, 1);"> {{objet.quantite_rav}} Litres</td>
                                         </tr>
                                         <tr>
-                                            <th style="color: black;"> Plein ? : </th>
+                                            <th style="color: black;"> Plein ? </th>
                                             <td style="color: rgb(1, 82, 1);"> {{objet.plein}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Engin ravitaillé : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.engin_rav.immatriculation}} Litres</td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.engin_rav.immatriculation}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;"> Fournisseur de carburant : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.forurnisseur_carburant.nom_fournisseur}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.fournisseur_carburant.nom_fournisseur}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Date de ravitaillement : </th>
@@ -374,7 +374,7 @@ Details {{sujet}}
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Libellé de la maintenance : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{type_maintenance.libelle_maint}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.libelle_maint}} </td>
                                         </tr>
 
                                     </table>
@@ -399,19 +399,19 @@ Details {{sujet}}
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Nom : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{personne.nom}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.nom}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Prénom : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{personne.prenom}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.prenom}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Contact : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{personne.contact}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.contact}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Grade : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{personne.grade.libelle_grade}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.grade.libelle_grade}} </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -482,7 +482,7 @@ Details {{sujet}}
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Nom de la marque : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{marque.nom_marque}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.nom_marque}} </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -505,15 +505,15 @@ Details {{sujet}}
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Nom du modèle : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{modele.nom_modele}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.nom_modele}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Marque : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{modele.marque.nom_marque}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.marque.nom_marque}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Année : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{modele.annee}} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{objet.annee}} </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -536,11 +536,11 @@ Details {{sujet}}
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Engin concerné : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{ vidange.engin_vid.immatriculation }} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{ objet.engin_vid.immatriculation }} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Date de vidange : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{ vidange.date_vid }} </td>
+                                            <td style="color: rgb(1, 82, 1);"> {{ objet.date_vid }} </td>
                                         </tr>
 
                                     </table>
@@ -575,7 +575,50 @@ Details {{sujet}}
                 </div>
             </div>
         </div>
-    
+        {% elif sujet == 't_card' %}
+        <div class="bg-image">
+            <div class="container">
+                <div class="card card-profile shadow mt-3">
+                    <div class="px-4">
+                        <div class="row justify-content-center bg-gradient-light">
+                            <div class="mt-5">
+                                <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                    <h3>Détails de {{sujet | upper}} : </h3>
+                                        <table class="table table-bordered" width="100%" cellspacing="0">
+                                            <tr>
+                                                <th style="color: black;">Date de création : </th>
+                                                <td style="color: rgb(1, 82, 1);"> {{objet.date_emploie}} </td>
+                                            </tr>
+                                            <tr>
+                                                <th style="color: black;">Type d'engin : </th>
+                                                <td style="color: rgb(1, 82, 1);"> {{objet.type_engin_tcard.designation}} </td>
+                                            </tr>
+                                            <tr>
+                                                <th style="color: black;">Approvisionné ? </th>
+                                                <td style="color: rgb(1, 82, 1);"> {{objet.approvisionnement}} </td>
+                                            </tr>
+                                            <tr>
+                                                <th style="color: black;">Montant 
+                                                {% if objet.approvisionnement %}
+                                                    approvisionné
+                                                {% else %}
+                                                    débité
+                                                {% endif %}
+                                                     : </th>
+                                                <td style="color: rgb(1, 82, 1);"> {{objet.montant}} F CFA</td>
+                                            </tr>
+                                            <tr>
+                                                <th style="color: black;">Solde : </th>
+                                                <td style="color: rgb(1, 82, 1);"> {{objet.solde}} F CFA</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     {% endif %}
 

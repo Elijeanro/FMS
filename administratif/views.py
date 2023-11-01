@@ -9,9 +9,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from gestionnaire.views import update_notifications
 
-from gestionnaire.models import Personne,Engin,Grade,Marque,Modele,TypeEngin,Fournisseur,MaintenanceEngin,RavitaillementCarburant,ReleveDistance
-
-# nb_a_ravitailler= RavitaillementCarburant.objects.filter(infoligne_id__in=infln_ids, etat_billet=2).count()
+from gestionnaire.models import (Personne,Engin,Grade,Marque,Modele,TypeEngin,Fournisseur
+                                 ,MaintenanceEngin,RavitaillementCarburant,ReleveDistance,T_Card)
 
 def signin(request):
     message = ''
@@ -120,19 +119,24 @@ def analyse_glob(request, grade_id, type_bilan):
     ravitaillements = RavitaillementCarburant.objects.all().order_by('date_rav')
 
     # Initialisation de la variable pour stocker les données d'écart de consommation
-    ecart_conso_data = []
-
-    prev_ravitaillement = None
+    ecart_conso_data = []  # Liste pour stocker les valeurs d'écart_conso
+    prev_ravitaillement = None  # Initialisez prev_ravitaillement à None
 
     for ravitaillement in ravitaillements:
-        if prev_ravitaillement:
-            ecart = (ravitaillement.Km_plein - prev_ravitaillement.Km_plein)
+        if prev_ravitaillement and ravitaillement.Km_plein is not None and prev_ravitaillement.Km_plein is not None:
+            ecart = float(ravitaillement.Km_plein) - float(prev_ravitaillement.Km_plein)
             ecart_conso = ((ravitaillement.quantite_rav * 100 / ecart) - ravitaillement.engin_rav.info_engin.consommation) * 100
         else:
-            ecart_conso = 0  # Aucun ravitaillement précédent, définir l'écart à 0
+            ecart_conso = 0  # Aucun ravitaillement précédent, ou valeurs Km_plein manquantes, définir l'écart à 0
 
         ecart_conso_data.append(ecart_conso)
         prev_ravitaillement = ravitaillement
+
+# Maintenant, ecart_conso_data contient toutes les valeurs d'écart_conso
+
+
+# Maintenant, ecart_conso_data contient toutes les valeurs d'écart_conso
+
 
     # Attachez les données d'écart de consommation à chaque ravitaillement
     for i, ravitaillement in enumerate(ravitaillements):
@@ -405,8 +409,24 @@ def bilan_periodique_partic(request, grade_id, engin_id,type_bilan, day_1, month
 
 def notifications(request,grade_id):
     engins_avec_notifications = Engin.objects.filter(has_notification=True)
-    
+    grade = get_object_or_404(Grade, pk=grade_id)
     msgs_notif_rav = RavitaillementCarburant.objects.filter(engin_rav__in=engins_avec_notifications)
     msgs_notif_maint = MaintenanceEngin.objects.filter(engin_maint__in=engins_avec_notifications)
     nb_engin_notif = msgs_notif_maint.count() + msgs_notif_rav.count()
-    return render(request, 'notifications.html', {'engins_avec_notifications': engins_avec_notifications, 'nb_engin_notif':nb_engin_notif, 'grade_id':grade_id, 'msgs_notif_rav':msgs_notif_rav, 'msgs_notif_maint':msgs_notif_maint})
+    return render(request, 'notifications.html', {'engins_avec_notifications': engins_avec_notifications, 'nb_engin_notif':nb_engin_notif, 'grade_id':grade_id, 'grade':grade, 'msgs_notif_rav':msgs_notif_rav, 'msgs_notif_maint':msgs_notif_maint})
+
+def etat_t_card(request, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
+    t_card = T_Card.objects.all()
+    moto = T_Card.objects.filter(type_engin_tcard=1)
+    tricycle = T_Card.objects.filter(type_engin_tcard=2)
+    voiture = T_Card.objects.filter(type_engin_tcard=3)
+    type_engin = TypeEngin.objects.all()
+    
+    nb_moto = moto.count()
+    nb_tricycle = tricycle.count()
+    nb_voiture = voiture.count()
+    
+    last_solde_moto = float(moto.last().solde) if moto.exists() else 0
+    last_solde_tricycle = float(tricycle.last().solde) if tricycle.exists() else 0
+    last_solde_voiture = float(voiture.last().solde) if voiture.exists() else 0

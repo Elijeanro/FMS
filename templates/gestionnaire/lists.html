@@ -739,18 +739,61 @@ liste {{sujet}}
                 <tr>
                     <td class="text-center"> {{o.libelle_grade}} </td>
                     <td class="td-actions text-right">
-                        <button type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm " data-original-title=""
-                            title="">
-                            <i class="ni ni-circle-08 pt-1"></i>
-                        </button>
-                        <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm "
-                            data-original-title="" title="">
-                            <i class="ni ni-settings-gear-65 pt-1"></i>
-                        </button>
-                        <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm "
-                            data-original-title="" title="">
-                            <i class="ni ni-fat-remove pt-1"></i>
-                        </button>
+                        <div class="dropdown no-arrow">
+                            <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
+                                aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
+                                <a class="dropdown-item" href="">Modifier</a>
+                                <a class="dropdown-item" href="">Supprimer</a>
+                                <!-- <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% elif sujet == 't_card' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h3>Liste des {{sujet | upper}}{{ 2 | pluralize:"S"}} </h3>
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center">Date d'emploie</th>
+                    <th class="text-center">Type d'engin</th>
+                    <th class="text-center">Solde</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in objet %}
+                <tr>
+                    <td class="text-center"> {{o.date_emploie}} </td>
+                    <td class="text-center"> {{o.type_engin_tcard}} </td>
+                    <td class="text-center"> {{o.solde}} </td>
+                    <td class="td-actions text-right">
+                        <div class="dropdown no-arrow">
+                            <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false"
+                                aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header" style="color: black; font-size: 12px;">Options:</div>
+                                <a class="dropdown-item" href="">Modifier</a>
+                                <a class="dropdown-item" href="">Supprimer</a>
+                                <!-- <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a> -->
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 {% endfor %}

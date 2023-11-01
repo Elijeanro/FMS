@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+{% extends 'bases/base1.html' %}
+
+
+{% block title %}
+options tcard
+{% endblock title %}
+
+
+{% block contenu %}
+<div class="wrapper">
+
+  <div class="row d-sm-flex justify-content-center mb-2">
+
+    <h1 class="h3 mb-0 text-gray-800">Approvisionnement de T-Card</h1>
+
+  </div>
+
+  <div class="row d-sm-flex justify-content-center mb-2">
+    <div class="row">
+      <div class="col">
+        <div class="row justify-content-center">
+          <h4 class="h5 m-3 text-darker bg-body">Veuillez choisir le type de carte et l'option</h4>
+        </div>
+
+        <form method="post" name="periode_form">
+          {% csrf_token %}
+          <div class="form-group mb-3">
+              <div class="input-group input-group-alternative">
+                <span class="input-group-text bg-body">
+                  <label for="type_engin_tcard"
+                    style="font-size: medium; color: rgb(8, 8, 8); width: 125px; height: 10px;">Type de carte : </label>
+                </span>
+                <select class="form-control" id="type_engin_tcard" name="type_engin_tcard">
+                  <option value="">Sélectionner un type</option>
+
+                  {% for e in type_engin %}
+                  <option value="{{e.id}}">{{e.designation}}</option>
+                  {% endfor %}
+
+                </select>
+              </div>
+              
+            </div>
+          <div class="text-center">
+            <button type="submit" name="submit_option" class="btn btn-primary my-4">VALIDER</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+  <div class="row d-sm-flex justify-content-center mb-2">
+
+    <!-- Area Chart -->
+
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col">
+          <div  id="motoSection">
+            <h4 class="h3 mb-0 text-gray-800">Bilan T_Card Moto | Solde = {{solde_moto}} F CFA</h4>
+            <table class="table table-bordered" id="dataTable1" width="200%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Action</th>
+                  <th>Montant débité</th>
+                  <th>Solde final</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for m in moto %}
+                <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}" aria-expanded="false"
+                  aria-controls="details_{{ forloop.counter }}">
+                  <td>{{m.date_emploie}}</td>
+                  <td>
+                    {% if m.approvisionnement %}
+                    Approvisionnement
+                    {% else %}
+                    Débit
+                    {% endif %}
+                  </td>
+                  <td>{{ m.montant}} F CFA</td>
+                  <td>{{m.solde}} F CFA</td>
+
+                </tr>
+
+                {% endfor %}
+
+              </tbody>
+
+            </table>
+
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#tricycleSection" aria-expanded="false"
+              aria-controls="tricycleSection">
+              voir t-card tricycle
+            </button>
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#voitureSection" aria-expanded="false"
+              aria-controls="voitureSection">
+              voir t-card voiture
+            </button>
+            <button type="button" class="btn btn-default" onclick="printTable('dataTable1', 'Mouvement t-card : moto')">
+              <i class="fas fa-download"></i>
+              Imprimer ce tableau
+            </button>
+          </div>
+          <br><br>
+          <div class="collapse" id="tricycleSection">
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#motoSection" aria-expanded="false"
+              aria-controls="motoSection">
+              <a href="#motoSection"></a>
+              Voir t-card moto
+            </button>
+            <h4 class="h3 mb-0 text-gray-800">Bilan T_Card Tricycle | Solde = {{solde_tricycle}} F CFA</h4>
+            <table class="table table-bordered" id="dataTable2" width="200%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Action</th>
+                  <th>Montant débité</th>
+                  <th>Solde final</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for t in tricycle %}
+                <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}" aria-expanded="false"
+                  aria-controls="details_{{ forloop.counter }}">
+                  <td>{{t.date_emploie}}</td>
+                  <td>
+                    {% if t.approvisionnement %}
+                    Approvisionnement
+                    {% else %}
+                    Débit
+                    {% endif %}
+                  </td>
+                  <td>{{ t.montant}} F CFA </td>
+                  <td>{{t.solde}} F CFA</td>
+
+                </tr>
+
+                {% endfor %}
+
+              </tbody>
+
+            </table>
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#tricycleSection" aria-expanded="false"
+              aria-controls="tricycleSection">
+              Replier le tableau
+            </button>
+
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#motoSection" aria-expanded="false"
+              aria-controls="motoSection">
+              <a href="#motoSection"></a>
+              voir t-card moto
+            </button>
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#voitureSection" aria-expanded="false"
+              aria-controls="voitureSection">
+              voir t-card voiture
+            </button>
+            <button type="button" class="btn btn-default"
+              onclick="printTable('dataTable2','Mouvement t-card : tricycles')">
+              <i class="fas fa-download"></i>
+              Imprimer ce tableau
+            </button>
+          </div>
+          <br><br>
+          <div class="collapse" id="voitureSection">
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#motoSection" aria-expanded="false"
+              aria-controls="motoSection">
+              <a href="#motoSection"></a>
+              voir t-card moto
+            </button>
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#tricycleSection" aria-expanded="false"
+              aria-controls="tricycleSection">
+              voir t-card tricycle
+            </button>
+
+            <h4 class="h3 mb-0 text-gray-800">Bilan T_Card Voiture | Solde = {{solde_voiture}} F CFA</h4>
+            <table class="table table-bordered" id="dataTable3" width="200%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Action</th>
+                  <th>Montant débité</th>
+                  <th>Solde final</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for v in voiture %}
+                <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}" aria-expanded="false"
+                  aria-controls="details_{{ forloop.counter }}">
+                  <td>{{v.date_emploie}}</td>
+                  <td>
+                    {% if v.approvisionnement %}
+                    Approvisionnement
+                    {% else %}
+                    Débit
+                    {% endif %}
+                  </td>
+                  <td>{{ v.montant}} F CFA </td>
+                  <td>{{v.solde}} F CFA</td>
+
+                </tr>
+
+                {% endfor %}
+
+              </tbody>
+
+            </table>
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#voitureSection" aria-expanded="false"
+              aria-controls="voitureSection">
+              Replier le tableau
+            </button>
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#motoSection" aria-expanded="false"
+              aria-controls="motoSection">
+              <a href="#motoSection"></a>
+              voir t-card moto
+            </button>
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#tricycleSection" aria-expanded="false"
+              aria-controls="tricycleSection">
+              voir t-card tricycle
+            </button>
+            <button type="button" class="btn btn-default"
+              onclick="printTable('dataTable3','mouvement t-card : voitures')">
+              <i class="fas fa-download"></i>
+              Imprimer ce tableau
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function printTable(tableId, headerText) {
+    var table = document.getElementById(tableId);
+    var newWin = window.open('', 'Print-Window');
+    newWin.document.open();
+    newWin.document.write('<html><head><style>@media print { .header { text-align: center; font-size: 16px; font-weight: bold; margin: 10px; } }</style></head><body onload="window.print()">' +
+      '<div class="header">' + headerText + '</div>' +
+      table.outerHTML + '</body></html>');
+    newWin.document.close();
+    newWin.focus();
+    newWin.print();
+    newWin.close();
+  }
+</script>
+
+
+{% endblock contenu %}

@@ -360,14 +360,15 @@ class ReleveDistanceForm(forms.Form):
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input ml-3'}),
         required=False
     )
-    ravitaille = forms.BooleanField(
+    ravitaillement = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input ml-3'}),
         required=False
     )   
     
 class T_CardForm(forms.Form):
-    solde = forms.FloatField(
-        widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Solde de la carte'}),
+    
+    montant = forms.FloatField(
+        widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Montant'}),
         required=True
     )
     type_engin_tcard = forms.ChoiceField(

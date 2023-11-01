@@ -38,7 +38,9 @@ urlpatterns = [
     path('update/engin/<int:pk>/<int:grade_id>/', views.update_engin, name='update_engin'),
     path('update/marque/<int:pk>/<int:grade_id>/', views.update_marque, name='update_marque'),
     path('update/etat-engin/<int:pk>/<int:grade_id>/', views.update_etat_engin, name='update_etat_engin'),
-   
+    path('option/t_card/<int:grade_id>/', views.option_t_card, name='option_t_card'),
+    path('update/t_card/<int:pk>/<int:grade_id>/<str:action>/', views.update_t_card, name='update_t_card'),
+    path('edit/t_card/<int:pk>/<int:grade_id>/', views.edit_t_card, name='edit_t_card'),
     path('update/maintenance-engin/<int:pk>/<int:grade_id>/', views.update_maintenance_engin, name='update_maintenance_engin'),
     path('update/type-maintenance/<int:pk>/<int:grade_id>/', views.update_type_maintenance, name='update_type_maintenance'),
     path('update/attribution/<int:pk>/<int:grade_id>/', views.update_attribution, name='update_attribution'),

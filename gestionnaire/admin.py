@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import TypeEngin,TypeMaintenance,Grade,InfoEngin,Engin,EtatEngin,\
-    MaintenanceEngin,Marque,Modele,Personne,RavitaillementCarburant,ReleveDistance,Fournisseur
+from .models import (TypeEngin,TypeMaintenance,Grade,InfoEngin,Engin,EtatEngin,T_Card,
+    MaintenanceEngin,Marque,Modele,Personne,RavitaillementCarburant,ReleveDistance,Fournisseur)
 
 admin.site.register(TypeEngin)
 admin.site.register(TypeMaintenance)
@@ -15,3 +15,4 @@ admin.site.register(RavitaillementCarburant)
 admin.site.register(ReleveDistance)
 admin.site.register(Fournisseur)
 admin.site.register(EtatEngin)
+admin.site.register(T_Card)

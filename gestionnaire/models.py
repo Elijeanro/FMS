@@ -89,9 +89,9 @@ class RavitaillementCarburant(models.Model):
     engin_rav = models.ForeignKey('Engin',on_delete=models.CASCADE)
     fournisseur_carburant = models.ForeignKey('Fournisseur', on_delete=models.CASCADE, null=True)
     carb_dispo = models.FloatField(null=True)
-    plein = models.BooleanField(default=False)
-    Km_plein = models.FloatField(null=True)
-    conso = models.FloatField(null=True)
+    plein = models.BooleanField(default=False,null=True,blank=True)
+    Km_plein = models.FloatField(null=True,blank=True)
+    conso = models.FloatField(null=True,blank=True)
     def __str__(self):
         return f"Ravitaillement en carburant du {self.date_rav}"
     def dap(self):
@@ -198,9 +198,11 @@ class ReleveDistance(models.Model):
 class T_Card(models.Model):
     date_emploie = models.DateField(auto_now_add=True)
     type_engin_tcard = models.ForeignKey('TypeEngin',on_delete=models.CASCADE,default=1)
+    montant = models.FloatField(default=0.0)
     solde = models.FloatField(default=0.0)
+    approvisionnement = models.BooleanField(default=False,null=True)
     def __str__(self):
-        return f"Carte - {self.type_engin_tcard.designation}"
+        return f"Carte - {self.type_engin_tcard.designation} | {self.date_emploie}"
     
 class ChatBox(models.Model):
     expediteur = models.ForeignKey(User, on_delete=models.CASCADE, related_name='messages_expediteur')

@@ -22,6 +22,7 @@ def creation(request,sujet,grade_id):
     return render(request,'gestionnaire/creation.html',context)
 
 def delete(request,sujet,grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     context={}
     context['sujet']=sujet
     context['grade_id'] = grade_id
@@ -41,22 +42,25 @@ def details(request, pk, sujet, grade_id):
         'type_engin': TypeEngin,
         'etat_engin': EtatEngin,
         'info_engin': InfoEngin,
-        'ravitaillement_engin': RavitaillementCarburant,
+        'ravitaillement_carburant': RavitaillementCarburant,
         'type_maintenance': TypeMaintenance,
         'maintenance_engin': MaintenanceEngin,
         'attribution': Attribution,
         'releve_distance': ReleveDistance,
+        't_card': T_Card,
     }
     
     if sujet in sujet_to_model:
         objet = get_object_or_404(sujet_to_model[sujet], pk=pk)
         
         if sujet == 'releve_distance':
-            distance = objet.nbKmFin - objet.nbKmDebut
+            distance = float(objet.nbKmFin) - float(objet.nbKmDebut)
             context['distance'] = distance
     else:
         objet = None
-    
+        
+    print("objet:", objet)
+
     context['objet'] = objet
     return render(request, 'gestionnaire/details.html', context)
 
@@ -74,11 +78,12 @@ def lists(request, sujet,grade_id):
         'type_engin': TypeEngin,
         'etat_engin': EtatEngin,
         'info_engin': InfoEngin,
-        'ravitaillement_engin': RavitaillementCarburant,
+        'ravitaillement_carburant': RavitaillementCarburant,
         'type_maintenance': TypeMaintenance,
         'maintenance_engin': MaintenanceEngin,
         'attribution': Attribution,
         'releve_distance': ReleveDistance,
+        't_card':T_Card,
     }
 
     if sujet in sujet_to_model:
@@ -125,6 +130,7 @@ def update_notifications(engin_id):
 LES CREATE
 """
 def create_personne(request, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='personne'
     
     if request.method == "POST":
@@ -145,9 +151,10 @@ def create_personne(request, grade_id):
                 return redirect(reverse('gestionnaire:details',args=[pk, sujet, grade_id]))
     else:
         form=PersonneForm()
-    return render(request,'gestionnaire/creation.html',{'form':form, 'sujet':sujet, 'grade_id':grade_id})        
+    return render(request,'gestionnaire/creation.html',{'form':form, 'sujet':sujet, 'grade_id':grade_id, 'grade':grade})        
 
 def create_marque(request, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet = 'marque'
     
     if request.method == "POST":
@@ -167,10 +174,11 @@ def create_marque(request, grade_id):
     else:
         form = MarqueForm()
         
-    return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet, 'grade_id':grade_id})
+    return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet, 'grade_id':grade_id, 'grade':grade})
 
 
 def create_modele(request, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet = 'modele'
     
     if request.method == "POST":
@@ -193,9 +201,10 @@ def create_modele(request, grade_id):
     else:
         form = ModeleForm()
         
-    return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet, 'grade_id':grade_id})
+    return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet, 'grade_id':grade_id, 'grade':grade})
 
 def create_fournisseur(request, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet = 'fournisseur'
     
     if request.method == "POST":
@@ -218,9 +227,10 @@ def create_fournisseur(request, grade_id):
     else:
         form = FournisseurForm()
         
-    return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet, 'grade_id':grade_id})
+    return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet, 'grade_id':grade_id, 'grade':grade})
 
 def create_engin(request, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet = 'engin'
     
     if request.method == "POST":
@@ -268,10 +278,11 @@ def create_engin(request, grade_id):
     else:
         form = EnginForm()
         
-    return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet, 'grade_id':grade_id})
+    return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet, 'grade_id':grade_id, 'grade':grade})
 
 
 def create_type_engin(request, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet = 'type_engin'
     
     if request.method == "POST":
@@ -295,10 +306,11 @@ def create_type_engin(request, grade_id):
     else:
         form = TypeEnginForm()
         
-    return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet, 'grade_id':grade_id})
+    return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet, 'grade_id':grade_id, 'grade':grade})
 
 
 def create_etat_engin(request, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet = 'etat_engin'
     
     if request.method == "POST":
@@ -317,10 +329,11 @@ def create_etat_engin(request, grade_id):
     else:
         form = EtatEnginForm()
         
-    return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet, 'grade_id':grade_id})
+    return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet, 'grade_id':grade_id, 'grade':grade})
 
 
 def create_info_engin(request, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet = 'info_engin'
     
     if request.method == "POST":
@@ -346,13 +359,16 @@ def create_info_engin(request, grade_id):
     else:
         form = InfoEnginForm()
         
-    return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet, 'grade_id':grade_id})
+    return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet, 'grade_id':grade_id, 'grade':grade})
 
 def create_ravitaillement_carburant(request, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='ravitaillement_carburant'
+    solde2=0
     if request.method == "POST":
         form = RavitaillementCarburantForm(request.POST)
         if form.is_valid():
+            date_actuelle = datetime.datetime.now()
             cout_rav=form.cleaned_data['cout_rav']
             quantite_rav=cout_rav/700
             engin_rav_id = form.cleaned_data['engin_rav']
@@ -362,19 +378,28 @@ def create_ravitaillement_carburant(request, grade_id):
             date_max_precedente = ReleveDistance.objects.filter(engin_releve=engin_rav, date_releve__lt=date_actuelle).aggregate(Max('date_releve'))['date_releve__max']
             enregistrement_precedent = ReleveDistance.objects.filter(engin_releve=engin_rav, date_releve=date_max_precedente).first()
             if enregistrement_precedent:
-                carb_dispo = enregistrement_precedent.carb_restant + quantite_rav
+                carb_restant = enregistrement_precedent.carb_restant
+                if carb_restant is not None:
+                    carb_restant = float(carb_restant)
+                    
+                else:
+                    carb_restant = 0
             else:
-                carb_dispo = None
+                carb_restant = 0
+                
+            carb_dispo = carb_restant + quantite_rav
             plein = form.cleaned_data['plein']
             if plein : 
                 Km_plein = form.cleaned_data['Km_plein']
             date_actuelle = datetime.datetime.now()
             date_max_precedente = RavitaillementCarburant.objects.filter(engin_rav=engin_rav, date_rav__lt=date_actuelle).aggregate(Max('date_rav'))['date_rav__max']
             enregistrement_precedent = RavitaillementCarburant.objects.filter(engin_rav=engin_rav, date_rav=date_max_precedente).first()
+            
             if enregistrement_precedent and plein:
                 km1 = enregistrement_precedent.Km_plein
                 donnee_conso = engin_rav.info_engin.consommation
                 conso = (Km_plein - km1)*donnee_conso
+                
                 ravitaillement_carburant=RavitaillementCarburant(
                 cout_rav=cout_rav,
                 quantite_rav=quantite_rav,
@@ -394,24 +419,27 @@ def create_ravitaillement_carburant(request, grade_id):
                 carb_dispo=carb_dispo,
                 plein=plein,
             )
-             
+                
+            ravitaillement_carburant.save()
+            
             type_engin_tcard = engin_rav.type_engin
             solde1 = T_Card.objects.filter(type_engin_tcard=type_engin_tcard).values_list('solde',flat=True).last()
             solde2 = solde1 - cout_rav
             
-            ravitaillement_carburant.save()
             t_card = T_Card(
                 type_engin_tcard = type_engin_tcard,
+                montant = cout_rav,
                 solde = solde2,
             )
             t_card.save()
-            update_notifications(engin_rav)
+            
             return redirect(reverse('gestionnaire:details',args=[ravitaillement_carburant.id, sujet, grade_id]))  
     else:
         form = RavitaillementCarburantForm()
-    return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet,'grade_id':grade_id})
+    return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet,'grade_id':grade_id, 'grade':grade, 'solde2':solde2})
 
 def create_type_maintenance(request, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet = 'type_maintenance'
     
     if request.method == "POST":
@@ -430,10 +458,11 @@ def create_type_maintenance(request, grade_id):
     else:
         form = TypeMaintenanceForm()
         
-    return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet, 'grade_id':grade_id})
+    return render(request, 'gestionnaire/creation.html', {'form': form, 'sujet': sujet, 'grade_id':grade_id, 'grade':grade})
 
 
 def create_maintenance_engin(request, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='maintenance_engin'
     if request.method == "POST":
         form = MaintenanceEnginForm(request.POST)
@@ -455,13 +484,14 @@ def create_maintenance_engin(request, grade_id):
                 cout_maint=cout_maint
             )
             maintenance.save()
-            update_notifications(engin_maint)
+            update_notifications(engin_maint.id)
             return redirect(reverse('gestionnaire:details',args=[maintenance.id, sujet, grade_id]))  
     else:
         form = MaintenanceEnginForm()
-    return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet,'grade_id':grade_id})
+    return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet,'grade_id':grade_id, 'grade':grade})
 
 def create_attribution(request, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='attribution'
     if request.method == "POST":
         form = AttributionForm(request.POST)
@@ -479,9 +509,10 @@ def create_attribution(request, grade_id):
             return redirect(reverse('gestionnaire:details',args=[attribution.id, sujet, grade_id]))  
     else:
         form = AttributionForm()
-    return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet,'grade_id':grade_id})
+    return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet,'grade_id':grade_id, 'grade':grade})
 
 def create_releve_distance(request, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='releve_distance'
     grade = get_object_or_404(Grade, pk=grade_id)
     if request.method == "POST":
@@ -524,7 +555,7 @@ def create_releve_distance(request, grade_id):
                 # Gérer le cas où l'une ou les deux valeurs sont None
                 carb_restant = None  # Ou une autre valeur par défaut appropriée
 
-            ravitaille = form.cleaned_data['ravitaille']
+            ravitaillement = form.cleaned_data['ravitaillement']
             qte_rav = qte
             date2_rav = date_r
             
@@ -537,52 +568,69 @@ def create_releve_distance(request, grade_id):
                 carb_depart =carb_depart,
                 carb_consomme = carb_consomme,
                 carb_restant = carb_restant,
-                ravitaillement = ravitaille,
+                ravitaillement = ravitaillement,
                 qte_rav = qte_rav,
                 date2_rav = date2_rav,
             )
             releve_distance.save()
             engin_releve.nja += 1 
             engin_releve.save()
-            return redirect(reverse('gestionnaire:details',args=[releve_distance.id, sujet,grade_id, grade_id]))  
+            return redirect(reverse('gestionnaire:details',args=[releve_distance.id, sujet, grade_id]))  
     else:
         form = ReleveDistanceForm()
-    return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet,'grade_id':grade_id, 'grade':grade})
+    return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet,'grade_id':grade_id, 'grade':grade, 'grade':grade})
 
 def create_t_card(request,grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='t_card'
     if request.method == 'POST':
         form = T_CardForm(request.POST)
         if form.is_valid():
-            type_engin_tcard = form.cleaned_data['type_engin_tcard']
-            solde = form.cleaned_data['solde']
+            type_engin_tcard_id = form.cleaned_data['type_engin_tcard']
+            type_engin_tcard = TypeEngin.objects.get(id=type_engin_tcard_id)
+            montant = form.cleaned_data['montant']
+            approvisionnement = True
             
             t_card = T_Card(
                 type_engin_tcard=type_engin_tcard,
-                solde=solde,
+                solde=montant,
+                montant=montant,
+                approvisionnement=approvisionnement,
             )
             t_card.save()
+            print('les informations : ', t_card.type_engin_tcard,' | ', t_card.solde )
             return redirect(reverse('gestionnaire:details',args=[t_card.id, sujet, grade_id]))
     else:
         form = T_CardForm()
-    return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet,'grade_id':grade_id})
+    return render(request,'gestionnaire/creation.html',{'form':form,'sujet':sujet,'grade_id':grade_id, 'grade':grade})
 
 """
 LES UPDATES
 """  
 def update_personne(request, pk, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='personne'
     personne = get_object_or_404(Personne, pk=pk)
     if request.method == 'POST':
-        form = PersonneForm(request.POST, instance=personne)
+        form = PersonneForm(request.POST)
         if form.is_valid():
+            personne.nom = form.cleaned_data['nom']
+            personne.prenom = form.cleaned_data['prenom']
+            personne.contact = form.cleaned_data['contact']
+            personne.grade = form.cleaned_data['grade']
             form.save()
             return redirect(reverse('gestionnaire:details', args=[sujet]))  
     else:
-        form = PersonneForm(instance=personne)
-    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id})
+        form = PersonneForm(initial={
+            'nom' : personne.nom,
+            'prenom' : personne.prenom,
+            'contact' : personne.contact,
+            'grade' : personne.grade,
+        })
+    return render(request, 'gestionnaire/update.html', {'form': form, 'sujet':sujet, 'grade_id':grade_id, 'grade':grade})
 
 def update_type_engin(request, pk, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='type_engin'
     type_engin = get_object_or_404(TypeEngin, pk=pk)
     if request.method == 'POST':
@@ -592,9 +640,10 @@ def update_type_engin(request, pk, grade_id):
             return redirect(reverse('gestionnaire:details', args=[sujet]))  
     else:
         form = TypeEnginForm(instance=type_engin)
-    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id})
+    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id, 'grade':grade})
 
 def update_modele(request, pk, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='modele'
     modele = get_object_or_404(Modele, pk=pk)
     if request.method == 'POST':
@@ -604,9 +653,10 @@ def update_modele(request, pk, grade_id):
             return redirect(reverse('gestionnaire:details', args=[sujet]))  
     else:
         form = ModeleForm(instance=modele)
-    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id})
+    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id, 'grade':grade})
 
 def update_fournisseur(request, pk, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='fournisseur'
     fournisseur = get_object_or_404(Fournisseur, pk=pk)
     if request.method == 'POST':
@@ -616,33 +666,56 @@ def update_fournisseur(request, pk, grade_id):
             return redirect(reverse('gestionnaire:details', args=[sujet]))  
     else:
         form = FournisseurForm(instance=fournisseur)
-    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id})
+    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id, 'grade':grade})
 
 def update_info_engin(request, pk, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='info_engin'
-    info = get_object_or_404(InfoEngin, pk=pk)
+    information = get_object_or_404(InfoEngin, pk=pk)
     if request.method == 'POST':
-        form = InfoEnginForm(request.POST, instance=info)
+        form = InfoEnginForm(request.POST)
         if form.is_valid():
+            information.info = form.cleaned_data['info']
+            information.consommation = form.cleaned_data['consommation']
+            information.vidange = form.cleaned_data['vidange']
+            information.revision = form.cleaned_data['revision']
             form.save()
             return redirect(reverse('gestionnaire:details', args=[sujet]))  
     else:
-        form = InfoEnginForm(instance=info)
-    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id})
+        form = InfoEnginForm(initial={
+            'info' : information.info,
+            'consommation' : information.consommation,
+            'vidange' : information.vidange,
+            'revision' : information.revision,
+        })
+    return render(request, 'gestionnaire/update.html', {'form': form, 'sujet':sujet, 'grade_id':grade_id, 'grade':grade})
 
 def update_ravitaillement_carburant(request, pk, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='ravitaillement_carburant'
-    ravitaillement = get_object_or_404(RavitaillementCarburant, pk=pk)
+    ravitaillement_carburant = get_object_or_404(RavitaillementCarburant, pk=pk)
     if request.method == 'POST':
-        form = RavitaillementCarburantForm(request.POST, instance=ravitaillement)
+        form = RavitaillementCarburantForm(request.POST)
         if form.is_valid():
+            ravitaillement_carburant.cout_rav = form.cleaned_data['cout_rav']
+            ravitaillement_carburant.engin_rav = form.cleaned_data['engin_rav']
+            ravitaillement_carburant.fournisseur_carburant = form.cleaned_data['fournisseur_carburant']
+            ravitaillement_carburant.plein = form.cleaned_data['plein']
+            ravitaillement_carburant.Km_plein = form.cleaned_data['Km_plein']
             form.save()
             return redirect(reverse('gestionnaire:details', args=[sujet]))  
     else:
-        form = RavitaillementCarburantForm(instance=ravitaillement)
-    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id})
+        form = RavitaillementCarburantForm(initial={
+            'cout_rav' : ravitaillement_carburant.cout_rav,
+            'engin_rav' : ravitaillement_carburant.engin_rav,
+            'fournisseur_carburant' : ravitaillement_carburant.fournisseur_carburant,
+            'plein' : ravitaillement_carburant.plein,
+            'Km_plein' : ravitaillement_carburant.Km_plein,
+        })
+    return render(request, 'gestionnaire/update.html', {'form': form, 'sujet':sujet, 'grade_id':grade_id, 'grade':grade})
 
 def update_engin(request, pk, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet = 'engin'
     engin = get_object_or_404(Engin, pk=pk)
     
@@ -676,10 +749,11 @@ def update_engin(request, pk, grade_id):
             'capa_reserv': engin.capa_reserv,
         })
     
-    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id': grade_id, 'sujet':sujet})
+    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id': grade_id,'grade': grade, 'sujet':sujet})
 
 
 def update_marque(request, pk, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='marque'
     marque = get_object_or_404(Marque, pk=pk)
     if request.method == 'POST':
@@ -689,9 +763,10 @@ def update_marque(request, pk, grade_id):
             return redirect(reverse('gestionnaire:details', args=[sujet]))  
     else:
         form = MarqueForm(instance=marque)
-    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id})
+    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id, 'grade':grade})
 
 def update_etat_engin(request, pk, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='etat_engin'
     etat_engin = get_object_or_404(EtatEngin, pk=pk)
     if request.method == 'POST':
@@ -701,71 +776,199 @@ def update_etat_engin(request, pk, grade_id):
             return redirect(reverse('gestionnaire:details', args=[sujet]))  
     else:
         form = EtatEnginForm(instance=etat_engin)
-    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id})
+    return render(request, 'gestionnaire/update.html', {'form': form, 'sujet':sujet, 'grade_id':grade_id, 'grade':grade})
 
 
 def update_maintenance_engin(request, pk, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='maintenance_engin'
     maintenance_engin = get_object_or_404(MaintenanceEngin, pk=pk)
     if request.method == 'POST':
-        form = MaintenanceEnginForm(request.POST, instance=maintenance_engin)
+        form = MaintenanceEnginForm(request.POST)
         if form.is_valid():
+            maintenance_engin.type_maint = form.cleaned_data['type_maint']
+            maintenance_engin.motif_maint = form.cleaned_data['motif_maint']
+            maintenance_engin.engin_maint = form.cleaned_data['engin_maint']
+            maintenance_engin.cout_maint = form.cleaned_data['cout_maint']
+            maintenance_engin.fournisseur_maint = form.cleaned_data['fournisseur_maint']
             form.save()
             return redirect(reverse('gestionnaire:details', args=[sujet]))  
     else:
-        form = MaintenanceEnginForm(instance=maintenance_engin)
-    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id})
+        form = MaintenanceEnginForm(initial={
+            'type_maint' : maintenance_engin.type_maint,
+            'motif_maint' : maintenance_engin.motif_maint,
+            'engin_maint' : maintenance_engin.engin_maint,
+            'cout_maint' : maintenance_engin.cout_maint,
+            'fournisseur_maint': maintenance_engin.fournisseur_maint,
+        })
+    return render(request, 'gestionnaire/update.html', {'form': form, 'sujet':sujet, 'grade_id':grade_id, 'grade':grade})
 
 def update_type_maintenance(request, pk, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='type_maintenance'
     type_maintenance = get_object_or_404(TypeMaintenance, pk=pk)
     if request.method == 'POST':
-        form = TypeMaintenanceForm(request.POST, instance=type_maintenance)
+        form = TypeMaintenanceForm(request.POST)
         if form.is_valid():
+            type_maintenance.libelle_maint = form.cleaned_data['libelle_maint']
             form.save()
             return redirect(reverse('gestionnaire:details', args=[sujet]))  
     else:
-        form = TypeMaintenanceForm(instance=type_maintenance)
-    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id})
+        form = TypeMaintenanceForm(initial={
+            'libelle_maint' : type_maintenance.libelle_maint,
+        })
+    return render(request, 'gestionnaire/update.html', {'form': form, 'sujet':sujet, 'grade_id':grade_id, 'grade':grade})
 
 def update_attribution(request, pk, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='attribution'
     attribution = get_object_or_404(Attribution, pk=pk)
     if request.method == 'POST':
-        form = AttributionForm(request.POST, instance=attribution)
+        form = AttributionForm(request.POST)
         if form.is_valid():
+            attribution.conducteur = form.cleaned_data['conducteur']
+            attribution.engin = form.cleaned_data['engin']
             form.save()
             return redirect(reverse('gestionnaire:details', args=[sujet]))  
     else:
-        form = AttributionForm(instance=attribution)
-    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id})
+        form = AttributionForm(initial={
+            'conducteur' : attribution.conducteur,
+            'engin' : attribution.engin,
+        })
+    return render(request, 'gestionnaire/update.html', {'form': form, 'sujet':sujet, 'grade_id':grade_id, 'grade':grade})
 
 def update_releve_distance(request, pk, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='releve_distance'
     releve_distance = get_object_or_404(ReleveDistance, pk=pk)
     if request.method == 'POST':
-        form = ReleveDistanceForm(request.POST, instance=releve_distance)
+        form = ReleveDistanceForm(request.POST)
         if form.is_valid():
+            releve_distance.engin_releve = form.cleaned_data['engin_releve']
+            releve_distance.nbKmFin = form.cleaned_data['nbKmFin']
+            releve_distance.mode_4x4 = form.cleaned_data['mode_4x4']
+            releve_distance.ravitaillement = form.cleaned_data['ravitaillement']
             form.save()
             return redirect(reverse('gestionnaire:details', args=[sujet]))  
     else:
-        form = ReleveDistanceForm(instance=releve_distance)
-    return render(request, 'gestionnaire/update.html', {'form': form, 'grade_id':grade_id})
+        form = ReleveDistanceForm(initial={
+            'engin_releve' : releve_distance.engin_releve,
+            'nbKmFin' : releve_distance.nbKmFin,
+            'mode_4x4' : releve_distance.mode_4x4,
+            'ravitaillement' : releve_distance.ravitaillement,
+        })
+    return render(request, 'gestionnaire/update.html', {'form': form, 'sujet':sujet, 'grade_id':grade_id, 'grade':grade})
+
+def option_t_card(request, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
+    sujet = 't_card'
+    t_card = T_Card.objects.all()
+    moto = T_Card.objects.filter(type_engin_tcard=1)
+    tricycle = T_Card.objects.filter(type_engin_tcard=2)
+    voiture = T_Card.objects.filter(type_engin_tcard=3)
+    type_engin = TypeEngin.objects.all()
+    type_engin_id = None  
+    solde_moto = float(moto.last().solde) if moto.exists() else 0
+    solde_tricycle = float(tricycle.last().solde) if tricycle.exists() else 0
+    solde_voiture = float(voiture.last().solde) if voiture.exists() else 0
+    if request.method == 'POST':
+        type_engin_id = request.POST.get('type_engin_tcard')
+        print('type engin card', type_engin_id)
+        
+        return redirect(reverse('gestionnaire:update_t_card', args=[type_engin_id, grade_id, 'approvisionnement']))
+    
+    return render(request, 'gestionnaire/t_card_option.html', {
+        'sujet': sujet,
+        'grade_id': grade_id,
+        'grade': grade,
+        't_card': t_card,
+        'type_engin': type_engin,
+        'type_engin_tcard_id': type_engin_id,
+        'moto': moto,
+        'tricycle': tricycle,
+        'voiture': voiture,
+        'solde_moto': solde_moto,
+        'solde_tricycle': solde_tricycle,
+        'solde_voiture': solde_voiture,
+    })
+
+def edit_t_card(request, pk, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
+    sujet='t_card'
+    t_card = get_object_or_404(T_Card, pk=pk)
+    if request.method == 'POST':
+        form = T_CardForm(request.POST)
+        if form.is_valid():
+            t_card.montant = form.cleaned_data['montant']
+            t_card.type_engin_tcard = form.cleaned_data['type_engin_tcard']
+            form.save()
+            return redirect(reverse('gestionnaire:details', args=[pk, sujet, grade_id]))  
+    else:
+        form = T_CardForm(initial={
+            'montant' : t_card.montant,
+            'type_engin_tcard' : t_card.type_engin_tcard,
+        })
+    return render(request, 'gestionnaire/update.html', {'form': form, 'sujet':sujet, 'grade_id':grade_id, 'grade':grade})
+
+def update_t_card(request, pk, grade_id, action):
+    grade = get_object_or_404(Grade, pk=grade_id)
+    sujet = 't_card'
+    t_card = T_Card.objects.filter(type_engin_tcard=pk)  
+    last_solde = float(t_card.last().solde) if t_card.exists() else 0
+    
+    type_carte =  TypeEngin.objects.filter(id=pk)
+    type_carte=type_carte[0].designation
+    
+    if request.method == 'POST':
+        form = T_CardForm(request.POST)
+        if form.is_valid():
+            montant = float(form.cleaned_data['montant'])
+            type_engin_tcard=pk
+            solde2 = 0
+            if action == 'approvisionnement':
+                solde2 = last_solde + montant
+                approvisionnement = True
+            else:
+                solde2 = last_solde - montant
+                approvisionnement = False
+            t_card = T_Card(
+                montant=montant,
+                type_engin_tcard=type_engin_tcard,
+                solde=solde2,
+                approvisionnement=approvisionnement,
+            )
+            t_card.save()
+            return redirect('gestionnaire:details', pk=pk, sujet=sujet, grade_id=grade_id)  # Utilisez simplement les noms d'arguments
+
+    else:
+        form = T_CardForm()
+
+    return render(request, 'gestionnaire/update.html', {
+        'form': form,
+        'sujet': sujet,
+        'action': action,
+        'grade_id': grade_id,
+        'grade': grade,
+        'type_carte':type_carte,
+    })
+
 
 """
 LES DELETE
 """
 
 def delete_modele(request, modele_id, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='modele'
     modele = get_object_or_404(Modele, pk=modele_id)
     if request.method == 'POST':
         modele.delete()
         return redirect(reverse('gestionnaire:lists', args=[sujet]))  
     
-    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'sujet': 'modele'})
+    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'grade':grade, 'sujet': 'modele'})
 
 def delete_info_engin(request, info_engin_id, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='info_engin'
     info_engin = get_object_or_404(InfoEngin, pk=info_engin_id)
     
@@ -773,9 +976,10 @@ def delete_info_engin(request, info_engin_id, grade_id):
         info_engin.delete()
         return redirect(reverse('gestionnaire:lists', args=[sujet]))
     
-    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'sujet': 'info_engin'})
+    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'grade':grade, 'sujet': 'info_engin'})
 
 def delete_ravitaillement_carburant(request, ravitaillement_carburant_id,grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='ravitaillement_carburant'
     ravitaillement_carburant = get_object_or_404(RavitaillementCarburant, pk=ravitaillement_carburant_id)
     
@@ -783,9 +987,10 @@ def delete_ravitaillement_carburant(request, ravitaillement_carburant_id,grade_i
         ravitaillement_carburant.delete()
         return redirect(reverse('gestionnaire:lists', args=[sujet]))
     
-    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'sujet': 'ravitaillement_carburant'})
+    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'grade':grade, 'sujet': 'ravitaillement_carburant'})
 
 def delete_personne(request, personne_id, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='personne'
     personne = get_object_or_404(Personne, pk=personne_id)
     
@@ -793,9 +998,10 @@ def delete_personne(request, personne_id, grade_id):
         personne.delete()
         return redirect(reverse('gestionnaire:lists', args=[sujet]))
     
-    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'sujet': 'personne'})
+    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'grade':grade, 'sujet': 'personne'})
 
 def delete_marque(request, marque_id,grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='marque'
     marque = get_object_or_404(Marque, pk=marque_id)
     
@@ -803,9 +1009,10 @@ def delete_marque(request, marque_id,grade_id):
         marque.delete()
         return redirect(reverse('gestionnaire:lists', args=[sujet]))
     
-    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'sujet': 'marque'})
+    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'grade':grade, 'sujet': 'marque'})
 
 def delete_fournisseur(request, fournisseur_id, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='fournisseur'
     fournisseur = get_object_or_404(Fournisseur, pk=fournisseur_id)
     
@@ -813,9 +1020,10 @@ def delete_fournisseur(request, fournisseur_id, grade_id):
         fournisseur.delete()
         return redirect(reverse('gestionnaire:lists', args=[sujet]))
     
-    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'sujet': 'fournisseur'})
+    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'grade':grade, 'sujet': 'fournisseur'})
 
 def delete_engin(request, engin_id,grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='engin'
     engin = get_object_or_404(Engin, pk=engin_id)
     
@@ -823,9 +1031,10 @@ def delete_engin(request, engin_id,grade_id):
         engin.delete()
         return redirect(reverse('gestionnaire:lists', args=[sujet]))
     
-    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'sujet': 'engin'})
+    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'grade':grade, 'sujet': 'engin'})
 
 def delete_type_engin(request, type_engin_id, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='type_engin'
     type_engin = get_object_or_404(TypeEngin, pk=type_engin_id)
     
@@ -833,9 +1042,10 @@ def delete_type_engin(request, type_engin_id, grade_id):
         type_engin.delete()
         return redirect(reverse('gestionnaire:lists', args=[sujet]))
     
-    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'sujet': 'type_engin'})
+    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'grade':grade, 'sujet': 'type_engin'})
 
 def delete_etat_engin(request, etat_engin_id, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='etat_engin'
     etat_engin = get_object_or_404(EtatEngin, pk=etat_engin_id)
     
@@ -843,9 +1053,10 @@ def delete_etat_engin(request, etat_engin_id, grade_id):
         etat_engin.delete()
         return redirect(reverse('gestionnaire:lists', args=[sujet]))
     
-    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'sujet': 'etat_engin'})
+    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'grade':grade, 'sujet': 'etat_engin'})
 
 def delete_type_maintenance(request, type_maintenance_id, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='type_maintenance'
     type_maintenance = get_object_or_404(TypeMaintenance, pk=type_maintenance_id)
     
@@ -853,9 +1064,10 @@ def delete_type_maintenance(request, type_maintenance_id, grade_id):
         type_maintenance.delete()
         return redirect(reverse('gestionnaire:lists', args=[sujet]))
     
-    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'sujet': 'type_maintenance'})
+    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'grade':grade, 'sujet': 'type_maintenance'})
 
 def delete_maintenance_engin(request, maintenance_engin_id, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='maintenance_engin'
     maintenance_engin = get_object_or_404(MaintenanceEngin, pk=maintenance_engin_id)
     
@@ -863,9 +1075,10 @@ def delete_maintenance_engin(request, maintenance_engin_id, grade_id):
         maintenance_engin.delete()
         return redirect(reverse('gestionnaire:lists', args=[sujet]))
     
-    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'sujet': 'maintenance_engin'})
+    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'grade':grade, 'sujet': 'maintenance_engin'})
 
 def delete_attribution(request, attribution_id, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='attribution'
     attribution = get_object_or_404(Attribution, pk=attribution_id)
     
@@ -873,9 +1086,10 @@ def delete_attribution(request, attribution_id, grade_id):
         attribution.delete()
         return redirect(reverse('gestionnaire:lists', args=[sujet]))
     
-    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'sujet': 'attribution'})
+    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'grade':grade, 'sujet': 'attribution'})
 
 def delete_releve_distance(request, releve_distance_id, grade_id):
+    grade = get_object_or_404(Grade, pk=grade_id)
     sujet='releve_distance'
     releve_distance = get_object_or_404(ReleveDistance, pk=releve_distance_id)
     
@@ -883,4 +1097,4 @@ def delete_releve_distance(request, releve_distance_id, grade_id):
         releve_distance.delete()
         return redirect(reverse('gestionnaire:lists', args=[sujet]))
     
-    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'sujet': 'releve_distance'})
+    return render(request, 'gestionnaire/delete.html', {'grade_id':grade_id, 'grade':grade, 'sujet': 'releve_distance'})

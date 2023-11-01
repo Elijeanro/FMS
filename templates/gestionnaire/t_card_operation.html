@@ -20,7 +20,6 @@ Mettre à jour {{sujet}}
           </ul>
           {% endif %}
           <form role="form" method="post">
-
             {% csrf_token %}
             <div class="form-group mb-4">
               <div class="input-group-prepend">
@@ -28,18 +27,8 @@ Mettre à jour {{sujet}}
                   <h5>Mettre à jour {{ sujet }}</h5>
                 </span>
               </div>
-              
-            </div>
-            {% if sujet == 't_card' and action == 'approvisionnement' %}
-            <span class="input-group-prepend">
-              {{action | upper}} {{type_carte}}
-            </span>
-            
-            <br>
-              {{ form.montant }}
-              {% else %}
               {{ form.as_p }}
-              {% endif %}
+            </div>
             <div class="text-center mb-6">
               <button type="submit" class="btn btn-primary mt-4">Enregistrer</button>
             </div>
