@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'gestionnaire',
     'administrateur',
     'administratif',
+    'django_select2',
 ]
 
 MIDDLEWARE = [
@@ -136,5 +137,3 @@ STATICFILES_DIRS=[
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

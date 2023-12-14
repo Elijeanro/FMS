@@ -15,10 +15,17 @@ Bilan périodique
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">PERIODE du
-                {{day_1}}/{{month_1}}/{{year_1}} au {{day_2}}/{{month_2}}/{{year_2}}
-                <br>
+              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">PERIODE du <span class="text-default" >{{date_debut | date }}</span>
+                au <span class="text-default" >{{date_fin | date }}</span>
                 Engin {{engin.immatriculation}} ({{engin.type_engin.designation}})
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                    </div>
+                  </div>
+  
+                </div>
+                
               </div>
               <div class="row no-gutters align-items-center">
                 <div class="col-auto">
@@ -65,590 +72,357 @@ Bilan périodique
         <br>
         
   </div> -->
-  <div class="row d-sm-flex justify-content-center mb-2">
-    <div class="row">
-      <div class="col">
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#bilan_financier"
-          aria-expanded="false" aria-controls="bilan_financier">BILAN FINANCIER</button>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#bilan_technique"
-          aria-expanded="false" aria-controls="bilan_technique">BILAN TECHNIQUE</button>
-      </div>
-    </div>
-  </div>
   <div class="container mt-3">
     <div class="row">
       <div class="col">
-        <div class="collapse" id="bilan_financier">
+        <!-- <div class="collapse" id="bilan_financier"> -->
           <div class="row d-sm-flex justify-content-center mb-2">
 
-            <h1 class="h3 mb-0 text-gray-800">Bilan Financier</h1>
+            <h1 class="h3 mb-0 text-gray-800">Bilan</h1>
 
           </div>
 
           <div class="row d-sm-flex justify-content-center mb-2">
 
-            <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#carburantSection" aria-expanded="false"
-            aria-controls="carburantSection">
-              <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        Coût total de ravitaillement en carburant</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"> {{cout_r}} F CFA</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#maintenanceSection" aria-expanded="false"
-            aria-controls="maintenanceSection">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                        Coût total de maintenance des engins</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{cout_m}} F CFA</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#vidangeSection" aria-expanded="false"
-            aria-controls="vidangeSection">
-              <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Coût total de vidange
-                        des
-                        engins
-                      </div>
-                      <div class="row no-gutters align-items-center">
-                        <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{cout_v}} F CFA
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
+<!-- Ravitaillement -->
           </div>
           <div class="row d-sm-flex justify-content-center mb-2">
-
-            <div class="container mt-3">
-              <div class="row">
-                <div class="col">
-                  <div class="collapse" id="carburantSection">
-                    <h4 class="h3 mb-0 text-gray-800">Point sur le carburant</h4>
-                    <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
-                      <thead>
-                        <tr>
-                          <th>Date</th>
-                          <th>Engin</th>
-                          <th>Marque</th>
-                          <th>Modèle</th>
-                          <th>Immat.</th>
-                          <th>Montant</th>
-                          <th>Quantité</th>
-                          <th>Carb. Dispo</th>
-                          
-                        </tr>
+                  <div class="container mt-3 mb-3">
+                    <div class="row">
+                      <div class="col">
+                        <div id="carburantSection"> 
+                          <h4 class="h3 mb-0 text-gray-800">Point sur le carburant | Dépense totale en ravitaillement : {{cout_r | floatformat:2 }} F CFA</h4>
+                          <h4 class="h3 mb-0 text-gray-800">Quantité totale ravitaillée : {{quantite_r | floatformat:2 }} Litres</h4>
+                          <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                            <thead>
+                              <tr>
+                                <th>Date</th>
+                                <th>Engin</th>
+                                <th>Marque</th>
+                                <th>Modèle</th>
+                                <th>Immat.</th>
+                                <th>Montant</th>
+                                <th>Quantité</th>
+                                <th>Carb. Dispo</th>
+                                <th>Distance à parcourir</th>
+                                <th>Voir</th>  
+</tr>
                       </thead>
                       <tbody>
-                        {% for r in ravitaillements %}
-                        <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}"
-                          aria-expanded="false" aria-controls="details_{{ forloop.counter }}">
-                          <td>{{ r.date_rav }}</td>
-                          <td>{{ r.engin_rav.type_engin.designation}} </td>
-                          <td>{{r.modele_engin.marque.nom_marque}}</td>
-                          <td>{{r.modele_engin.nom_modele}}</td>
-                          <td>{{r.engin_rav.immatriculation}} </td>
-                          <td>{{r.cout_rav}} </td>
-                          <td>{{r.quantite_rav}} </td>
-                          <td>{{r.carb_dispo}}</td>
-
-                          
-                        </tr>
-
-                        {% endfor %}
-                      </tbody>
-                      <tr>
-                        <th>Total dépenses carburant : </th>
-                        <td>{{cout_r}} F CFA</td>
-                      </tr>
-                    </table>
-                    <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection"
-                    aria-expanded="false" aria-controls="carburantSection">
-                    Replier le tableau
-                  </button>
-
-                  <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection"
-                    aria-expanded="false" aria-controls="maintenanceSection">
-                    voir maintenance
-                  </button>
-                  <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection"
-                    aria-expanded="false" aria-controls="vidangeSection">
-                    voir vidange
-                  </button>
-                  <button type="button" class="btn btn-default" onclick="printTable('dataTable2', 'Bilan financier : Point sur le carburant')">
-                    <i class="fas fa-download"></i>
-                    Imprimer ce tableau
-                  </button>
-                </div>
-                <br><br>
-                <div class="collapse" id="maintenanceSection">
-                  <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection"
-                    aria-expanded="false" aria-controls="carburantSection">
-                    Voir ravitaillement
-                  </button>
-                    <h4 class="h3 mb-0 text-gray-800">Point sur les maintenances</h4>
-                    <table class="table table-bordered" id="dataTable3" width="100%" cellspacing="0">
-                      <thead>
-                        <tr>
-                          <th>Date</th>
-                          <th>Engin</th>
-                          <th>Marque</th>
-                          <th>Modèle</th>
-                          <th>Immat.</th>
-                          <th>Montant</th>
-                          <th>Fournisseur</th>
-                          <th>Type de maintenance</th>
-                          <th>Motif</th>
-                          
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for m in maintenances %}
-                        <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}"
-                          aria-expanded="false" aria-controls="details_{{ forloop.counter }}">
-                          <td>{{ m.date_maint }}</td>
-                          <td>{{ m.engin_maint.type_engin.designation}} </td>
-                          <td>{{m.modele_engin.marque.nom_marque}}</td>
-                          <td>{{m.modele_engin.nom_modele}}</td>
-                          <td>{{m.engin_maint.immatriculation}} </td>
-                          <td>{{m.cout_maint}} </td>
-                          <td>{{m.fournisseur_maint.nom_fournisseur}} </td>
-                          <td>{{m.type_maint.libelle_maint}} </td>
-                          <td>{{m.motif_maint}} </td>
-
-                          
-                        </tr>
-
-                        {% endfor %}
-                      </tbody>
-                      <tr>
-                        <th>Total dépenses maintenance : </th>
-                        <td>{{cout_m}} F CFA</td>
-                      </tr>
-                    </table>
-                    <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection"
-                    aria-expanded="false" aria-controls="maintenanceSection">
-                    Replier le tableau
-                  </button>
-
-                  <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection"
-                    aria-expanded="false" aria-controls="carburantSection">
-                    voir ravitaillement
-                  </button>
-                  <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection"
-                    aria-expanded="false" aria-controls="vidangeSection">
-                    voir vidange
-                  </button>
-                  <button type="button" class="btn btn-default" onclick="printTable('dataTable3','Bilan financier : Point sur les maintenances')">
-                    <i class="fas fa-download"></i>
-                    Imprimer ce tableau
-                  </button>
-                </div>
-                <br><br>
-                <div class="collapse" id="vidangeSection">
-                  <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection"
-                    aria-expanded="false" aria-controls="carburantSection">
-                    voir ravitaillement
-                  </button>
-                  <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection"
-                    aria-expanded="false" aria-controls="maintenanceSection">
-                    voir maintenance
-                  </button>
-                    <h4 class="h3 mb-0 text-gray-800">Point sur les vidanges</h4>
-                    <table class="table table-bordered" id="dataTable4" width="100%" cellspacing="0">
-                      <thead>
-                        <tr>
-                          <th>Date</th>
-                          <th>Engin</th>
-                          <th>Marque</th>
-                          <th>Modèle</th>
-                          <th>Immat.</th>
-                          <th>Montant</th>
-                          <th>Fournisseur</th>
-                          <th>Kilométrage à la vidange</th>
-                          
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for v in vidanges %}
-                        <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}"
-                          aria-expanded="false" aria-controls="details_{{ forloop.counter }}">
-                          <td>{{ v.date_maint }}</td>
-                          <td>{{ v.engin_maint.type_engin.designation}} </td>
-                          <td>{{v.modele_engin.marque.nom_marque}}</td>
-                          <td>{{v.modele_engin.nom_modele}}</td>
-                          <td>{{v.engin_vid.immatriculation}} </td>
-                          <td>{{v.cout_maint}} </td>
-                          <td>{{v.fournisseur_maint.nom_fournisseur}} </td>
-
-                          <td>{{v.Km_maint}} </td>
-
-                          
-                        </tr>
-
-                        {% endfor %}
-                      </tbody>
-                      <tr>
-                        <th>Total dépenses vidanges : </th>
-                        <td>{{cout_v}} F CFA</td>
-                      </tr>
-                    </table>
-                    <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection"
-                      aria-expanded="false" aria-controls="vidangeSection">
-                      Replier le tableau
-                    </button>
-                    <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection"
-                      aria-expanded="false" aria-controls="carburantSection">
-                      voir ravitaillement
-                    </button>
-                    <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection"
-                      aria-expanded="false" aria-controls="maintenanceSection">
-                      voir maintenance
-                    </button>
-                    <button type="button" class="btn btn-default" onclick="printTable('dataTable4','Bilan financier : Point sur les vidanges')">
-                      <i class="fas fa-download"></i>
-                      Imprimer ce tableau
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container mt-3">
-    <div class="row">
-      <div class="col">
-        <div class="collapse" id="bilan_technique">
-          <div class="row d-sm-flex justify-content-center mb-2">
-            <br>
-            <div class="row d-sm-flex justify-content-center mb-2">
-
-              <h1 class="h3 mb-0 text-gray-800">Bilan Technique </h1>
-
-            </div>
-
-            <div class="row d-sm-flex justify-content-center mb-2">
-
-              <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#carburantSection1" aria-expanded="false"
-              aria-controls="carburantSection1">
-                <div class="card border-left-primary shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                          Quantité totale de carburant ravitaillé</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"> {{quantite_r}} </div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fa fa-credit-card-alt fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#maintenanceSection1"
-              aria-expanded="false" aria-controls="maintenanceSection1">
-                <div class="card border-left-success shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                          Nombre total de maintenance de l'engin</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{nb_maintenance}}</div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-gears fa-2x text-gray-300"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Earnings (Monthly) Card Example -->
-              <div class="col-xl-3 col-md-6 mb-4" data-toggle="collapse" data-target="#vidangeSection1" aria-expanded="false"
-              aria-controls="vidangeSection1">
-                <div class="card border-left-info shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Nombre total de vidange
-                          de l'engin
-                        </div>
-                        <div class="row no-gutters align-items-center">
-                          <div class="col-auto">
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{nb_vidange}}
-                            </div>
-                          </div>
-
-                        </div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-gear fa-2x text-gray-300"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row d-sm-flex justify-content-center mb-2">
-              <div class="container mt-3">
-                <div class="row">
-                  <div class="col">
-                    <div class="collapse" id="carburantSection1">
-                      <h4 class="h3 mb-0 text-gray-800">Point sur les interventions en carburant</h4>
-                      <table class="table table-bordered" id="dataTable5" width="100%" cellspacing="0">
-                        <thead>
-                          <tr>
-                            <th>Date</th>
-                            <th>Engin</th>
-                            <th>Marque</th>
-                            <th>Modèle</th>
-                            <th>Immat.</th>
-                            <th>Quantité</th>
-                            <th>Carb. Dispo</th>
-                            <th>Distance à parcourir</th>
-                            
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {% for r in ravitaillements %}
-                          <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}"
-                            aria-expanded="false" aria-controls="details_{{ forloop.counter }}">
-                            <td>{{ r.date_rav }}</td>
-                            <td>{{ r.engin_rav.type_engin.designation}} </td>
-                            <td>{{r.modele_engin.marque.nom_marque}}</td>
-                            <td>{{r.modele_engin.nom_modele}}</td>
-                            <td>{{r.engin_rav.immatriculation}} </td>
-                            <td>{{r.quantite_rav}} </td>
-                            <td>{{r.carb_dispo}}</td>
-                            <td>{{r.dap}} Km</td>
-                            
-                          </tr>
-
-                          {% endfor %}
-                        </tbody>
-                        <tr>
-                          <th>Quantité totale de carburant : </th>
-                          <td>{{quantite_rav}} </td>
-                        </tr>
-                      </table>
-                      <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection1"
-                      aria-expanded="false" aria-controls="carburantSection1">
-                      Replier le tableau
-                    </button>
-                    <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection1"
-                      aria-expanded="false" aria-controls="maintenanceSection1">
-                      voir maintenance
-                    </button>
-                    <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection1"
-                      aria-expanded="false" aria-controls="vidangeSection1">
-                      voir vidange
-                    </button>
-                    <button type="button" class="btn btn-default" onclick="printTable('dataTable5','Bilan Technique : Point sur les interventions en carburant')">
-                      <i class="fas fa-download"></i>
-                      Imprimer ce tableau
-                    </button>
-                  </div>
-                  <br><br>
-
-                  <div class="collapse" id="maintenanceSection1">
-                    <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection1"
-                      aria-expanded="false" aria-controls="carburantSection1">
-                      Voir ravitaillement
-                    </button>
-                      <h4 class="h3 mb-0 text-gray-800">Point sur les interventions en maintenance</h4>
-                      <table class="table table-bordered" id="dataTable6" width="100%" cellspacing="0">
-                        <thead>
-                          <tr>
-                            <th>Date</th>
-                            <th>Engin</th>
-                            <th>Marque</th>
-                            <th>Modèle</th>
-                            <th>Immat.</th>
-                            <th>Montant</th>
-                            <th>Fournisseur</th>
-                            <th>Type de maintenance</th>
-                            <th>Motif</th>
-                            <th>Révision</th>
-                            
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {% for m in maintenances %}
-                          <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}"
-                            aria-expanded="false" aria-controls="details_{{ forloop.counter }}">
-                            <td>{{ m.date_maint }}</td>
-                            <td>{{ m.engin_maint.type_engin.designation}} </td>
-                            <td>{{m.modele_engin.marque.nom_marque}}</td>
-                            <td>{{m.modele_engin.nom_modele}}</td>
-                            <td>{{m.engin_maint.immatriculation}} </td>
-                            <td>{{m.cout_maint}} </td>
-                            <td>{{m.fournisseur_maint.nom_fournisseur}} </td>
-                            <td>{{m.type_maint.libelle_maint}} </td>
-                            <td>{{m.motif_maint}} </td>
-                            <td>Dans {{m.reviz}} jours</td>
-                            
-                          </tr>
-
-                          {% endfor %}
-                        </tbody>
-                        <tr>
-                          <th>Nombre total de maintenance : </th>
-                          <td>{{nb_maintenance}}</td>
-                        </tr>
-                      </table>
-                      <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection1"
-                      aria-expanded="false" aria-controls="maintenanceSection1">
-                      Replier le tableau
-                    </button>
-                    <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection1"
-                      aria-expanded="false" aria-controls="carburantSection1">
-                      voir ravitaillement
-                    </button>
-                    <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection1"
-                      aria-expanded="false" aria-controls="vidangeSection1">
-                      voir vidange
-                    </button>
-                    <button type="button" class="btn btn-default" onclick="printTable('dataTable6','Bilan Technique : Point sur les interventions en maintenance')">
-                      <i class="fas fa-download"></i>
-                      Imprimer ce tableau
-                    </button>
-                  </div>
-                  <br><br>
-                  <div class="collapse" id="vidangeSection1">
-                    <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection1"
-                      aria-expanded="false" aria-controls="carburantSection1">
-                      voir ravitaillement
-                    </button>
-                    <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection1"
-                      aria-expanded="false" aria-controls="maintenanceSection1">
-                      voir maintenance
-                    </button>
-                      <h4 class="h3 mb-0 text-gray-800">Point sur les interventions en vidange</h4>
-                      <table class="table table-bordered" id="dataTable7" width="100%" cellspacing="0">
-                        <thead>
-                          <tr>
-                            <th>Date</th>
-                            <th>Engin</th>
-                            <th>Marque</th>
-                            <th>Modèle</th>
-                            <th>Immat.</th>
-                            <th>Montant</th>
-                            <th>Fournisseur</th>
-                            <th>Kilométrage à la vidange</th>
-                            <th>Prochaine vidange</th>
-                            
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {% for v in vidanges %}
-                          <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}"
-                            aria-expanded="false" aria-controls="details_{{ forloop.counter }}">
-                            <td>{{ v.date_maint }}</td>
-                            <td>{{ v.engin_maint.type_engin.designation}} </td>
-                            <td>{{v.modele_engin.marque.nom_marque}}</td>
-                            <td>{{v.modele_engin.nom_modele}}</td>
-                            <td>{{v.engin_vid.immatriculation}} </td>
-                            <td>{{v.cout_maint}} </td>
-                            <td>{{v.fournisseur_maint.nom_fournisseur}} </td>
-
-                            <td>{{v.Km_maint}} </td>
-                            <td>
-                              
-                              {% if v.engin_maint.type_engin.designation == 'TRICYCLE' %}
-                                Dans {{v.vid}} jours
-                              {% else %}
-                                Après {{v.vid}} Km
+                      {% for r in ravitaillements %}
+                              <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}"
+                                aria-expanded="false" aria-controls="details_{{ forloop.counter }}">
+                                <td>{{ r.date_rav }}</td>
+                                <td>{{ r.engin_rav.type_engin.designation }} </td>
+                                <td>{{ r.engin_rav.modele_engin.marque.nom_marque }}</td>
+                                <td>{{ r.engin_rav.modele_engin.nom_modele }}</td>
+                                <td>{{ r.engin_rav.immatriculation }} </td>
+                                <td>{{ r.cout_rav | floatformat:2 }} </td>
+                                <td>{{ r.quantite_rav | floatformat:2 }} </td>
+                                <td>{{ r.carb_dispo | floatformat:2 }}</td>
+                                <td>{{r.dap | floatformat:2 }} Km</td>
+                                <td class="td-actions text-right">
+                                  <div class="dropdown no-arrow">
+                                    <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                                      id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                      aria-labelledby="dropdownMenuLink">
+                                      <div class="dropdown-header" style="color: black; font-size: 12px;">Option:</div>
+                                      <a class="dropdown-item" href="{% url 'administratif:bilan_partic' r.engin_rav.id date_debut date_fin %}">Bilan de l'engin</a>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                              {% endfor %}
+                            </tbody>
+                            <tr>
+                              <th>Total dépenses maintenance : </th>
+                              <td>{{cout_r | floatformat:2 }} F CFA</td>
+                            </tr>
+                            <tr>
+                              <th>Quantité totale de carburant : </th>
+                              <td>{{quantite_r | floatformat:2 }} Litres</td>
+                            </tr>
+                          </table>
+                          <table>
+                            <tr>
+                              <th>Total dépenses maintenance : </th>
+                              <td>{{cout_r | floatformat:2 }} F CFA</td>
+                            </tr>
+                            <tr>
+                              <th>Quantité totale de carburant : </th>
+                              <td>{{quantite_r | floatformat:2 }} Litres</td>
+                            </tr>
+                          </table>
+                          <div class="pagination justify-content-center">
+                            <span class="step-links">
+                              {% if ravitaillements.has_previous %}
+                                <a href="?page=1" class="btn btn-lg btn-primary">&laquo;</a>
+                                <a href="?page={{ ravitaillements.previous_page_number }}" class="btn btn-lg btn-primary"><i class="fas fa-chevron-left"></i></a>
                               {% endif %}
-                                
-                            </td>
+                              <span class="current">
+                                Page {{ ravitaillements.number }} sur {{ ravitaillements.paginator.num_pages }}
+                              </span>
+                              {% if ravitaillements.has_next %}
+                                <a href="?page={{ ravitaillements.next_page_number }}" class="btn btn-lg btn-primary"><i class="fas fa-chevron-right"></i></a>
+                                <a href="?page={{ ravitaillements.paginator.num_pages }}" class="btn btn-lg btn-primary"> &raquo;</a>
+                              {% endif %}
+                            </span>
+                          </div>
+                          <br>
+                          
+                          <button class="btn btn-primary" type="button">
+                            <a href="#maintenanceSection" class="text-white">voir maintenance</a>
                             
-                          </tr>
-
-                          {% endfor %}
-                        </tbody>
-                        <tr>
-                          <th>Nombre total de vidanges : </th>
-                          <td>{{nb_vidange}}</td>
-                        </tr>
-                      </table>
-                      <button class="btn btn-primary" data-toggle="collapse" data-target="#vidangeSection1"
-                          aria-expanded="false" aria-controls="vidangeSection1">
-                          Replier le tableau
-                        </button>
-                        <button class="btn btn-primary" data-toggle="collapse" data-target="#carburantSection1"
-                          aria-expanded="false" aria-controls="carburantSection1">
-                          voir ravitaillement
-                        </button>
-                        <button class="btn btn-primary" data-toggle="collapse" data-target="#maintenanceSection1"
-                          aria-expanded="false" aria-controls="maintenanceSection1">
-                          voir maintenance
-                        </button>
-                        <button type="button" class="btn btn-default" onclick="printTable('dataTable7','Bilan Technique : Point sur les interventions en vidange')">
-                          <i class="fas fa-download"></i>
-                          Imprimer ce tableau
-                        </button>
+                          </button>
+                          <button class="btn btn-primary" type="button">
+                            <a href="#vidangeSection" class="text-white">voir vidange</a>
+                            
+                          </button>
+                          <button type="button" class="btn btn-default" onclick="printTable('dataTable2', 'Bilan financier : Point sur le carburant')">
+                            <i class="fas fa-download"></i>
+                            Imprimer ce tableau
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
+                <br><br>
+
+    <!-- ############################ maintenance -->
+    <div class="container mt-3 mb-3">
+      <div class="row">
+        <div class="col">
+    <div id="maintenanceSection">
+      <h4 class="h3 mb-0 text-gray-800">Point sur les maintenances | Dépense totale en maintenance : {{cout_m | floatformat:2 }} F CFA </h4>
+      <h4 class="h3 mb-0 text-gray-800">Nombre total de maintenance : {{nb_maintenance}} </h4>
+      <table class="table table-bordered" id="dataTable3" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Engin</th>
+            <th>Marque</th>
+            <th>Modèle</th>
+            <th>Immat.</th>
+            <th>Montant</th>
+            <th>Fournisseur</th>
+            <th>Type de maintenance</th>
+            <th>Motif</th>
+            <th>Révision</th>
+            <th>Voir</th>  
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in maintenances %}
+          <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}"
+            aria-expanded="false" aria-controls="details_{{ forloop.counter }}">
+            <td>{{ m.date_maint }}</td>
+            <td>{{ m.engin_maint.type_engin.designation}} </td>
+            <td>{{m.engin_maint.modele_engin.marque.nom_marque}}</td>
+            <td>{{m.engin_maint.modele_engin.nom_modele}}</td>
+            <td>{{m.engin_maint.immatriculation}} </td>
+            <td>{{m.cout_maint | floatformat:2 }} </td>
+            <td>{{m.fournisseur_maint.nom_fournisseur}} </td>
+            <td>{{m.type_maint.libelle_maint}} </td>
+            <td>{{m.motif_maint}} </td>
+            <td>Dans {{m.reviz}} jours</td>
+            <td class="td-actions text-right">
+              <div class="dropdown no-arrow">
+                <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                  id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                  aria-labelledby="dropdownMenuLink">
+                  <div class="dropdown-header" style="color: black; font-size: 12px;">Option:</div>
+                  <a class="dropdown-item" href="{% url 'administratif:bilan_partic' m.engin_maint.id date_debut date_fin %}">Bilan de l'engin</a>
+
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            </td>                          
+          </tr>
+
+          {% endfor %}
+        </tbody>
+        <tr>
+          <th>Total dépenses maintenance : </th>
+          <td>{{cout_m | floatformat:2 }} F CFA</td>
+        </tr>
+        <tr>
+          <th>Nombre total de maintenance : </th>
+          <td>{{nb_maintenance}}</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <th>Total dépenses maintenance : </th>
+          <td>{{cout_m | floatformat:2 }} F CFA</td>
+        </tr>
+        <tr>
+          <th>Nombre total de maintenance : </th>
+          <td>{{nb_maintenance}}</td>
+        </tr>
+      </table>
+      <div class="pagination justify-content-center">
+        <span class="step-links">
+          {% if maintenances.has_previous %}
+            <a href="?page=1" class="btn btn-lg btn-primary">&laquo;</a>
+            <a href="?page={{ maintenances.previous_page_number }}" class="btn btn-lg btn-primary"><i class="fas fa-chevron-left"></i></a>
+          {% endif %}
+          <span class="current">
+            Page {{ maintenances.number }} sur {{ maintenances.paginator.num_pages }}
+          </span>
+          {% if maintenances.has_next %}
+            <a href="?page={{ maintenances.next_page_number }}" class="btn btn-lg btn-primary"><i class="fas fa-chevron-right"></i></a>
+            <a href="?page={{ maintenances.paginator.num_pages }}" class="btn btn-lg btn-primary"> &raquo;</a>
+          {% endif %}
+        </span>
+      </div><br>
+      
+
+      <button class="btn btn-primary">
+        <a href="#carburantSection" class="text-white">voir ravitaillement</a>
+        
+      </button>
+      <button class="btn btn-primary">
+        <a href="#vidangeSection" class="text-white">voir vidange</a>
+      </button>
+      <button type="button" class="btn btn-default" onclick="printTable('dataTable3','Bilan financier : Point sur les maintenances')">
+        <i class="fas fa-download"></i>
+        Imprimer ce tableau
+      </button>
+    </div>
+    <br><br>
+
+<!-- Vidange -->
+
+<div class="container mt-3 mb-3">
+  <div class="row">
+    <div class="col">
+    <div id="vidangeSection">
+      <h4 class="h3 mb-0 text-gray-800">Point sur les vidanges | Dépense totale en vidange : {{cout_v | floatformat:2 }} F CFA</h4>
+      <h4 class="h3 mb-0 text-gray-800">Nombre total de vidange : {{nb_vidange}}</h4>
+      <table class="table table-bordered" id="dataTable4" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Engin</th>
+            <th>Marque</th>
+            <th>Modèle</th>
+            <th>Immat.</th>
+            <th>Montant</th>
+            <th>Fournisseur</th>
+            <th>Kilométrage à la vidange</th>
+            <th>Prochaine vidange</th>
+            <th>Voir</th>  
+          </tr>
+        </thead>
+        <tbody>
+          {% for v in vidanges %}
+          <tr data-bs-toggle="collapse" data-bs-target="#details_{{ forloop.counter }}"
+            aria-expanded="false" aria-controls="details_{{ forloop.counter }}">
+            <td>{{ v.date_maint }}</td>
+            <td>{{ v.engin_maint.type_engin.designation}} </td>
+            <td>{{v.engin_vid.modele_engin.marque.nom_marque}}</td>
+            <td>{{v.engin_vid.modele_engin.nom_modele}}</td>
+            <td>{{v.engin_vid.immatriculation}} </td>
+            <td>{{v.cout_maint | floatformat:2 }} </td>
+            <td>{{v.fournisseur_maint.nom_fournisseur}} </td>
+
+            <td>{{v.Km_maint | floatformat:2 }} </td>
+            <td>
+
+              {% if v.engin_maint.type_engin.designation == 'TRICYCLE' %}
+              Dans {{v.vid}} jours
+              {% else %}
+              Après {{v.vid}} Km
+              {% endif %}
+
+            </td>
+            <td class="td-actions text-right">
+              <div class="dropdown no-arrow">
+                <a class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button"
+                  id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                  aria-labelledby="dropdownMenuLink">
+                  <div class="dropdown-header" style="color: black; font-size: 12px;">Option:</div>
+                  <a class="dropdown-item" href="{% url 'administratif:bilan_partic' v.engin_maint.id date_debut date_fin %}">Bilan de l'engin</a>
+
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          {% endfor %}
+        </tbody>
+        <tr>
+          <th>Total dépenses vidanges : </th>
+          <td>{{cout_v | floatformat:2 }} F CFA</td>
+        </tr>
+        <tr>
+          <th>Nombre total de vidange : </th>
+          <td>{{nb_vidange}}</td>
+        </tr> 
+      </table>
+      <table>
+        <tr>
+          <th>Total dépenses vidanges : </th>
+          <td>{{cout_v | floatformat:2 }} F CFA</td>
+        </tr>
+        <tr>
+          <th>Nombre total de vidange : </th>
+          <td>{{nb_vidange}}</td>
+        </tr>
+      </table>
+      <div class="pagination justify-content-center">
+        <span class="step-links">
+          {% if vidanges.has_previous %}
+            <a href="?page=1" class="btn btn-lg btn-primary">&laquo;</a>
+            <a href="?page={{ vidanges.previous_page_number }}" class="btn btn-lg btn-primary"><i class="fas fa-chevron-left"></i></a>
+          {% endif %}
+          <span class="current">
+            Page {{ vidanges.number }} sur {{ vidanges.paginator.num_pages }}
+          </span>
+          {% if vidanges.has_next %}
+            <a href="?page={{ vidanges.next_page_number }}" class="btn btn-lg btn-primary"><i class="fas fa-chevron-right"></i></a>
+            <a href="?page={{ vidanges.paginator.num_pages }}" class="btn btn-lg btn-primary"> &raquo;</a>
+          {% endif %}
+        </span>
+      </div><br>
+      
+      <button class="btn btn-primary">
+        <a href="#carburantSection" class="text-white">voir ravitaillement</a>
+      </button>
+      <button class="btn btn-primary">
+        <a href="#maintenanceSection" class="text-white">voir maintenance</a>
+      </button>
+      <button type="button" class="btn btn-default" onclick="printTable('dataTable4','Bilan financier : Point sur les vidanges')">
+        <i class="fas fa-download"></i>
+        Imprimer ce tableau
+      </button>
     </div>
   </div>
 </div>
+</div>
+</div>
+</div></div></div></div></div></div>
+</div>
+<br><br>
+
 <script>
-  function printTable(tableId, headerText) {
-    var table = document.getElementById(tableId);
-    var newWin = window.open('', 'Print-Window');
-    newWin.document.open();
-    newWin.document.write('<html><head><style>@media print { .header { text-align: center; font-size: 16px; font-weight: bold; margin: 10px; } }</style></head><body onload="window.print()">' +
-      '<div class="header">' + headerText + '</div>' +
-      table.outerHTML + '</body></html>');
-    newWin.document.close();
-    newWin.focus();
-    newWin.print();
-    newWin.close();
-  }
-  </script>
+function printTable(tableId, headerText) {
+var table = document.getElementById(tableId);
+var newWin = window.open('', 'Print-Window');
+newWin.document.open();
+newWin.document.write('<html><head><style>@media print { .header { text-align: center; font-size: 16px; font-weight: bold; margin: 10px; } }</style></head><body onload="window.print()">' +
+'<div class="header">' + headerText + '</div>' +
+table.outerHTML + '</body></html>');
+newWin.document.close();
+newWin.focus();
+newWin.print();
+newWin.close();
+}
+</script>
 {% endblock contenu %}

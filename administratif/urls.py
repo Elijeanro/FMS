@@ -1,27 +1,33 @@
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.urls import path
 from . import views
 
 app_name = 'administratif'
+# def protected_path(route, view, kwargs=None, name=None):
+#     return path(route, login_required(view), kwargs=kwargs, name=name)
+
 urlpatterns = [
 #Login
     path('',views.signin,name='login'),
 # Logout
-    path('deconnexion',views.signout,name='logout'),
+    path('deconnexion/',views.signout,name='logout'),
 # Espaces de travail
-    path('espace/utilisateur/<int:grade_id>', views.espaceDeTravail, name='espace_utilisateur'),
+    path('espace/utilisateur/', views.espaceDeTravail, name='espace_utilisateur'),
 # Erreur 404
     path('erreur_404/',views.erreur_404, name='msg_erreur'),
 # Analyses
-    path('analyse_globales/<int:grade_id>/<str:type_bilan>', views.analyse_glob, name='analyses_glob'),
-    path('analyse_particulieres/<int:grade_id>/<int:engin_id>/<str:type_bilan>', views.analyse_partic,\
+    path('analyse_globales/', views.analyse_glob, name='analyses_glob'),
+    path('analyse_particulieres/<int:engin_id>', views.analyse_partic,\
         name='analyses_partic'),
-    path('periode_bilan/<int:grade_id>/<str:type_bilan>', views.periode_bilan,\
+    path('periode_bilan/', views.periode_bilan,\
         name='periode_bilan'),
-    path('bilan_periodique_general/<int:grade_id>/<str:type_bilan>/<int:day_1>/<int:month_1>/<int:year_1>/<int:day_2>/<int:month_2>/<int:year_2>', views.bilan_periodique_glob,\
-        name='bilan_glob'),
-    path('bilan_periodique_particulier/<int:grade_id>/<int:engin_id>/<str:type_bilan>/<int:day_1>/<int:month_1>/<int:year_1>/<int:day_2>/<int:month_2>/<int:year_2>', \
+    path(
+    'bilan_periodique_general/<str:date_debut>/<str:date_fin>/',
+    views.bilan_periodique_glob,
+    name='bilan_glob'),
+    path('bilan_periodique_particulier/<int:engin_id>/<str:date_debut>/<str:date_fin>/',
         views.bilan_periodique_partic, name='bilan_partic'), 
-    path('notifications/<int:grade_id>', views.notifications, name='notifications'),
+    path('notifications/', views.notifications, name='notifications'),
     
 ]

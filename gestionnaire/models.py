@@ -13,8 +13,8 @@ class Marque(models.Model):
         return str(self.nom_marque)
     
 class Modele(models.Model):
-    nom_modele = models.CharField(max_length=20)
     marque = models.ForeignKey('Marque', on_delete=models.CASCADE)
+    nom_modele = models.CharField(max_length=20)
     annee = models.SmallIntegerField()
     def __str__(self):
         return f"{self.marque.nom_marque} / {self.nom_modele}"

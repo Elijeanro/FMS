@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from gestionnaire.forms import PersonneForm
 from .forms import GradeForm
+from django.contrib.auth.decorators import login_required
+
 
 def CreatePersonne(request,sujet):
     sujet='personne'

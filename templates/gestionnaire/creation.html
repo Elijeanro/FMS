@@ -6,11 +6,10 @@
 Enrégistrer {{sujet}}
 {% endblock title %}
 
-
 {% block contenu %}
 <div class="wrapper">
   <div class="section section-hero section-shaped">
-    <div class="container pt-lg-3 bg-gradient-gray">
+    <div class="container pt-lg-3 bg-white">
       <div class="row justify-content-center">
         <div class="col-lg-5">
           {% if messages %}
@@ -21,28 +20,210 @@ Enrégistrer {{sujet}}
             {% endfor %}
           </ul>
           {% endif %}
+          <span class="input-group-text"><i class="fas fa-list-alt fa-2x w-25"></i>
+            <h5> NOUVEL ENREGISTREMENT : </h5>
+          </span><br>
           <form role="form" method="post">
             {% csrf_token %}
 
-            <div class="form-group mb-4">
+            <div class="form-group mb-2">
               <div class="input-group-prepend">
-                <span class="input-group-text"><i class="ni ni-laptop"></i>
-                  <h5>Enregistrer {{sujet}}</h5>
+                <span class="input-group-text">
+                  <h5> {{sujet | upper}}</h5>
                 </span>
               </div>
+              <hr>
               {{ form.as_p }}
             </div>
 
-            <div class="text-center mb-6">
+            <div class="text-center mb-3">
               <button type="submit" class="btn btn-success mt-4">ENREGISTRER</button>
             </div>
           </form>
+          <hr>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+
+<script>
+  $(document).ready(function () {
+    $('#id_engin').select2({
+      ajax: {
+        url: "{% url 'gestionnaire:create_attribution' %}",
+        dataType: 'json',
+        data: function (params) {
+          return {
+            term: params.term,
+            field_name: 'engin'
+          };
+        },
+        processResults: function (data) {
+          return {
+            results: $.map(data, function (item) {
+              return { id: item.id, text: item.immatriculation };
+            })
+          };
+        }
+      },
+      minimumInputLength: 1
+    });
+
+    // Add similar code for the 'conducteur' field
+    $('#id_conducteur').select2({
+      ajax: {
+        url: "{% url 'gestionnaire:create_attribution' %}",
+        dataType: 'json',
+        data: function (params) {
+          return {
+            term: params.term,
+            field_name: 'conducteur'
+          };
+        },
+        processResults: function (data) {
+          return {
+            results: $.map(data, function (item) {
+              return { id: item.id, text: item.nom };
+            })
+          };
+        }
+      },
+      minimumInputLength: 1
+    });
+    // Add similar code for the 'engin_releve' field
+    $('#id_engin_releve').select2({
+      ajax: {
+        url: "{% url 'gestionnaire:create_releve_distance' %}",
+        dataType: 'json',
+        data: function (params) {
+          return {
+            term: params.term,
+            field_name: 'engin_releve'
+          };
+        },
+        processResults: function (data) {
+          return {
+            results: $.map(data, function (item) {
+              return { id: item.id, text: item.immatriculation };
+            })
+          };
+        }
+      },
+      minimumInputLength: 1
+    });
+
+    $('#id_engin_maint').select2({
+      ajax: {
+        url: "{% url 'gestionnaire:create_maintenance_engin' %}",
+        dataType: 'json',
+        data: function (params) {
+          return {
+            term: params.term,
+            field_name: 'engin_maint'
+          };
+        },
+        processResults: function (data) {
+          return {
+            results: $.map(data, function (item) {
+              return { id: item.id, text: item.immatriculation };
+            })
+          };
+        }
+      },
+      minimumInputLength: 1
+    });
+
+    // Add similar code for the 'fournisseur_maint' field
+    $('#id_fournisseur_maint').select2({
+      ajax: {
+        url: "{% url 'gestionnaire:create_maintenance_engin' %}",
+        dataType: 'json',
+        data: function (params) {
+          return {
+            term: params.term,
+            field_name: 'fournisseur_maint'
+          };
+        },
+        processResults: function (data) {
+          return {
+            results: $.map(data, function (item) {
+              return { id: item.id, text: item.nom_fournisseur };
+            })
+          };
+        }
+      },
+      minimumInputLength: 1
+    });
+
+    // Add similar code for the 'marque' field
+    $('#id_marque').select2({
+      ajax: {
+        url: "{% url 'gestionnaire:create_modele' %}",
+        dataType: 'json',
+        data: function (params) {
+          return {
+            term: params.term,
+            field_name: 'marque'
+          };
+        },
+        processResults: function (data) {
+          return {
+            results: $.map(data, function (item) {
+              return { id: item.id, text: item.nom_marque };
+            })
+          };
+        }
+      },
+      minimumInputLength: 1
+    });
+
+    $('#id_engin_rav').select2({
+      ajax: {
+        url: "{% url 'gestionnaire:create_ravitaillement_carburant' %}",
+        dataType: 'json',
+        data: function (params) {
+          return {
+            term: params.term,
+            field_name: 'engin_rav'
+          };
+        },
+        processResults: function (data) {
+          return {
+            results: $.map(data, function (item) {
+              return { id: item.id, text: item.immatriculation };
+            })
+          };
+        }
+      },
+      minimumInputLength: 1
+    });
+
+    // Add similar code for the 'fournisseur_carburant' field
+    $('#id_fournisseur_carburant').select2({
+      ajax: {
+        url: "{% url 'gestionnaire:create_ravitaillement_carburant' %}",
+        dataType: 'json',
+        data: function (params) {
+          return {
+            term: params.term,
+            field_name: 'fournisseur_carburant'
+          };
+        },
+        processResults: function (data) {
+          return {
+            results: $.map(data, function (item) {
+              return { id: item.id, text: item.nom_fournisseur };
+            })
+          };
+        }
+      },
+      minimumInputLength: 1
+    });
+  });
+</script>
+<!--   
 <script type="text/javascript">
   document.addEventListener("DOMContentLoaded", function () {
 
@@ -53,7 +234,7 @@ Enrégistrer {{sujet}}
       
       if (selectedValue === "create_engin") {
         // Redirigez vers la page d'ajout d'un nouvel engin
-        window.location.href = "{% url 'gestionnaire:create_engin' grade_id %}";  // Assurez-vous que 'create_engin' correspond à votre URL
+        window.location.href = "{% url 'gestionnaire:create_engin' %}";  // Assurez-vous que 'create_engin' correspond à votre URL
       }
     });
 
@@ -64,7 +245,7 @@ Enrégistrer {{sujet}}
       var selectedValue = fournisseurSelect.value;
 
       if (selectedValue === "create_fournisseur") {
-        window.location.href = "{% url 'gestionnaire:create_fournisseur' grade_id %}";
+        window.location.href = "{% url 'gestionnaire:create_fournisseur' %}";
       }
     });
 
@@ -73,7 +254,7 @@ Enrégistrer {{sujet}}
       var selectedValue = marqueSelect.value;
 
       if (selectedValue === "create_marque") {
-        window.location.href = "{% url 'gestionnaire:create_marque' grade_id %}";
+        window.location.href = "{% url 'gestionnaire:create_marque' %}";
       }
     });
 
@@ -82,7 +263,7 @@ Enrégistrer {{sujet}}
       var selectedValue = modeleSelect.value;
 
       if (selectedValue === "create_modele") {
-        window.location.href = "{% url 'gestionnaire:create_modele' grade_id %}";
+        window.location.href = "{% url 'gestionnaire:create_modele' %}";
       }
     });
 
@@ -91,7 +272,7 @@ Enrégistrer {{sujet}}
       var selectedValue = type_enginSelect.value;
 
       if (selectedValue === "create_type_engin") {
-        window.location.href = "{% url 'gestionnaire:create_type_engin' grade_id %}";
+        window.location.href = "{% url 'gestionnaire:create_type_engin' %}";
       }
     });
 
@@ -100,7 +281,7 @@ Enrégistrer {{sujet}}
       var selectedValue = type_maintenanceSelect.value;
 
       if (selectedValue === "create_type_maintenance") {
-        window.location.href = "{% url 'gestionnaire:create_type_maintenance' grade_id %}";
+        window.location.href = "{% url 'gestionnaire:create_type_maintenance' %}";
       }
     });
 
@@ -109,7 +290,7 @@ Enrégistrer {{sujet}}
       var selectedValue = personneSelect.value;
 
       if (selectedValue === "create_personne") {
-        window.location.href = "{% url 'gestionnaire:create_personne' grade_id %}";
+        window.location.href = "{% url 'gestionnaire:create_personne' %}";
       }
     });
 
@@ -127,7 +308,7 @@ Enrégistrer {{sujet}}
       var selectedValue = info_enginSelect.value;
 
       if (selectedValue === "create_info_engin") {
-        window.location.href = "{% url 'gestionnaire:create_info_engin' grade_id %}";
+        window.location.href = "{% url 'gestionnaire:create_info_engin' %}";
       }
     });
 
@@ -136,11 +317,11 @@ Enrégistrer {{sujet}}
       var selectedValue = etat_enginSelect.value;
 
       if (selectedValue === "create_etat_engin") {
-        window.location.href = "{% url 'gestionnaire:create_etat_engin' grade_id %}";
+        window.location.href = "{% url 'gestionnaire:create_etat_engin' %}";
       }
     });
   });
   
-</script>
+</script> -->
 
 {% endblock contenu %}

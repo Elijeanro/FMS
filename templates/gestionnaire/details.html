@@ -7,34 +7,47 @@ Details {{sujet}}
 {% endblock title %}
 
 {% block contenu %}
-<div class="wrapper bg-gradient-light">
+<div class="wrapper bg-white">
     <p class="lead text-gray-800 mb-5"> Succès de création {{sujet}} </p>
+    
     {% if sujet == 'attribution' %}
     <!--  -->
-    <div class="bg-gradient-blue">
+    <div class="bg-white">
         <div class="container">
+            {% if grade_id == 1 or grade_id == 3 %}
+              <a href="{% url 'gestionnaire:create_attribution' grade_id %}"
+                class="btn btn-lg btn-primary btn-icon mb-3 mb-sm-0">
+                <span class="btn-inner--icon"><i class="ni ni-settings-gear-65"></i></span>
+                <span class="btn-inner--text">Nouveau</span>
+                ||
+                <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
+                <span class="btn-inner--text"> {{sujet}} </span>
+              </a>
+              {% else %}
+
+              {% endif %}
             <div class="card card-profile shadow mt-2">
                 <div class="px-4">
-                    <div class="row justify-content-center bg-gradient-light">
+                    <div class="row justify-content-center bg-light">
                         <div class="mt-5">
-                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                            <div class="mt-3 py-5 px-5 border-top bg-white">
                                 <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Nom : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.conducteur.nom}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.conducteur.nom}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Prénom : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.conducteur.prenom}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.conducteur.prenom}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Engin attribué : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.engin.immatriculation}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.engin.immatriculation}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Date d'attribution : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.date_attribution}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.date_attribution}} </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -50,48 +63,60 @@ Details {{sujet}}
     <!--  -->
     <div class="bg-image">
         <div class="container">
+            {% if grade_id == 1 or grade_id == 3 %}
+              <a href="{% url 'gestionnaire:create_engin' grade_id %}"
+                class="btn btn-lg btn-primary btn-icon mb-3 mb-sm-0">
+                <span class="btn-inner--icon"><i class="ni ni-settings-gear-65"></i></span>
+                <span class="btn-inner--text">Nouveau</span>
+                ||
+                <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
+                <span class="btn-inner--text"> {{sujet}} </span>
+              </a>
+              {% else %}
+
+              {% endif %}
             <div class="card card-profile shadow mt-0">
                 <div class="px-4">
-                    <div class="row justify-content-center bg-gradient-light">
+                    <div class="row justify-content-center bg-white">
                         <div class="mt-5">
-                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                            <div class="mt-3 py-5 px-5 border-top bg-white-gray">
                                 <h3>Détails de création {{sujet | upper}} : </h3>
                                 <table class="table table-bordered" width="100%" cellspacing="2">
                                     <tr>
                                         <th style="color: black;">Immatriculattion : </th>
-                                        <td style="color: rgb(1, 82, 1);"> {{objet.immatriculation}} </td>
+                                        <td style="color: rgb(1, 14, 1);"> {{objet.immatriculation}} </td>
                                     </tr>
                                     <tr>
                                         <th style="color: black;">Couleur : </th>
-                                        <td style="color: rgb(1, 82, 1);"> {{objet.couleur}} </td>
+                                        <td style="color: rgb(1, 14, 1);"> {{objet.couleur}} </td>
                                     </tr>
                                     <tr>
                                         <th style="color: black;">Informations techniques : </th>
-                                        <td style="color: rgb(1, 82, 1);"> {{objet.info_engin.info}} </td>
+                                        <td style="color: rgb(1, 14, 1);"> {{objet.info_engin.info}} </td>
                                     </tr>
                                     <tr>
                                         <th style="color: black;">Modèle : </th>
-                                        <td style="color: rgb(1, 82, 1);"> {{objet.modele_engin.nom_modele}} </td>
+                                        <td style="color: rgb(1, 14, 1);"> {{objet.modele_engin.nom_modele}} </td>
                                     </tr>
                                     <tr>
                                         <th style="color: black;">Type : </th>
-                                        <td style="color: rgb(1, 82, 1);"> {{objet.type_engin.designation}} </td>
+                                        <td style="color: rgb(1, 14, 1);"> {{objet.type_engin.designation}} </td>
                                     </tr>
                                     <tr>
                                         <th style="color: black;">Fournisseur : </th>
-                                        <td style="color: rgb(1, 82, 1);"> {{objet.fournisseur_engin.nom_fournisseur}} </td>
+                                        <td style="color: rgb(1, 14, 1);"> {{objet.fournisseur_engin.nom_fournisseur}} </td>
                                     </tr>
                                     <tr>
                                         <th style="color: black;">Etat : </th>
-                                        <td style="color: rgb(1, 82, 1);"> {{objet.etat_engin.libelle_etat}} </td>
+                                        <td style="color: rgb(1, 14, 1);"> {{objet.etat_engin.libelle_etat}} </td>
                                     </tr>
                                     <tr>
                                         <th style="color: black;">Obsolète? : </th>
-                                        <td style="color: rgb(1, 82, 1);"> {{objet.est_obsolete}} </td>
+                                        <td style="color: rgb(1, 14, 1);"> {{objet.est_obsolete}} </td>
                                     </tr>
                                     <tr>
                                         <th style="color: black;">Date de création : </th>
-                                        <td style="color: rgb(1, 82, 1);"> {{objet.date_creation}} </td>
+                                        <td style="color: rgb(1, 14, 1);"> {{objet.date_creation}} </td>
                                     </tr>
 
                                 </table>
@@ -107,16 +132,28 @@ Details {{sujet}}
 
     <div class="bg-image">
         <div class="container">
+            {% if grade_id == 1 or grade_id == 3 %}
+              <a href="{% url 'gestionnaire:create_etat_engin' grade_id %}"
+                class="btn btn-lg btn-primary btn-icon mb-3 mb-sm-0">
+                <span class="btn-inner--icon"><i class="ni ni-settings-gear-65"></i></span>
+                <span class="btn-inner--text">Nouveau</span>
+                ||
+                <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
+                <span class="btn-inner--text"> {{sujet}} </span>
+              </a>
+              {% else %}
+
+              {% endif %}
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center bg-gradient-light">
+                    <div class="row justify-content-center bg-white">
                         <div class="mt-5">
-                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                            <div class="mt-3 py-5 px-5 border-top bg-white-gray">
                                 <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Libellé de l'état : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.libelle_etat}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.libelle_etat}} </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -132,24 +169,36 @@ Details {{sujet}}
 
     <div class="bg-image">
         <div class="container">
+            {% if grade_id == 1 or grade_id == 3 %}
+              <a href="{% url 'gestionnaire:create_fournisseur' grade_id %}"
+                class="btn btn-lg btn-primary btn-icon mb-3 mb-sm-0">
+                <span class="btn-inner--icon"><i class="ni ni-settings-gear-65"></i></span>
+                <span class="btn-inner--text">Nouveau</span>
+                ||
+                <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
+                <span class="btn-inner--text"> {{sujet}} </span>
+              </a>
+              {% else %}
+
+              {% endif %}
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center bg-gradient-light">
+                    <div class="row justify-content-center bg-white">
                         <div class="mt-5">
-                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                            <div class="mt-3 py-5 px-5 border-top bg-white-gray">
                                 <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Nom du fournisseur : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.nom_fournisseur}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.nom_fournisseur}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Adresse : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.adresse}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.adresse}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Description du fournisseur : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.description_fournisseur}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.description_fournisseur}} </td>
                                         </tr>
 
                                     </table>
@@ -165,28 +214,40 @@ Details {{sujet}}
     {% elif sujet == 'info_engin' %}
     <div class="bg-image">
         <div class="container">
+            {% if grade_id == 1 or grade_id == 3 %}
+              <a href="{% url 'gestionnaire:create_info_engin' grade_id %}"
+                class="btn btn-lg btn-primary btn-icon mb-3 mb-sm-0">
+                <span class="btn-inner--icon"><i class="ni ni-settings-gear-65"></i></span>
+                <span class="btn-inner--text">Nouveau</span>
+                ||
+                <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
+                <span class="btn-inner--text"> {{sujet}} </span>
+              </a>
+              {% else %}
+
+              {% endif %}
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center bg-gradient-light">
+                    <div class="row justify-content-center bg-white">
                         <div class="mt-5">
-                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                            <div class="mt-3 py-5 px-5 border-top bg-white-gray">
                                 <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Info : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.info}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.info}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Consommation : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.consommation}} L/100Km</td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.consommation}} L/100Km</td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Vidange : </th>
-                                            <td style="color: rgb(1, 82, 1);">Chaque {{objet.vidange}} Km </td>
+                                            <td style="color: rgb(1, 14, 1);">Chaque {{objet.vidange}} Km </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Révision : </th>
-                                            <td style="color: rgb(1, 82, 1);">Tous les {{objet.revision}} jours </td>
+                                            <td style="color: rgb(1, 14, 1);">Tous les {{objet.revision}} jours </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -201,36 +262,48 @@ Details {{sujet}}
     {% elif sujet == 'maintenance_engin' %}
     <div class="bg-image">
         <div class="container">
+            {% if grade_id == 1 or grade_id == 3 %}
+              <a href="{% url 'gestionnaire:create_maintenance_engin' grade_id %}"
+                class="btn btn-lg btn-primary btn-icon mb-3 mb-sm-0">
+                <span class="btn-inner--icon"><i class="ni ni-settings-gear-65"></i></span>
+                <span class="btn-inner--text">Nouveau</span>
+                ||
+                <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
+                <span class="btn-inner--text"> {{sujet}} </span>
+              </a>
+              {% else %}
+
+              {% endif %}
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center bg-gradient-light">
+                    <div class="row justify-content-center bg-white">
                         <div class="mt-5">
-                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                            <div class="mt-3 py-5 px-5 border-top bg-white-gray">
                                 <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Motif : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.motif_maint}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.motif_maint}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Engin : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.engin_maint.immatriculation}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.engin_maint.immatriculation}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Type de maintenance : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.type_maint.libelle_maint}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.type_maint.libelle_maint}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Coût de la maintenance : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.cout_maint}} F CFA</td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.cout_maint}} F CFA</td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Fournisseur de la maintenance : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.fournisseur_maint.nom_fournisseur}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.fournisseur_maint.nom_fournisseur}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Date de la maintenance : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.date_maint}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.date_maint}} </td>
                                         </tr>
 
                                     </table>
@@ -246,36 +319,48 @@ Details {{sujet}}
     {% elif sujet == 'ravitaillement_carburant' %}
     <div class="bg-image">
         <div class="container">
+            {% if grade_id == 1 or grade_id == 3 %}
+              <a href="{% url 'gestionnaire:create_ravitaillement_carburant' grade_id %}"
+                class="btn btn-lg btn-primary btn-icon mb-3 mb-sm-0">
+                <span class="btn-inner--icon"><i class="ni ni-settings-gear-65"></i></span>
+                <span class="btn-inner--text">Nouveau</span>
+                ||
+                <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
+                <span class="btn-inner--text"> {{sujet}} </span>
+              </a>
+              {% else %}
+
+              {% endif %}
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center bg-gradient-light">
+                    <div class="row justify-content-center bg-white">
                         <div class="mt-5">
-                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                            <div class="mt-3 py-5 px-5 border-top bg-white-gray">
                                 <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Coût de ravitaillement : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.cout_rav}} F CFA</td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.cout_rav}} F CFA</td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Quantité équivalente : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.quantite_rav}} Litres</td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.quantite_rav}} Litres</td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;"> Plein ? </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.plein}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.plein}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Engin ravitaillé : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.engin_rav.immatriculation}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.engin_rav.immatriculation}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;"> Fournisseur de carburant : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.fournisseur_carburant.nom_fournisseur}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.fournisseur_carburant.nom_fournisseur}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Date de ravitaillement : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.date_rav}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.date_rav}} </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -290,33 +375,45 @@ Details {{sujet}}
     {% elif sujet == 'releve_distance' %}
     <div class="bg-image">
         <div class="container">
+            {% if grade_id == 1 or grade_id == 3 %}
+              <a href="{% url 'gestionnaire:create_releve_distance' grade_id %}"
+                class="btn btn-lg btn-primary btn-icon mb-3 mb-sm-0">
+                <span class="btn-inner--icon"><i class="ni ni-settings-gear-65"></i></span>
+                <span class="btn-inner--text">Nouveau</span>
+                ||
+                <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
+                <span class="btn-inner--text"> {{sujet}} </span>
+              </a>
+              {% else %}
+
+              {% endif %}
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center bg-gradient-light">
+                    <div class="row justify-content-center bg-white">
                         <div class="mt-5">
-                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                            <div class="mt-3 py-5 px-5 border-top bg-white-gray">
                                 <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Date : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.date_releve}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.date_releve}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Engin : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.engin_releve.immatriculation}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.engin_releve.immatriculation}} </td>
                                         </tr>
 
                                         <tr>
                                             <th style="color: black;">Kilometrage de début : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.nbKmDebut}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.nbKmDebut}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Kilometrage de fin : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.nbKmFin}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.nbKmFin}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Distance parcourue : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.distance}} Km</td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.distance}} Km</td>
                                         </tr>
 
                                     </table>
@@ -332,24 +429,36 @@ Details {{sujet}}
     {% elif sujet == 'type_engin' %}
     <div class="bg-image">
         <div class="container">
+            {% if grade_id == 1 or grade_id == 3 %}
+              <a href="{% url 'gestionnaire:create_type_engin' grade_id %}"
+                class="btn btn-lg btn-primary btn-icon mb-3 mb-sm-0">
+                <span class="btn-inner--icon"><i class="ni ni-settings-gear-65"></i></span>
+                <span class="btn-inner--text">Nouveau</span>
+                ||
+                <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
+                <span class="btn-inner--text"> {{sujet}} </span>
+              </a>
+              {% else %}
+
+              {% endif %}
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center bg-gradient-light">
+                    <div class="row justify-content-center bg-white">
                         <div class="mt-5">
-                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                            <div class="mt-3 py-5 px-5 border-top bg-white-gray">
                                 <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Désignation : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.designation}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.designation}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Description : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.description}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.description}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Nombre de roues : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.nombre_roue}} roues</td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.nombre_roue}} roues</td>
                                         </tr>
 
                                     </table>
@@ -365,16 +474,28 @@ Details {{sujet}}
     {% elif sujet == 'type_maintenance' %}
     <div class="bg-image">
         <div class="container">
+            {% if grade_id == 1 or grade_id == 3 %}
+              <a href="{% url 'gestionnaire:create_type_maintenance' grade_id %}"
+                class="btn btn-lg btn-primary btn-icon mb-3 mb-sm-0">
+                <span class="btn-inner--icon"><i class="ni ni-settings-gear-65"></i></span>
+                <span class="btn-inner--text">Nouveau</span>
+                ||
+                <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
+                <span class="btn-inner--text"> {{sujet}} </span>
+              </a>
+              {% else %}
+
+              {% endif %}
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center bg-gradient-light">
+                    <div class="row justify-content-center bg-white">
                         <div class="mt-5">
-                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                            <div class="mt-3 py-5 px-5 border-top bg-white-gray">
                                 <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Libellé de la maintenance : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.libelle_maint}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.libelle_maint}} </td>
                                         </tr>
 
                                     </table>
@@ -390,28 +511,40 @@ Details {{sujet}}
     {% elif sujet == 'personne' %}
     <div class="bg-image">
         <div class="container">
+            {% if grade_id == 1 or grade_id == 3 %}
+              <a href="{% url 'gestionnaire:create_personne' grade_id %}"
+                class="btn btn-lg btn-primary btn-icon mb-3 mb-sm-0">
+                <span class="btn-inner--icon"><i class="ni ni-settings-gear-65"></i></span>
+                <span class="btn-inner--text">Nouveau</span>
+                ||
+                <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
+                <span class="btn-inner--text"> {{sujet}} </span>
+              </a>
+              {% else %}
+
+              {% endif %}
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center bg-gradient-light">
+                    <div class="row justify-content-center bg-white">
                         <div class="mt-5">
-                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                            <div class="mt-3 py-5 px-5 border-top bg-white-gray">
                                 <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Nom : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.nom}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.nom}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Prénom : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.prenom}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.prenom}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Contact : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.contact}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.contact}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Grade : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.grade.libelle_grade}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.grade.libelle_grade}} </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -425,40 +558,41 @@ Details {{sujet}}
     {% elif sujet == 'utilisateur' %}
     <div class="bg-image">
         <div class="container">
+            
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center bg-gradient-light">
+                    <div class="row justify-content-center bg-white">
                         <div class="mt-5">
-                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                            <div class="mt-3 py-5 px-5 border-top bg-white-gray">
                                 <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Nom : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{personne.user.last_name}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{personne.user.last_name}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Prénom : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{personne.user.first_name}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{personne.user.first_name}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Email : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{personne.user.email}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{personne.user.email}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Contact : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{personne.contact}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{personne.contact}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Grade : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{personne.grade.libelle_grade}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{personne.grade.libelle_grade}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Nom d'utilisateur : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{personne.user.username}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{personne.user.username}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Mot de passe : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{personne.user.password}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{personne.user.password}} </td>
                                         </tr>
 
                                     </table>
@@ -473,16 +607,28 @@ Details {{sujet}}
     {% elif sujet == 'marque' %}
     <div class="bg-image">
         <div class="container">
+            {% if grade_id == 1 or grade_id == 3 %}
+              <a href="{% url 'gestionnaire:create_marque' grade_id %}"
+                class="btn btn-lg btn-primary btn-icon mb-3 mb-sm-0">
+                <span class="btn-inner--icon"><i class="ni ni-settings-gear-65"></i></span>
+                <span class="btn-inner--text">Nouveau</span>
+                ||
+                <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
+                <span class="btn-inner--text"> {{sujet}} </span>
+              </a>
+              {% else %}
+
+              {% endif %}
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center bg-gradient-light">
+                    <div class="row justify-content-center bg-white">
                         <div class="mt-5">
-                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                            <div class="mt-3 py-5 px-5 border-top bg-white-gray">
                                 <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Nom de la marque : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.nom_marque}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.nom_marque}} </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -496,24 +642,36 @@ Details {{sujet}}
     {% elif sujet == 'modele' %}
     <div class="bg-image">
         <div class="container">
+            {% if grade_id == 1 or grade_id == 3 %}
+              <a href="{% url 'gestionnaire:create_modele' grade_id %}"
+                class="btn btn-lg btn-primary btn-icon mb-3 mb-sm-0">
+                <span class="btn-inner--icon"><i class="ni ni-settings-gear-65"></i></span>
+                <span class="btn-inner--text">Nouveau</span>
+                ||
+                <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
+                <span class="btn-inner--text"> {{sujet}} </span>
+              </a>
+              {% else %}
+
+              {% endif %}
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center bg-gradient-light">
+                    <div class="row justify-content-center bg-white">
                         <div class="mt-5">
-                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                            <div class="mt-3 py-5 px-5 border-top bg-white-gray">
                                 <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Nom du modèle : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.nom_modele}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.nom_modele}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Marque : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.marque.nom_marque}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.marque.nom_marque}} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Année : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{objet.annee}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{objet.annee}} </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -527,20 +685,32 @@ Details {{sujet}}
     {% elif sujet == 'vidange_engin' %}
     <div class="bg-image">
         <div class="container">
+            {% if grade_id == 1 or grade_id == 3 %}
+              <a href="{% url 'gestionnaire:create_maintenance_engin' grade_id %}"
+                class="btn btn-lg btn-primary btn-icon mb-3 mb-sm-0">
+                <span class="btn-inner--icon"><i class="ni ni-settings-gear-65"></i></span>
+                <span class="btn-inner--text">Nouveau</span>
+                ||
+                <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
+                <span class="btn-inner--text"> {{sujet}} </span>
+              </a>
+              {% else %}
+
+              {% endif %}
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center bg-gradient-light">
+                    <div class="row justify-content-center bg-white">
                         <div class="mt-5">
-                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                            <div class="mt-3 py-5 px-5 border-top bg-white-gray">
                                 <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Engin concerné : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{ objet.engin_vid.immatriculation }} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{ objet.engin_vid.immatriculation }} </td>
                                         </tr>
                                         <tr>
                                             <th style="color: black;">Date de vidange : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{ objet.date_vid }} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{ objet.date_vid }} </td>
                                         </tr>
 
                                     </table>
@@ -556,16 +726,28 @@ Details {{sujet}}
     {% elif sujet == 'grade' %}
     <div class="bg-image">
         <div class="container">
+            {% if grade_id == 1 or grade_id == 3 %}
+              <a href="{% url 'gestionnaire:create_grade' grade_id %}"
+                class="btn btn-lg btn-primary btn-icon mb-3 mb-sm-0">
+                <span class="btn-inner--icon"><i class="ni ni-settings-gear-65"></i></span>
+                <span class="btn-inner--text">Nouveau</span>
+                ||
+                <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
+                <span class="btn-inner--text"> {{sujet}} </span>
+              </a>
+              {% else %}
+
+              {% endif %}
             <div class="card card-profile shadow mt-3">
                 <div class="px-4">
-                    <div class="row justify-content-center bg-gradient-light">
+                    <div class="row justify-content-center bg-white">
                         <div class="mt-5">
-                            <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                            <div class="mt-3 py-5 px-5 border-top bg-white-gray">
                                 <h3>Détails de création {{sujet | upper}} : </h3>
                                     <table class="table table-bordered" width="100%" cellspacing="0">
                                         <tr>
                                             <th style="color: black;">Libellé du grade : </th>
-                                            <td style="color: rgb(1, 82, 1);"> {{grade.libelle_grade}} </td>
+                                            <td style="color: rgb(1, 14, 1);"> {{grade.libelle_grade}} </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -578,24 +760,36 @@ Details {{sujet}}
         {% elif sujet == 't_card' %}
         <div class="bg-image">
             <div class="container">
+                {% if grade_id == 1 or grade_id == 3 %}
+              <a href="{% url 'gestionnaire:create_t_card' grade_id %}"
+                class="btn btn-lg btn-primary btn-icon mb-3 mb-sm-0">
+                <span class="btn-inner--icon"><i class="ni ni-settings-gear-65"></i></span>
+                <span class="btn-inner--text">Nouveau</span>
+                ||
+                <span class="btn-inner--icon"><i class="ni ni-bus-front-12"></i></span>
+                <span class="btn-inner--text"> {{sujet}} </span>
+              </a>
+              {% else %}
+
+              {% endif %}
                 <div class="card card-profile shadow mt-3">
                     <div class="px-4">
-                        <div class="row justify-content-center bg-gradient-light">
+                        <div class="row justify-content-center bg-white">
                             <div class="mt-5">
-                                <div class="mt-3 py-5 px-5 border-top bg-gradient-gray">
+                                <div class="mt-3 py-5 px-5 border-top bg-white-gray">
                                     <h3>Détails de {{sujet | upper}} : </h3>
                                         <table class="table table-bordered" width="100%" cellspacing="0">
                                             <tr>
                                                 <th style="color: black;">Date de création : </th>
-                                                <td style="color: rgb(1, 82, 1);"> {{objet.date_emploie}} </td>
+                                                <td style="color: rgb(1, 14, 1);"> {{objet.date_emploie}} </td>
                                             </tr>
                                             <tr>
                                                 <th style="color: black;">Type d'engin : </th>
-                                                <td style="color: rgb(1, 82, 1);"> {{objet.type_engin_tcard.designation}} </td>
+                                                <td style="color: rgb(1, 14, 1);"> {{objet.type_engin_tcard.designation}} </td>
                                             </tr>
                                             <tr>
                                                 <th style="color: black;">Approvisionné ? </th>
-                                                <td style="color: rgb(1, 82, 1);"> {{objet.approvisionnement}} </td>
+                                                <td style="color: rgb(1, 14, 1);"> {{objet.approvisionnement}} </td>
                                             </tr>
                                             <tr>
                                                 <th style="color: black;">Montant 
@@ -605,11 +799,11 @@ Details {{sujet}}
                                                     débité
                                                 {% endif %}
                                                      : </th>
-                                                <td style="color: rgb(1, 82, 1);"> {{objet.montant}} F CFA</td>
+                                                <td style="color: rgb(1, 14, 1);"> {{objet.montant}} F CFA</td>
                                             </tr>
                                             <tr>
                                                 <th style="color: black;">Solde : </th>
-                                                <td style="color: rgb(1, 82, 1);"> {{objet.solde}} F CFA</td>
+                                                <td style="color: rgb(1, 14, 1);"> {{objet.solde}} F CFA</td>
                                             </tr>
                                         </table>
                                     </div>

@@ -22,4 +22,5 @@ urlpatterns = [
     path('',include('administrateur.urls')),
     path('',include('administratif.urls')),
     path('',include('gestionnaire.urls')),
+    path('select2/',include('django_select2.urls')),
 ]

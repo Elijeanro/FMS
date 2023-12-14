@@ -1,24 +1,26 @@
-# from django import forms
-# from django.forms import DateTimeInput
-# from gestionnaire.models import TypeEngin,TypeMaintenance,Grade,InfoEngin,Engin,VidangeEngin,\
-#     MaintenanceEngin,Marque,Modele,Personne,RavitaillementCarburant,ReleveDistance
+from django import forms
+from django.forms import DateTimeInput
+from gestionnaire.models import TypeEngin,TypeMaintenance,Grade,InfoEngin,Engin,\
+    MaintenanceEngin,Marque,Modele,Personne,RavitaillementCarburant,ReleveDistance
 # from phonenumbers.phonenumberutil import NumberParseException
 # from phonenumbers import parse, format_number, PhoneNumberFormat, NumberParseException
 # from django.contrib.admin.widgets import  AdminDateWidget, AdminTimeWidget, AdminSplitDateTime
 
-# destinataires=[
-#     ('Nagode', 'Compagnie Nagode'),
-#     ('Cheval Blanc', 'Compagnie Cheval Blanc'),
-#     ('Rakieta', 'Compagnie Rakieta'),
-#     ('LK', 'Compagnie LK'),
-#     ('ETRAB', 'Compagnie ETRAB'),
-#     ('Adji Transport', 'Compagnie Adji Transport'),
-#     ('DC10', 'Compagnie DC10')
-# ]
-# class RechercheForm(forms.Form):
-#     objet = forms.CharField(
-#         widget=forms.Select(attrs={'class': 'form-control mb-3', 'placeholder': 'Objet'}, choices=destinataires)
-#     )
-#     chaine = forms.CharField(
-#         widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Rechercher'})
-#     )
+class PeriodeBilanForm(forms.Form):
+    
+    date_debut = forms.DateField(
+        label='Date de début',
+        widget=forms.SelectDateWidget(years=range(2023, 2030))
+    )
+
+    date_fin = forms.DateField(
+        label='Date de fin',
+        widget=forms.SelectDateWidget(years=range(2023, 2030))
+    )
+
+    engin = forms.ModelChoiceField(
+        label='Engin',
+        queryset=Engin.objects.all(),
+        empty_label='Sélectionner un engin',
+        required=False
+    )

@@ -18,7 +18,7 @@ License - nucleoapp.com/license/
 .ni {
   display: inline-block;
   font: normal normal normal 14px/1 NucleoIcons;
-  font-size: inherit;
+  /* font-size: inherit; */
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -28,25 +28,25 @@ License - nucleoapp.com/license/
   change icon size
 -------------------------*/
 .ni-lg {
-  font-size: 1.33333333em;
+  /* font-size: 1.33333333em; */
   line-height: 0.75em;
   vertical-align: -15%;
 }
 
 .ni-2x {
-  font-size: 2em;
+  /* font-size: 2em; */
 }
 
 .ni-3x {
-  font-size: 3em;
+  /* font-size: 3em; */
 }
 
 .ni-4x {
-  font-size: 4em;
+  /* font-size: 4em; */
 }
 
 .ni-5x {
-  font-size: 5em;
+  /* font-size: 5em; */
 }
 
 /*----------------------------------

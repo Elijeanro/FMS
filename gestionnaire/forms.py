@@ -1,15 +1,22 @@
 from django import forms
 from django.forms import DateTimeInput
-from gestionnaire.models import TypeEngin,TypeMaintenance,Grade,InfoEngin,Engin,\
+from gestionnaire.models import TypeEngin,TypeMaintenance,Grade,InfoEngin,Engin,Attribution,\
     MaintenanceEngin,Marque,Modele,Personne,RavitaillementCarburant,ReleveDistance,Fournisseur,EtatEngin
 from django.contrib.auth.models import User
 from phonenumbers.phonenumberutil import NumberParseException
 from phonenumbers import parse, format_number, PhoneNumberFormat, NumberParseException
-from django.contrib.admin.widgets import  AdminDateWidget, AdminTimeWidget, AdminSplitDateTime
 from django.forms.widgets import SelectDateWidget
 from django.shortcuts import reverse
+import datetime
 
-    
+class NonNegativeFloatField(forms.FloatField):
+    def clean(self, value):
+        cleaned_data = super().clean(value)
+        if cleaned_data >= 0:
+            return cleaned_data
+        else:
+            raise forms.ValidationError("La valeur doit être un nombre positif ou nul.")
+       
 class PersonneForm(forms.Form):
     nom = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Nom'})
@@ -54,34 +61,47 @@ class MarqueForm(forms.ModelForm):
         widgets = {
             'nom_marque': forms.TextInput(attrs={'class':'form-control mb-3', 'placeholder':'Nom de la marque'})
         }
-
-class ModeleForm(forms.ModelForm):
-    marque = forms.ChoiceField(
-        choices=[('','Choisir une marque')]+
-                [(m.id, m.nom_marque) for m in Marque.objects.all()]+
-                [('create_marque', 'Ajouter une marque')],
-        widget=forms.Select(attrs={'class':'form-control mb-3','id':'marque'}),
-        required=True
-    )
-    def clean_marque(self):
-        marque_id=self.cleaned_data['marque']
-        if marque_id =='create_marque':
-            create_url=reverse('create_marque')
-            raise forms.ValidationError(create_url)
-        return marque_id
-    
-    annee = forms.DateField(
-        widget=SelectDateWidget(years=range(1900, 2101), attrs={'class': 'form-control mb-3'}),
-        input_formats=['%Y']
-    )
-    
-    class Meta:
-        model = Modele
-        fields = ['nom_modele', 'marque', 'annee']
-        widgets = {
-            'nom_modele': forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Nom du modèle'})
+        labels = {
+            'nom_marque':'Nom de la marque'
         }
 
+class ModeleForm(forms.ModelForm):
+    class Meta:
+        model = Modele
+        fields = '__all__'
+        widgets = {
+            'nom_modele':forms.TextInput(attrs={'class':'form-control mb-3', 'placeholder':'Saisir le modèle'}),
+            'annee':forms.NumberInput(attrs={'class':'form-control mb-3', 'placeholder':'Saisir l\'année'}),
+        }
+        labels = {
+            'nom_modele':'Désignation du modèle',
+            'annee':'Année de mise en circulation'
+        }
+    marque = forms.ModelChoiceField(
+        queryset=Marque.objects.all(),
+        widget=forms.Select(attrs={'class':'form-control'}),
+        label='Nom de la marque',
+        required=True
+    )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['marque'].queryset = Marque.objects.all()
+        if 'marque' in self.data:
+            self.fields['marque'].queryset = Marque.objects.all()
+        elif self.instance.pk:
+            print(self.instance.marque)
+            self.fields['marque'].queryset = Marque.objects.filter(pk=self.instance.marque.pk)
+    
+    def clean_annee(self):
+        cette_annee = datetime.datetime.now().year
+        annee = self.cleaned_data.get('annee')
+
+        if annee is None or not 1886 <= annee <= cette_annee:
+            raise forms.ValidationError("Valeur incorrecte pour l'année. Veuillez saisir une valeur entre 1886 et l'année en cours.")
+        return annee
+    
 class FournisseurForm(forms.ModelForm):
     class Meta:
         model = Fournisseur
@@ -91,95 +111,105 @@ class FournisseurForm(forms.ModelForm):
             'adresse':forms.TextInput(attrs={'class':'form-control mb-3', 'placeholder':'Adresse du fournisseur'}),
             'description_fournisseur':forms.Textarea(attrs={'class':'form-control mb-3', 'placeholder':'Donnez une description du fournisseur'}),
         }
+        labels = {
+            'nom_fournisseur':'Nom du fournisseur',
+            'adresse':'Adresse du fournisseur',
+            'description_fournisseur':'Description des activités du fournisseur'
+        }
 
-class EnginForm(forms.Form):
-    immatriculation = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Saisir le numéro matricule'}))
-    couleur = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': "Donnez la couleur de l'engin"}))
+class EnginForm(forms.ModelForm):
+    class Meta:
+        model = Engin
+        fields = ['immatriculation','couleur','modele_engin','type_engin','info_engin','etat_engin','est_obsolete',\
+                  'fournisseur_engin','vik','capa_reserv']
+    immatriculation = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Saisir le numéro matricule'}),label='Immatriculation de l\'engin')
+    couleur = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': "Donnez la couleur de l'engin"}), label='Couleur de l\'engin')
     
-    modele_engin = forms.ChoiceField(
-        choices=[('', 'Sélectionnez un modèle')] + 
-                [(m.id, m.nom_modele) for m in Modele.objects.all()] + 
-                [('create_modele', 'Ajouter un modèle')],
-        widget=forms.Select(attrs={'class': 'form-control mb-3', 'id':'modele'}),
+    modele_engin = forms.ModelChoiceField(
+        queryset=Modele.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control mb-3'}),
+        label='Modèle de l\'engin',
         required=False,
     )
-    def clean_modele_engin(self):
-        modele_id = self.cleaned_data['modele_engin']
-        if modele_id == 'create_modele':
-            create_url = reverse('create_modele')  
-            raise forms.ValidationError(create_url)
-        return modele_id
     
-    type_engin = forms.ChoiceField(
-        choices=[('', 'Sélectionnez un type d\'engin')] + 
-                [(t.id, t.designation) for t in TypeEngin.objects.all()] + 
-                [('create_type_engin', 'Ajouter un type d\'engin')],
-        widget=forms.Select(attrs={'class': 'form-control mb-3','id':'type_engin'}),
+    type_engin = forms.ModelChoiceField(
+        queryset=TypeEngin.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control mb-3'}),
+        label='Type d\'engin',
         required=False,
     )
-    def clean_type_engin(self):
-        type_id = self.cleaned_data['type_engin']
-        if type_id == 'create_type_engin':
-            create_url = reverse('create_type_engin')  
-            raise forms.ValidationError(create_url)
-        return type_id
     
-    info_engin = forms.ChoiceField(
-        choices=[('', 'Informations à propos de cet engin')] + 
-                [(i.id, i.info) for i in InfoEngin.objects.all()] + 
-                [('create_info_engin', 'Ajouter des informations')],
-        widget=forms.Select(attrs={'class': 'form-control mb-3', 'id':'info_engin'}),
+    info_engin = forms.ModelChoiceField(
+        queryset=InfoEngin.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control mb-3'}),
+        label='Informations sur l\'engin',
         required=False,
     )
-    def clean_info_engin(self):
-        info_id = self.cleaned_data['info_engin']
-        if info_id == 'create_info_engin':
-            create_url = reverse('create_info_engin')  
-            raise forms.ValidationError(create_url)
-        return info_id
     
-    etat_engin = forms.ChoiceField(
-        choices=[('', 'Sélectionnez l\'état de l\'engin')] + 
-                [(e.id, e.libelle_etat) for e in EtatEngin.objects.all()] + 
-                [('create_etat_engin', 'Ajouter un état')],
+    etat_engin = forms.ModelChoiceField(
+        queryset=EtatEngin.objects.all(),
         widget=forms.Select(attrs={'class': 'form-control mb-3', 'id':'etat_engin'}),
+        label='Etat de l\'engin',
         required=False,
     )
-    def clean_etat_engin(self):
-        etat_id = self.cleaned_data['etat_engin']
-        if etat_id == 'create_etat_engin':
-            create_url = reverse('create_etat_engin')  
-            raise forms.ValidationError(create_url)
-        return etat_id
     
     est_obsolete = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input ml-3'}),
+        label='L\'engin est-il obsolète ? ',
         required=False,
         initial=False,  
     )
     
-    fournisseur_engin = forms.ChoiceField(
-        choices=[('', 'Sélectionnez le fournisseur de l''engin')] + 
-                [(f.id, f.nom_fournisseur) for f in Fournisseur.objects.all()] + 
-                [('create_fournisseur', 'Ajouter un fournisseur')],
+    fournisseur_engin = forms.ModelChoiceField(
+        queryset=Fournisseur.objects.all(),
         widget=forms.Select(attrs={'class': 'form-control mb-3', 'id':'fournisseur'}),
+        label='Fournisseur de l\'engin',
         required=False,
     )
-    def clean_fournisseur_engin(self):
-        fournisseur_id=self.cleaned_data['fournisseur_engin']
-        if fournisseur_id == 'create_fournisseur':
-            create_url=reverse('create_fournisseur')
-            raise forms.ValidationError(create_url)
-        return fournisseur_id
-
+    
     vik = forms.FloatField(
         widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Valeur initiale du compteur'}),
+        label='Valeur initiale du compteur de kilométrage',
         required=True
     )
     capa_reserv = forms.FloatField(
         widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Capacité du réservoir'}),
+        label='Capacité du réservoir',
         required=True
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['modele_engin'].queryset = Modele.objects.all()
+        if 'modele_engin' in self.data:
+            self.fields['modele_engin'].queryset = Modele.objects.all()
+        elif self.instance.pk:
+            self.fields['modele_engin'].queryset = Modele.objects.filter(pk=self.instance.modele_engin.pk)
+
+        self.fields['type_engin'].queryset = TypeEngin.objects.all()
+        if 'type_engin' in self.data:
+            self.fields['type_engin'].queryset = TypeEngin.objects.all()
+        elif self.instance.pk:
+            self.fields['type_engin'].queryset = TypeEngin.objects.filter(pk=self.instance.type_engin.pk)
+
+        self.fields['info_engin'].queryset = InfoEngin.objects.all()
+        if 'info_engin' in self.data:
+            self.fields['info_engin'].queryset = InfoEngin.objects.all()
+        elif self.instance.pk:
+            self.fields['info_engin'].queryset = InfoEngin.objects.filter(pk=self.instance.info_engin.pk)
+
+        self.fields['etat_engin'].queryset = EtatEngin.objects.all()
+        if 'etat_engin' in self.data:
+            self.fields['etat_engin'].queryset = EtatEngin.objects.all()
+        elif self.instance.pk:
+            self.fields['etat_engin'].queryset = EtatEngin.objects.filter(pk=self.instance.etat_engin.pk)
+
+        self.fields['fournisseur_engin'].queryset = Fournisseur.objects.all()
+        if 'fournisseur_engin' in self.data:
+            self.fields['fournisseur_engin'].queryset = Fournisseur.objects.all()
+        elif self.instance.pk:
+            self.fields['fournisseur_engin'].queryset = Fournisseur.objects.filter(pk=self.instance.fournisseur_engin.pk)
     
 class TypeEnginForm(forms.ModelForm):
     class Meta:
@@ -190,6 +220,12 @@ class TypeEnginForm(forms.ModelForm):
             'description':forms.TextInput(attrs={'class':'form-control mb-3', 'placeholder':'Description'}),
             'nombre_roue':forms.NumberInput(attrs={'class':'form-control mb-3', 'placeholder':'Nombre de roues'}),
         }
+        labels = {
+            'designation':'Désignation du type d\'engin',
+            'description':'Description du type d\'engin',
+            'nombre_roue':'Nombre de roue'
+        }
+
 class EtatEnginForm(forms.ModelForm):
     class Meta:
         model = EtatEngin
@@ -197,185 +233,234 @@ class EtatEnginForm(forms.ModelForm):
         widgets = {
             'libelle_etat':forms.TextInput(attrs={'class':'form-control mb-3', 'placeholder':'Etat d''un engin'})
         }
+        labels = {
+            'libelle_etat':'Libellé de l''état de l\'engin'
+        }
 
 class InfoEnginForm(forms.Form):
-    info = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control mb-3', 'placeholder':'Saisir le libellé d''information'}))
-    consommation = forms.FloatField(widget=forms.NumberInput(attrs={'class':'form-control mb-3', 'placeholder':'Consommation'}))
-    vidange = forms.FloatField(widget=forms.NumberInput(attrs={'class':'form-control mb-3', 'placeholder':'Vidange après combien de kilomètres?'}))
-    revision = forms.DurationField(widget=forms.TextInput(attrs={'class':'form-control mb-3', 'placeholder':'Nombre de jours entre deux révisions'}))
+    info = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control mb-3', 'placeholder':'Saisir le libellé d''information'}),label='Titre de l''information')
+    consommation = forms.FloatField(widget=forms.NumberInput(attrs={'class':'form-control mb-3', 'placeholder':'Consommation'}),label='Consommation')
+    vidange = forms.FloatField(widget=forms.NumberInput(attrs={'class':'form-control mb-3', 'placeholder':'Vidange après combien de kilomètres?'}),label='La vidange doit être faite au bout de combien de kilomètres ? ')
+    revision = forms.DurationField(widget=forms.TextInput(attrs={'class':'form-control mb-3', 'placeholder':'Nombre de jours entre deux révisions'}),label='La révision doit être faite après combien de jours d\'activités ? ')
     
-class RavitaillementCarburantForm(forms.Form):
-    cout_rav = forms.FloatField(
-        widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Coût du ravitaillement'}),
+class RavitaillementCarburantForm(forms.ModelForm):
+    class Meta:
+        model = RavitaillementCarburant
+        fields = ['cout_rav','engin_rav','fournisseur_carburant','plein','Km_plein']
+    cout_rav = NonNegativeFloatField(
+        widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Coût du ravitaillement', 'min': 700 }),
+        label='Coût du ravitaillement en F CFA',
         required=True
     )
-    engin_rav = forms.ChoiceField(
-        choices=[('','Choisir un engin')]+
-                [(e.id, e.immatriculation) for e in Engin.objects.filter(est_obsolete=False)]+
-                [('create_engin', 'Ajouter un engin')],
-        widget=forms.Select(attrs={'class':'form-control mb-3','id':'engin'}),
+    engin_rav = forms.ModelChoiceField(
+        queryset=Engin.objects.all(),
+        widget=forms.Select(attrs={'class':'form-control mb-3'}),
+        label='Engin ravitaillé',
         required=True
     )
-    def clean_engin_rav(self):
-        engin_id=self.cleaned_data['engin_rav']
-        if engin_id == 'create_engin':
-            create_url=reverse('create_engin')
-            raise forms.ValidationError(create_url)
-        return engin_id
     
-    fournisseur_carburant = forms.ChoiceField(
-        choices=[('', 'Sélectionnez le fournisseur de carburant')] + 
-                [(f.id, f.nom_fournisseur) for f in Fournisseur.objects.all()] + 
-                [('create_fournisseur', 'Ajouter un fournisseur de carburant')],
-        widget=forms.Select(attrs={'class': 'form-control mb-3', 'id':'fournisseur'}),
+    fournisseur_carburant = forms.ModelChoiceField(
+        queryset=Fournisseur.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control mb-3'}),
+        label='Fournisseur du carburant',
         required=False,
     )
-    def clean_fournisseur_carburant(self):
-        fournisseur_id=self.cleaned_data['fournisseur_carburant']
-        if fournisseur_id == 'create_fournisseur':
-            create_url=reverse('create_fournisseur')
-            raise forms.ValidationError(create_url)
-        return fournisseur_id
-    
+
     plein = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input ml-2'}),
+        label='Etait-ce le plein ? ',
         required=False
     )
     Km_plein = forms.FloatField(
         widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Kilometrage au plein'}),
         initial=0,
-        required=True
+        label='Valeur du kilométrage au plein (en Km)',
+        required=False
     )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
+        self.fields['engin_rav'].queryset = Engin.objects.none()
+        if 'engin_rav' in self.data:
+            self.fields['engin_rav'].queryset = Engin.objects.all()
+        elif self.instance.pk:
+            self.fields['engin_rav'].queryset = Engin.objects.filter(pk=self.instance.engin_rav.pk)
+
+        self.fields['fournisseur_carburant'].queryset = Fournisseur.objects.none()
+        if 'fournisseur_carburant' in self.data:
+            self.fields['fournisseur_carburant'].queryset = Fournisseur.objects.all()
+        elif self.instance.pk:
+            self.fields['fournisseur_carburant'].queryset = Fournisseur.objects.filter(pk=self.instance.fournisseur_carburant.pk)
+    
+    def clean_cout_rav(self):
+        cout_rav = self.cleaned_data['cout_rav']
+        if cout_rav < 700:
+            raise forms.ValidationError("Montant invalide car inférieur à 700 F CFA.")
+        return cout_rav
+    
 class TypeMaintenanceForm(forms.Form):
     libelle_maint = forms.CharField(
         max_length=30,
         widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Libellé de la maintenance'}),
+        label='Libellé du type de maintenance',
         required=True
     )
 
-class MaintenanceEnginForm(forms.Form):
-    type_maint = forms.ChoiceField(
-        choices=[('','Selectionner le type de maintenance')]+
-                [(t.id, t.libelle_maint) for t in TypeMaintenance.objects.all()]+
-                [('create_type_maintenance', 'Ajouter un type de maintenance')],
-        widget=forms.Select(attrs={'class':'form-control mb-3','id':'type_maint'}),
+class MaintenanceEnginForm(forms.ModelForm):
+    class Meta:
+        model = MaintenanceEngin
+        fields = ['type_maint','motif_maint','engin_maint','cout_maint','fournisseur_maint']
+     
+    type_maint = forms.ModelChoiceField(
+        queryset=TypeMaintenance.objects.all(),
+        widget=forms.Select(attrs={'class':'form-control'}),
+        label='Type de maintenance',
         required=True
     )
-    def clean_type_maint(self):
-        type_maint_id=self.cleaned_data['type_maint']
-        if type_maint_id == 'create_type_maintenance':
-            create_url=reverse('create_type_maintenance')
-            raise forms.ValidationError(create_url)
-        return type_maint_id
-    
+
     motif_maint = forms.CharField(
         max_length=500,
-        widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Motif de la maintenance'}),
+        widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Motif de la maintenance'}),
+        label='Motif de la maintenance',
         required=False
     )
-    engin_maint = forms.ChoiceField(
-        choices=[('','Choisir un engin')]+
-                [(e.id, e.immatriculation) for e in Engin.objects.all()]+
-                [('create_engin', 'Ajouter un engin')],
-        widget=forms.Select(attrs={'class':'form-control mb-3','id':'engin'}),
+    engin_maint = forms.ModelChoiceField(
+        queryset=Engin.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label='Engin concerné',
         required=True
     )
-    def clean_engin_maint(self):
-        engin_id=self.cleaned_data['engin_maint']
-        if engin_id == 'create_engin':
-            create_url=reverse('create_engin')
-            raise forms.ValidationError(create_url)
-        return engin_id
     
     cout_maint = forms.FloatField(
-        widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Coût de la maintenance'}),
+        widget=forms.NumberInput(attrs={'class':'form-control', 'placeholder': 'Coût de la maintenance'}),
         initial=0,
+        label='Coût de la maintenance en F CFA',
         required=True
     )
-    fournisseur_maint = forms.ChoiceField(
-        choices=[('','Selectionner un fournisseur')]+
-                [(f.id, f.nom_fournisseur) for f in Fournisseur.objects.all()]+
-                [('create_fournisseur', 'Ajouter un fournisseur')],
-        widget=forms.Select(attrs={'class':'form-control mb-3', 'id':'fournisseur'}),
+    fournisseur_maint = forms.ModelChoiceField(
+        queryset=Fournisseur.objects.all(),
+        widget=forms.Select(attrs={'class':'form-control'}),
+        label='Fournisseur de la maintenance',
         required=False
     )
-    def clean_fournisseur_maint(self):
-        fournisseur_id=self.cleaned_data['fournisseur_maint']
-        if fournisseur_id == 'create_fournisseur':
-            create_url=reverse('create_fournisseur')
-            raise forms.ValidationError(create_url)
-        return fournisseur_id
     
-class AttributionForm(forms.Form):
-    conducteur = forms.ChoiceField(
-        choices=[('','Choisir un conducteur')]+
-                [(p.id, p.nom) for p in Personne.objects.filter(grade=5)]+
-                [('create_personne', 'Ajouter un conducteur')],
-        widget=forms.Select(attrs={'class':'form-control mb-3', 'id':'personne'}),
-        required=True
-    )
-    def clean_conducteur(self):
-        conducteur_id=self.cleaned_data['conducteur']
-        if conducteur_id == 'create_personne':
-            create_url=reverse('create_personne')
-            raise forms.ValidationError(create_url)
-        return conducteur_id
-    
-    engin = forms.ChoiceField(
-        choices=[('','Choisir un engin')]+
-                [(e.id, e.immatriculation) for e in Engin.objects.filter(est_obsolete=False)]+
-                [('create_engin', 'Ajouter un engin')],
-        widget=forms.Select(attrs={'class':'form-control mb-3', 'id':'engin'}),
-        required=True
-    )
-    def clean_engin(self):
-        engin_id=self.cleaned_data['engin']
-        if engin_id == 'create_engin':
-            create_url=reverse('create_engin')
-            raise forms.ValidationError(create_url)
-        return engin_id
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-class ReleveDistanceForm(forms.Form):
-    engin_releve = forms.ChoiceField(
-        choices=[('','Choisir un engin')]+
-                [(e.id, e.immatriculation) for e in Engin.objects.filter(est_obsolete=False)]+
-                [('create_engin', 'Ajouter un engin')],
-        widget=forms.Select(attrs={'class':'form-control mb-3', 'id':'engin'}),
+        self.fields['engin_maint'].queryset = Engin.objects.all()
+        if 'engin_maint' in self.data:
+            self.fields['engin_maint'].queryset = Engin.objects.all()
+        elif self.instance.pk:
+            self.fields['engin_maint'].queryset = Engin.objects.filter(pk=self.instance.engin_maint.pk)
+
+
+        self.fields['fournisseur_maint'].queryset = Fournisseur.objects.none()
+        if 'fournisseur_maint' in self.data:
+            self.fields['fournisseur_maint'].queryset = Fournisseur.objects.all()
+        elif self.instance.pk:
+            self.fields['fournisseur_maint'].queryset = Fournisseur.objects.filter(pk=self.instance.fournisseur_maint.pk)
+
+    def clean_cout_maint(self):
+        cout_maint = self.cleaned_data['cout_maint']
+        if cout_maint < 100:
+            raise forms.ValidationError("Montant invalide car inférieur à 100 F CFA.")
+        return cout_maint
+    
+class AttributionForm(forms.ModelForm):
+    class Meta:
+        model = Attribution
+        fields = ['conducteur','engin']
+    
+    conducteur = forms.ModelChoiceField(
+        queryset=Personne.objects.filter(grade=5),
+        widget=forms.Select(attrs={'class':'form-control'}),
+        label='Nom du conducteur',
         required=True
     )
-    def clean_engin_releve(self):
-        engin_id=self.cleaned_data['engin_releve']
-        if engin_id == 'create_engin':
-            create_url=reverse('create_engin')
-            raise forms.ValidationError(create_url)
-        return engin_id
+
+    engin = forms.ModelChoiceField(
+        queryset=Engin.objects.all(),
+        widget=forms.Select(attrs={'class':'form-control'}),
+        label='Immatriculation de l\'engin',
+        required=True
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['engin'].queryset = Engin.objects.all()
+        if 'engin' in self.data:
+            self.fields['engin'].queryset = Engin.objects.all()
+        elif self.instance.pk:
+            self.fields['engin'].queryset = Engin.objects.filter(pk=self.instance.engin.pk)
+
+        self.fields['conducteur'].queryset = Personne.objects.all()
+        if 'conducteur' in self.data:
+            self.fields['conducteur'].queryset = Personne.objects.all()
+        elif self.instance.pk:
+            self.fields['conducteur'].queryset = Personne.objects.filter(pk=self.instance.conducteur.pk)
     
+class ReleveDistanceForm(forms.ModelForm):
+    class Meta:
+        model = ReleveDistance
+        fields = ['engin_releve','nbKmFin','mode_4x4','ravitaillement']
+        widgets = {
+           'mode_4x4' : forms.CheckboxInput(),
+           'ravitaillement' : forms.CheckboxInput(), 
+        }
+        labels = {
+            'mode_4x4' : 'Le mode 4x4 activé ',
+            'ravitaillement' : 'Engin ravitaillé dans la journée ',
+        }
+
+    engin_releve = forms.ModelChoiceField(
+        queryset=Engin.objects.all(),
+        widget=forms.Select(attrs={'class':'form-control'}),
+        label='Engin concerné',
+        required=True
+    )
+
     nbKmFin = forms.FloatField(
-        widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Kilométrage en fin d''activité de la journée'}),
+        widget=forms.NumberInput(attrs={'class':'form-control'}),
+        label='Valeur du kilométrage en fin de journée (en Km)',
         required=True
     )
     
-    mode_4x4 = forms.BooleanField(
-        widget=forms.CheckboxInput(attrs={'class': 'form-check-input ml-3'}),
-        required=False
-    )
-    ravitaillement = forms.BooleanField(
-        widget=forms.CheckboxInput(attrs={'class': 'form-check-input ml-3'}),
-        required=False
-    )   
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['engin_releve'].queryset = Engin.objects.none()
+        if 'engin_releve' in self.data:
+            self.fields['engin_releve'].queryset = Engin.objects.all()
+        elif self.instance.pk:
+            self.fields['engin_releve'].queryset = Engin.objects.filter(pk=self.instance.engin_releve.pk)
     
+    def clean_nbKmFin(self):
+        engin_releve = self.cleaned_data.get('engin_releve')
+        valeur = ReleveDistance.objects.filter(
+            engin_releve=engin_releve
+        ).exclude(id=self.instance.id if self.instance else 0).last()
+        nbKmFin = self.cleaned_data['nbKmFin']
+        if nbKmFin < 0:
+            raise forms.ValidationError("Le kilométrage en fin de journée ne peut pas être négatif.")
+        elif nbKmFin < float(valeur.nbKmFin) :
+            raise forms.ValidationError("La valeur du Kilométrage en fin de la journée en cours ne doit pas être inférieure à {} Km. Veuillez corriger".format(float(valeur.nbKmFin)))
+        return nbKmFin
+        
 class T_CardForm(forms.Form):
     
-    montant = forms.FloatField(
+    montant = NonNegativeFloatField(
         widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Montant'}),
+        label='Montant approvisionné',
         required=True
     )
     type_engin_tcard = forms.ChoiceField(
-        choices=[('','Sélectionner le type d''engin')]+
+        choices=[('','Sélectionner le type d\'engin')]+
                 [(t.id, t.designation) for t in TypeEngin.objects.all()]+
-                [('create_type_engin', 'Ajouter un type d''engin')],
+                [('create_type_engin', 'Ajouter un type d\'engin')],
         widget=forms.Select(attrs={'class':'form-control mb-3', 'id':'type_engin'}),
+        label='Type d\'engin concerné par la carte',
         required=True
     )
     def clean_type_engin_tcard(self):
@@ -384,3 +469,4 @@ class T_CardForm(forms.Form):
             create_url=reverse('create_type_engin')
             raise forms.ValidationError(create_url)
         return type_engin_id
+    

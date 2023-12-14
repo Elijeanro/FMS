@@ -14,53 +14,53 @@
     {% endblock title %}
 
   </title>
+
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
   <!-- Nucleo Icons -->
   <link href="{% static 'assets/css/nucleo-icons.css' %}" rel="stylesheet" />
   <link href="{% static 'assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+
   <!-- Font Awesome Icons -->
   <link href="{% static 'assets/css/font-awesome.css' %}" rel="stylesheet" />
   <link href="{% static 'assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+
+  <!-- Select2 -->
+  <link href="{% static 'assets/css/select2.css' %}" rel="stylesheet" />
+  <script src="{% static 'assets/js/select2.min.js' %}"></script>
+
   <!-- CSS Files -->
   <link href="{% static 'assets/css/argon-design-system.css' %}" rel="stylesheet" />
-  <link href="{% static 'assets/fontawesome-free/css/fontawesome.css' %}" rel="stylesheet" />
-</head>
+  
+  <!-- JQuery -->
+  <!-- <link href="{% static 'assets/css/jquery-ui.css' %}" rel="stylesheet" /> -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  
+  <script>
+    $( function() {
+      $( "#date_debut, #date_fin" ).datepicker();
+    } );
+    </script>
+  </head>
 
-<body class="index-page" style="color: black;" id="top">
+<body class="index-page h6" style="color: black;" id="top">
   <!-- Navbar -->
   <nav id="navbar-main"
-    class="navbar navbar-main navbar-expand-lg bg-white navbar-light position-sticky top-0 shadow py-2">
-    <div>
-      <h3 class="h4 text-success font-weight-bold mb-4"><i class="fa fa-user-circle"></i>{{ username }}</h3>
-    </div>
+    class="navbar navbar-main navbar-expand-lg bg-white navbar-light position-sticky top-0 shadow py-0 px--9">
     <div class="container">
-      <a class="navbar-brand mr-lg-5" href="#" style="width: 25%; height: 25%;">
-        <img src="{% static 'images/Logo_EV_final.png' %}" style="width: 45%; height: 25%;">
-        <img src="{% static 'assets/img/brand/FMS_logo.png' %}" style="width: 45%; height: 25%;">
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global"
-        aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="navbar-collapse collapse" id="navbar_global">
-        <div class="navbar-collapse-header">
-          <div class="row">
-            <div class="col-6 collapse-brand">
-              <a href="#">
-                <img src="{% static 'assets/img/brand/FMS_logo.png' %}">
-              </a>
-            </div>
-            <div class="col-6 collapse-close">
-              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global"
-                aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-              </button>
-            </div>
-          </div>
+      <div class="col-3 px-1 mx-1">
+        <div class="row-2">
+          <a class="navbar-brand mr-lg-5" href="#" style="width: 70%; height: 25%;">
+            <img src="{% static 'assets/images/Logo_EV_final.png' %}" style="width: 45%; height: 25%;">
+            <img src="{% static 'assets/img/brand/FMS_logo.png' %}" style="width: 45%; height: 25%;">
+          </a>
+          <h6 class="h4 text-success font-weight-bold my--1"><i class="fa fa-user-circle"></i>{{ personne.utilisateur.username }}</h6>
         </div>
+      </div>
+    
         <style>
           .navbar-nav-hover {
             position: sticky;
@@ -71,7 +71,7 @@
           <li class="nav-item dropdown">
             <a href="#" class="nav-link" data-toggle="dropdown" role="button">
               <i class="ni ni-ui-04 d-lg-none"></i>
-              <img src="{% static 'images/traffic-jam.png' %}" alt="parc" style="width: 12%;">
+              <img src="{% static 'assets/images/traffic-jam.png' %}" alt="parc" style="width: 20%;"><br>
               <span class="nav-link-inner--text">Parc Automobile</span>
             </a>
             <div class="dropdown-menu dropdown-menu-xl">
@@ -88,11 +88,11 @@
                   </div>
                 </a>
                 <div class="form-group ml-3">
-                  <select class="form-control" id="interventionSelect">
+                  <select id="interventionSelect">
                     <option value="">Sélectionnez une option</option>
-                    <option value="{% url 'gestionnaire:create_ravitaillement_carburant' grade_id %}">Enregistrer un
+                    <option value="{% url 'gestionnaire:create_ravitaillement_carburant' %}">Enregistrer un
                       ravitaillement en carburant</option>
-                    <option value="{% url 'gestionnaire:create_maintenance_engin' grade_id %}">Enregistrer une
+                    <option value="{% url 'gestionnaire:create_maintenance_engin' %}">Enregistrer une
                       maintenance</option>
                   </select>
                 </div>
@@ -107,10 +107,10 @@
                   </div>
                 </a>
                 <div class="form-group ml-3">
-                  <select class="form-control" id="metricsSelect">
+                  <select id="metricsSelect">
                     <option value="">Sélectionnez une option</option>
-                    <option value="{% url 'gestionnaire:lists' 'etat_engin' grade_id %}">Les états d'un engin</option>
-                    <option value="{% url 'gestionnaire:create_releve_distance' grade_id %}">Données des activités des
+                    <option value="{% url 'gestionnaire:lists' 'etat_engin' %}">Les états d'un engin</option>
+                    <option value="{% url 'gestionnaire:create_releve_distance' %}">Données des activités des
                       engins</option>
                   </select>
                 </div>
@@ -127,24 +127,24 @@
                   </div>
                 </a>
                 <div class="form-group ml-3">
-                  <select class="form-control" id="parcautomobileSelect">
+                  <select id="parcautomobileSelect">
                     <option value="">Sélectionnez une option</option>
-                    <option value="{% url 'administratif:espace_utilisateur' grade_id %}">Revenir au parc automobile
+                    <option value="{% url 'administratif:espace_utilisateur' %}">Revenir au parc automobile
                     </option>
                     {% if grade_id == 1 or grade_id == 3 %}
-                    <option value="{% url 'gestionnaire:create_marque' grade_id %}">Ajouter une marque</option>
-                    <option value="{% url 'gestionnaire:create_modele' grade_id %}">Ajouter un modèle</option>
-                    <option value="{% url 'gestionnaire:create_fournisseur' grade_id %}">Ajouter un fournisseur</option>
-                    <option value="{% url 'gestionnaire:create_engin' grade_id %}">Ajouter un engin</option>
-                    <option value="{% url 'gestionnaire:create_type_engin' grade_id %}">Ajouter un type d'engin</option>
-                    <option value="{% url 'gestionnaire:create_info_engin' grade_id %}">Ajouter des informations d'engin
+                    <option value="{% url 'gestionnaire:create_marque' %}">Ajouter une marque</option>
+                    <option value="{% url 'gestionnaire:create_modele' %}">Ajouter un modèle</option>
+                    <option value="{% url 'gestionnaire:create_fournisseur' %}">Ajouter un fournisseur</option>
+                    <option value="{% url 'gestionnaire:create_engin' %}">Ajouter un engin</option>
+                    <option value="{% url 'gestionnaire:create_type_engin' %}">Ajouter un type d'engin</option>
+                    <option value="{% url 'gestionnaire:create_info_engin' %}">Ajouter des informations d'engin
                     </option>
-                    <option value="{% url 'gestionnaire:create_type_maintenance' grade_id %}">Ajouter un type de
+                    <option value="{% url 'gestionnaire:create_type_maintenance' %}">Ajouter un type de
                       maintenance</option>
-                    <option value="{% url 'gestionnaire:create_attribution' grade_id %}">Attribuer un engin à un
+                    <option value="{% url 'gestionnaire:create_attribution' %}">Attribuer un engin à un
                       conducteur</option>
-                    <option value="{% url 'gestionnaire:create_t_card' grade_id %}">Ajouter une T-Card</option>
-                    <option value="{% url 'gestionnaire:option_t_card' grade_id %}">Opération sur les T-Card</option>
+                    <option value="{% url 'gestionnaire:create_t_card' %}">Ajouter une T-Card</option>
+                    <option value="{% url 'gestionnaire:option_t_card' %}">Opération sur les T-Card</option>
                     {% endif %}
                   </select>
                 </div>
@@ -176,21 +176,16 @@
 
           <li class="nav-item dropdown">
 
-            <a href="#" class="nav-link" data-toggle="dropdown" role="button">
+            <a href="{% url 'administratif:analyses_glob' %}" class="nav-link" role="button">
               <i class="ni ni-collection d-lg-none"></i>
-              <img src="{% static 'images/auto.png' %}" alt="parc" style="width: 12%;">
+              <img src="{% static 'assets/images/auto.png' %}" alt="parc" style="width: 20%;"><br>
               <span class="nav-link-inner--text">Bilan Global</span>
             </a>
-            <div class="dropdown-menu">
-              <a href="{% url 'administratif:analyses_glob' grade_id 'finances' %}" class="dropdown-item">Financier</a>
-              <a href="{% url 'administratif:analyses_glob' grade_id 'techniques' %}"
-                class="dropdown-item">Technique</a>
-            </div>
-
+            
           </li>
           <li class="nav-item dropdown">
 
-            <a href="{% url 'administratif:periode_bilan' grade_id 'general' %}" class="nav-link" role="button">
+            <a href="{% url 'administratif:periode_bilan' %}" class="nav-link" role="button">
               <i class="ni ni-calendar-grid-58"></i>
               <span class="nav-link-inner--text">Bilan périodique</span>
             </a>
@@ -205,17 +200,18 @@
           </li> -->
           <!-- Notifications Zone -->
           <li class="nav-item">
-            <a href="#" class="nav-link {% if engins_avec_notifications %}text-danger{% endif %}" data-toggle="modal" data-target="#notificationModal">
-                <i class="ni ni-bell-55 {% if engins_avec_notifications %}text-danger{% endif %}"></i>
-                <span class="nav-link-inner--text">Notifications</span>
+            <a href="#" class="nav-link {% if engins_avec_notifications %}text-danger{% endif %}" data-toggle="modal"
+              data-target="#notificationModal">
+              <i class="ni ni-bell-55 {% if engins_avec_notifications %}text-danger{% endif %}"></i>
+              <span class="nav-link-inner--text">Notifications</span>
             </a>
-        </li>
-        
+          </li>
+
           <!-- Search Zone -->
           <li class="nav-item dropdown">
             <a href="#" class="nav-link" data-toggle="dropdown" role="button">
               <i class="ni ni-hat-3"></i>
-              <span class="nav-link-inner--text"> {{ grade.libelle_grade }} </span>
+              <span class="nav-link-inner--text"> {{ personne.grade.libelle_grade }} </span>
             </a>
             <div class="dropdown-menu">
               <a href="./examples/landing.html" class="dropdown-item">Paramètres du compte</a>
@@ -224,7 +220,7 @@
               {% if grade_id == 1 or grade_id == 2 %}
               <a href="{% url 'administrateur:creerpersonne' 'personne' %}" class="dropdown-item">Ajouter un compte</a>
               {% elif grade_id == 3 %}
-              <a href="{% url 'gestionnaire:create_personne' grade_id %}" class="dropdown-item">Ajouter un compte</a>
+              <a href="{% url 'gestionnaire:create_personne' %}" class="dropdown-item">Ajouter un compte</a>
               {% endif %}
             </div>
           </li>
@@ -282,22 +278,22 @@
   <!-- JAVASCRIPTS -->
   <script>
     document.getElementById("printButton").addEventListener("click", function () {
-        // Capturer le contenu de la page
-        html2canvas(document.body).then(function (canvas) {
-            // Convertir le canvas en image de données base64
-            var imgData = canvas.toDataURL("image/png");
+      // Capturer le contenu de la page
+      html2canvas(document.body).then(function (canvas) {
+        // Convertir le canvas en image de données base64
+        var imgData = canvas.toDataURL("image/png");
 
-            // Créer un objet PDF
-            var pdf = new jsPDF('p', 'mm', 'a4');
+        // Créer un objet PDF
+        var pdf = new jsPDF('p', 'mm', 'a4');
 
-            // Ajouter l'image capturée à la page PDF
-            pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
+        // Ajouter l'image capturée à la page PDF
+        pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
 
-            // Enregistrer le fichier PDF (ouvrir dans un nouvel onglet)
-            pdf.save("page.pdf");
-        });
+        // Enregistrer le fichier PDF (ouvrir dans un nouvel onglet)
+        pdf.save("page.pdf");
+      });
     });
-</script>
+  </script>
 
   <script>
     $(window).scroll(function (event) {
@@ -341,43 +337,49 @@
       });
   </script>
   <!-- Notification Modal-->
-  <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
-    <div class="modal-content">
+      <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Notifications</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
+          <h5 class="modal-title" id="exampleModalLabel">Notifications</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
         </div>
         <div class="modal-body">Vous avez {{nb_engin_notif}} notifications.</div>
         <div class="modal-footer">
-          
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Quitter</button>
-            <a class="btn btn-primary" href="{% url 'administratif:notifications' grade_id %}">Voir</a>
-        </div>
-    </div>
-</div>
 
-<div class="modal fade pt-3" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Quitter</button>
+          <a class="btn btn-primary" href="{% url 'administratif:notifications' %}">Voir</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade pt-3" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel1">Déconnexion</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
+              <span aria-hidden="true">×</span>
             </button>
-        </div>
-        <div class="modal-body">Voulez-vous vraiment vous déconnecter?</div>
-        <div class="modal-footer">
-          
+          </div>
+          <div class="modal-body">Voulez-vous vraiment vous déconnecter?</div>
+          <div class="modal-footer">
+
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
             <a class="btn btn-primary" href="{% url 'administratif:logout' %}">Déconnexion</a>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-</div>
-</div>
+  </div>
+  <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> -->
+
 </body>
 
 </html>

@@ -10,19 +10,22 @@
 {% block contenu %}
 <div class="wrapper">
   <div class="section section-hero section-shaped">
-    <div class="container pt-lg-3 bg-gradient-gray">
+    <div class="container pt-lg-3 bg-white">
       <div class="row justify-content-center">
         <div class="col-lg-5">
+          <span class="input-group-text"><i class="fas fa-list-alt fa-2x w-25"></i>
+            <h5> NOUVEL ENREGISTREMENT : </h5>
+          </span><br>
           <form role="form" method="post">
             {% csrf_token %}
-            <div class="form-group mb-4">
+            <div class="form-group mb-2">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="ni ni-laptop"></i></span>
               </div>
               {{ form.as_p }}
             </div>
 
-            <div class="text-center mb-6">
+            <div class="text-center mb-3">
               <button type="submit" class="btn btn-success mt-4">ENREGISTRER</button>
             </div>
           </form>
